@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import morgan from 'morgan'
 
 import hello from './api/hello.js'
 import goodbye from './api/goodbye.js'
@@ -7,8 +8,11 @@ import goodbye from './api/goodbye.js'
 const app = express();
 const port = 3000; 
 
+// express tools
 app.use(cors());
+app.use(morgan('dev'))
 
+// api endpoints
 app.use('/api', hello);
 app.use('/api', goodbye);
 

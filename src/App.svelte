@@ -1,26 +1,26 @@
 <script>
-  import Goodbye from './lib/Goodbye.svelte';
-  import Hello from './lib/Hello.svelte'
+    import Goodbye from './lib/Goodbye.svelte';
+    import Hello from './lib/Hello.svelte'
 
-  let msg = '';
+    let msg = '';
 
-  function handleMessage(event) {
-    msg = event.detail;
-    console.log(msg);
-  }
+    function handleMessage(event) {
+        msg = event.detail;
+        console.log(msg);
+    }
 </script>
 
 <main>
-  <h1>FlashAI</h1>
+    <h1>FlashAI</h1>
 
-  <div class="card">
-    <Hello on:messageFetched={handleMessage} />
-    <Goodbye on:messageFetched={handleMessage} />
-      {#if msg}
+    <div class="p-8">
+        <Hello on:messageFetched={handleMessage} />
+        <Goodbye on:messageFetched={handleMessage} />
+    </div>
+    
+    {#if msg}
         <p>{msg}</p>
-      {/if}
-  </div>
+    {/if}
 
-  <p></p>
 </main>
 

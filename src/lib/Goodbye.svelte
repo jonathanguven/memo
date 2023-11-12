@@ -1,19 +1,21 @@
 <script>
     import { createEventDispatcher } from "svelte";
-  
+
     const dispatch = createEventDispatcher();
-  
+
     async function getMessage() {
-      try {
+        try {
         const res = await fetch('http://localhost:3000/api/goodbye')
         const data = await res.json();
         dispatch('messageFetched', data.message);
-      } catch (error) {
+        } catch (error) {
         console.error('Error fetching message: ', error);
-      }
+        }
     }
-  </script>
+</script>
   
-  <button on:click={getMessage}>
+<button on:click={getMessage}>
     Goodbye
-  </button>
+</button>
+
+
