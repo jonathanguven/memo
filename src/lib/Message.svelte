@@ -5,17 +5,15 @@
 
     async function getMessage() {
         try {
-            const res = await fetch('http://localhost:3000/api/goodbye')
+            const res = await fetch('http://localhost:3000/api/message')
             const data = await res.json();
-            dispatch('messageFetched', data.message);
+            dispatch('messageFetched', data);
         } catch (error) {
             console.error('Error fetching message: ', error);
         }
     }
 </script>
-  
+
 <button on:click={getMessage}>
-    Goodbye
+    Endpoint 1
 </button>
-
-
