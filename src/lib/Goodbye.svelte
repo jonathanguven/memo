@@ -5,11 +5,11 @@
 
     async function getMessage() {
         try {
-        const res = await fetch('http://localhost:3000/api/goodbye')
-        const data = await res.json();
-        dispatch('messageFetched', data.message);
+            const res = await fetch('http://localhost:3000/api/goodbye')
+            const data = await res.json();
+            dispatch('messageFetched', data.message);
         } catch (error) {
-        console.error('Error fetching message: ', error);
+            console.error('Error fetching message: ', error);
         }
     }
 </script>
