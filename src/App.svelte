@@ -1,35 +1,34 @@
 <script>
-    import Image from './lib/Image.svelte';
-    import Message from './lib/Message.svelte'
+    import { fade } from 'svelte/transition'
+    import { Router, Link, Route } from 'svelte-routing';
 
-    let msg = '';
-    let img = '';
+    import Login from './lib/routes/Login.svelte';
+    import Home from './lib/routes/Home.svelte';
 
-    function handleMessage(event) {
-        msg = event.detail.message;
-        if (event.detail.image) {
-            img = event.detail.image;
-        }
-    }
+    export let url = "";
 </script>
 
-<main>
-    <h1>FlashAI</h1>
+<Router {url}>
+    <!-- make them show up right here -->
+    <nav>
+        <Link to="/">Home</Link>
+        <Link to="/login">Login</Link>
+    </nav>
 
-    <div class="p-4">
-        <Message on:messageFetched={handleMessage} />
-        <Image on:messageFetched={handleMessage} />
+    <main>
+        <h1>sup</h1>
+    </main>
+
+    <div>
+        <!-- Define route paths right here -->
+        <Route path="/"><Home /></Route>
+        <Route path="/login" component={Login}>Login</Route>
     </div>
+</Router>
 
-    {#if msg}
-        <p class="mb-4">{msg}</p>
-    {/if}
 
-    {#if img}
-        <img src={img} alt="" width="400" height="400">
-        <button class="mt-4" on:click={() => {img = ''}}>clear</button>
-    {/if}
 
-    
-</main>
+<style>
+
+</style>
 
