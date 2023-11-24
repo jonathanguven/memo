@@ -1,6 +1,5 @@
 <script>
     import { fade } from 'svelte/transition'
-    import { Router, Link, Route } from 'svelte-routing';
 
     import Image from '../components/Image.svelte';
     import Message from '../components/Message.svelte'
