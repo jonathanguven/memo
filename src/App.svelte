@@ -1,29 +1,29 @@
 <script>
     import { fade } from 'svelte/transition'
-    import { Router, Link, Route } from 'svelte-routing';
+    import { Router, Route, Link } from 'svelte-routing';
 
     import Login from './lib/routes/Login.svelte';
     import Home from './lib/routes/Home.svelte';
 
-    export let url = "";
+    export let base = "/";
+    $: url = window.location.href
 </script>
 
-<Router {url}>
-    <!-- make them show up right here -->
+<Router {base}>
+    <!-- content outside the main page, layout content -->
+    <main>
+        <h1>{url}</h1>
+    </main>
+    <!-- The navbar -->
     <nav>
         <Link to="/">Home</Link>
         <Link to="/login">Login</Link>
     </nav>
-
-    <main>
-        <h1>sup</h1>
-    </main>
-
+    <!-- Here is where the "page" is loaded (depends on route) -->
     <div>
-        <!-- Define route paths right here -->
         <Route path="/"><Home /></Route>
         <Route path="/login" component={Login}>Login</Route>
-    </div>
+    </div>    
 </Router>
 
 
