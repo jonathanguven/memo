@@ -4,7 +4,7 @@ import morgan from 'morgan'
 
 import message from './api/message.js'
 import image from './api/image.js'
-import form from './api/formSubmit.js'
+import create from './api/createAccount.js'
 
 const app = express();
 const port = 3001; 
@@ -16,7 +16,7 @@ app.use(morgan('dev'))
 // api endpoints
 app.use('/api', message);
 app.use('/api', image);
-app.use(form)
+app.use(create)
 
 app.get('/', (req, res) => {
     res.send('Home URL')

@@ -1,34 +1,38 @@
 <script>
-    import { fade } from 'svelte/transition'
-    import { Router, Route, Link } from 'svelte-routing';
-
-    import Login from './lib/routes/Login.svelte';
+    import { Router, Route, Link, useLocation } from 'svelte-routing';
+    import CreateAcount from './lib/routes/CreateAcount.svelte';
     import Home from './lib/routes/Home.svelte';
+    import Login from './lib/routes/Login.svelte';
 
-    export let base = "/";
-    $: url = window.location.href
+    export let url = "";
+
+    let route = '/';
+
+    function update(newRoute) {
+        route = newRoute;
+    }
+
 </script>
 
-<Router {base}>
-    <!-- content outside the main page, layout content -->
-    <main>
-        <h1>{url}</h1>
-    </main>
-    <!-- The navbar -->
-    <nav>
-        <Link to="/">Home</Link>
-        <Link to="/login">Login</Link>
-    </nav>
-    <!-- Here is where the "page" is loaded (depends on route) -->
-    <div>
-        <Route path="/"><Home /></Route>
-        <Route path="/login" component={Login}>Login</Route>
-    </div>    
-</Router>
+<main class="flex flex-col h-screen p-3">
+    <Router {url}>
+        <nav class="navbar">
+            <Link to="/" class="brand" on:click={() => update('/')}>Flash</Link>
+            <!-- TODO -->
+            <Link to="/about" class="nav-link {route === '/about' ? 'active' : ''}" on:click={() => update('/about')}>About</Link>
+            <Link to="/profile" class="nav-link {route === '/profile' ? 'active' : ''}" on:click={() => update('/profile')}>Profile</Link>
+            <Link to="/sign-up" class="nav-link {route === '/sign-up' ? 'active' : ''}" on:click={() => update('/sign-up')}>Login</Link>
+        </nav>
 
+        <div class="flex justify-center flex-grow mt-40">
+            <Route path="/" component={Home}></Route>
+            <Route path="/login" component={Login}></Route>
 
+            <Route path="/profile">profile</Route>
+            <Route path="/about">about</Route>
+            <Route path="/sign-up" component={CreateAcount}></Route>
+        </div>    
+    </Router>
+</main>
 
-<style>
-
-</style>
 

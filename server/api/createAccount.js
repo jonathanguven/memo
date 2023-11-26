@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 
-router.post('/formSubmit', express.json(), (req, res) => {
+router.post('/create-account', express.json(), (req, res) => {
     let match = false;
     const { name, password, confirm } = req.body
 
@@ -11,7 +11,7 @@ router.post('/formSubmit', express.json(), (req, res) => {
     console.log(`\nReceived Form Data\nusername: ${name}\nPasswords match: ${match}\n`)
 
     res.json({
-        message: 'Post Request Received!'
+        message: 'Account Created!'
     });
 });
   

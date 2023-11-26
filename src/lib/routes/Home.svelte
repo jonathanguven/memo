@@ -20,7 +20,8 @@
     }
 </script>
 
-<main>
+<main class="flex flex-col items-center">
+    <h1>Home</h1>
     <div class="mt-4 mb-2">
         <Message on:messageFetched={handleMessage} />
         <Image on:messageFetched={handleMessage} />
@@ -34,6 +35,6 @@
 
     {#if img}
         <img src={img} alt="" width="400" height="400">
-        <button class="rounded-lg border border-transparent bg-neutral-900 hover:text-color-neutral-500 px-5 py-2.5 text-base font-medium cursor-pointer transition-colors duration-200 m-4" on:click={() => {img = ''}}>clear</button>
+        <button class="rounded-lg border border-transparent bg-neutral-900 hover:text-color-neutral-500 px-5 py-2.5 text-base font-medium cursor-pointer transition-colors duration-200 my-4" on:click={() => {img = ''}}>clear</button>
     {/if}
 </main>
