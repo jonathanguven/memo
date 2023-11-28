@@ -5,7 +5,7 @@
 
     async function getMessage() {
         try {
-            const res = await fetch('http://localhost:3001/api/image')
+            const res = await fetch('http://localhost:3000/api/image')
             const data = await res.json();
             dispatch('messageFetched', data);
         } catch (error) {

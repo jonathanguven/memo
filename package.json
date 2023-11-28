@@ -18,11 +18,17 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "bcrypt": "^5.1.1",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "node-fetch": "^3.3.2",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
     "svelte-routing": "^2.8.0"
   }
 }
