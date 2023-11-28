@@ -2,6 +2,8 @@
     import { Link } from 'svelte-routing'
     import { fade } from 'svelte/transition'
 
+    const api = import.meta.env.VITE_API_URL;
+
     // form fields
     let name = '';
     let password = '';
@@ -21,18 +23,27 @@
         nameError = passwordError = confirmError = '';
 
         if (name.length < 5 || name.length > 16) {
-            nameError = 'Username must be between 5-16 chars';
+            nameError = '* Username must be between 5-16 chars';
             isValid = false;
+            setTimeout(() => {
+                nameError = '';
+            }, 2000);
         }
 
         if (password.length < 8 || password.length > 16) {
-            passwordError = 'Password must be between 8-16 chars';
+            passwordError = '* Password must be between 8-16 chars';
             isValid = false;
+            setTimeout(() => {
+                passwordError = '';
+            }, 2000);
         }
 
         if (password !== confirm) {
-            confirmError = 'Passwords do not match';
+            confirmError = '* Passwords do not match';
             isValid = false;
+            setTimeout(() => {
+                confirmError = '';
+            }, 2000);
         }
 
         return isValid;
@@ -44,19 +55,19 @@
         }
 
         try {
-            const response = await fetch('http://localhost:3001/create-account', {
+            const response = await fetch(`${api}/create-account`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name: name,
+                    username: name,
                     password: password,
-                    confirm: confirm,
                 })
             });
 
             const data = await response.json();
+            console.log(data)
             msg = data.message;
 
             showMessage = true;
@@ -74,31 +85,35 @@
 <div class="flex flex-col items-center bg-transparent">
     <h1 class="text-3xl p-4">Create Account</h1>
     <form on:submit|preventDefault={submitForm} class="border-2 px-6 py-6 rounded-xl shadow-md">
-        <div class="mb-4">
+        <div>
             <label for="username" class="block text-md font-medium text-gray-100 text-left">
-                Username (5-16 bytes)
+                Username (5-16 chars)
             </label>
             <input id="username" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
                 type="text" 
                 bind:value={name} 
             />
-            {#if nameError}
-                <p class="pt-1 text-sm text-red-500">{nameError}</p>
-            {/if}
+            <div class="min-h-[24px] ">
+                {#if nameError}
+                    <p class="pt-1 text-sm text-red-500" out:fade={{ duration: 500 }}>{nameError}</p>
+                {/if}
+            </div>
         </div>
-        <div class="mb-4">
+        <div>
             <label for="password" class="block text-md font-medium text-gray-100 text-left">
-                Password (8-72 bytes)
+                Password (8-16 chars)
             </label>
             <input id="password" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
                 type="password" 
                 bind:value={password} 
             />
-            {#if passwordError}
-                <p class="pt-1 text-sm text-red-500">{passwordError}</p>
-            {/if}
+            <div class="min-h-[24px] ">
+                {#if passwordError}
+                    <p class="pt-1 text-sm text-red-500" out:fade={{ duration: 500 }}>{passwordError}</p>
+                {/if}
+            </div>
         </div>
-        <div class="mb-6">
+        <div>
             <label for="confirm-password" class="block text-md font-medium text-gray-100 text-left">
                 Confirm password
             </label>
@@ -106,16 +121,18 @@
                 type="password" 
                 bind:value={confirm} 
             />
-            {#if confirmError}
-                <p class="pt-1 text-sm text-red-500">{confirmError}</p>
-            {/if}
+            <div class="min-h-[24px] ">
+                {#if confirmError}
+                    <p class="pt-1 text-sm text-red-500" out:fade={{ duration: 500 }}>{confirmError}</p>
+                {/if}
+            </div>
         </div>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between mt-2">
             <button type="submit" class="w-full px-4 py-2 text-white bg-red-500 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline">
                 Submit
             </button>
         </div>
-        <div class="mt-4 text-center">
+        <div class="mt-6 text-center">
             <p class="text-sm">Already have an account? 
                 <Link to="/login" class="font-medium text-red-500 hover:text-red-700">Log in</Link>
             </p>
@@ -127,7 +144,6 @@
         {/if}
     </div>
 </div>
-
 
 <style>
     input {
