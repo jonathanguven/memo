@@ -1,6 +1,8 @@
 <script>
+    import { isAuthenticated, checkAuthentication } from '../../stores/authStore';
     import { Link } from 'svelte-routing'
     import { fade } from 'svelte/transition'
+    import { navigate } from 'svelte-routing'
 
     const api = import.meta.env.VITE_API_URL;
 
@@ -10,10 +12,8 @@
 
     let nameError = '';
     let passwordError = '';
-    let loginError = '';
 
     let loginMessage = '';
-    let jwt = '';
 
     const validateForm = () => {
         nameError = passwordError = '';
@@ -47,24 +47,24 @@
             console.log(JSON.stringify({ username, password }))
             const response = await fetch(`${api}/login`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password,
-                })
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ username, password, remember })
             });
 
             const data = await response.json();
 
-            loginMessage = data.message;
-            jwt = data.token;
-
-            setTimeout(() => {
-                loginMessage = '';
-            }, 1500);
+            if (response.ok) {
+                await checkAuthentication();
+                navigate('/'); 
+            } else {
+                loginMessage = data.message;
+                setTimeout(() => {
+                    loginMessage = '';
+                }, 2500);
+            }
         } catch (error) {
+            loginMessage = 'An error occurred while logging in';
             console.error('Error logging in: ', error);
         }
     }
@@ -108,8 +108,7 @@
     </form>
     <div class="min-h-[48px] flex flex-col justify-center items-center m-2">
         {#if loginMessage}
-            <div out:fade={{ duration: 500 }}>{loginMessage}</div>
-            <div out:fade={{ duration: 500 }}>{jwt}</div>
+            <div out:fade={{ duration: 500 }} class="text-red-500 text-lg">{loginMessage}</div>
         {/if}
     </div>
 </div>

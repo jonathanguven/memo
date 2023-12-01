@@ -3,26 +3,35 @@ import cors from 'cors'
 import morgan from 'morgan'
 import 'dotenv/config';
 import passport from './auth.js';
+import cookieParser from 'cookie-parser';
 
 import message from './api/message.js'
 import image from './api/image.js'
 import create from './api/createAccount.js'
 import login from './api/login.js'
+import check from './auth/check.js'
+import logout from './api/logout.js'
 
 const app = express();
 const port = 3000; 
 
 // express tools
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', 
+    credentials: true,
+}));
 app.use(morgan('dev'))
 app.use(express.json());
 app.use(passport.initialize());
+app.use(cookieParser());
 
 // api endpoints
 app.use('/api', message);
 app.use('/api', image);
-app.use(create)
+app.use(create);
 app.use(login);
+app.use(logout);
+app.use('/auth', check);
 
 app.get('/', (req, res) => {
     res.send('Home URL')
