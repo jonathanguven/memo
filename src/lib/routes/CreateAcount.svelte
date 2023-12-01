@@ -1,6 +1,8 @@
 <script>
     import { Link } from 'svelte-routing'
     import { fade } from 'svelte/transition'
+    import { navigate } from 'svelte-routing'
+    import { checkAuthentication } from '../../stores/authStore';
 
     const api = import.meta.env.VITE_API_URL;
 
@@ -60,20 +62,24 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     username: name,
                     password: password,
                 })
             });
-
             const data = await response.json();
-            console.log(data)
             msg = data.message;
 
-            showMessage = true;
-            setTimeout(() => {
-                showMessage = false;
-            }, 1500);
+            if (response.ok) {
+                await checkAuthentication();
+                navigate('/'); 
+            } else {
+                msg = data.message;
+                setTimeout(() => {
+                    msg = '';
+                }, 2500);
+            }
 
             name = password = confirm = '';
         } catch (error) {
@@ -84,7 +90,7 @@
 
 <div class="flex flex-col items-center bg-transparent">
     <h1 class="text-3xl p-4">Create Account</h1>
-    <form on:submit|preventDefault={submitForm} class="border-2 px-6 py-6 rounded-xl shadow-md">
+    <form on:submit|preventDefault={submitForm} class="border-2 px-4 py-4 rounded-xl shadow-md">
         <div>
             <label for="username" class="block text-md font-medium text-gray-100 text-left">
                 Username
@@ -93,9 +99,9 @@
                 type="text" 
                 bind:value={name} 
             />
-            <div class="min-h-[24px] ">
+            <div class="min-h-[20px] ">
                 {#if nameError}
-                    <p class="pt-1 text-sm text-red-500" out:fade={{ duration: 500 }}>{nameError}</p>
+                    <p class="pt-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{nameError}</p>
                 {/if}
             </div>
         </div>
@@ -107,9 +113,9 @@
                 type="password" 
                 bind:value={password} 
             />
-            <div class="min-h-[24px] ">
+            <div class="min-h-[20px] ">
                 {#if passwordError}
-                    <p class="pt-1 text-sm text-red-500" out:fade={{ duration: 500 }}>{passwordError}</p>
+                    <p class="pt-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{passwordError}</p>
                 {/if}
             </div>
         </div>
@@ -121,9 +127,9 @@
                 type="password" 
                 bind:value={confirm} 
             />
-            <div class="min-h-[24px] ">
+            <div class="min-h-[20px] ">
                 {#if confirmError}
-                    <p class="pt-1 text-sm text-red-500" out:fade={{ duration: 500 }}>{confirmError}</p>
+                    <p class="pt-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{confirmError}</p>
                 {/if}
             </div>
         </div>
@@ -132,7 +138,7 @@
                 Submit
             </button>
         </div>
-        <div class="mt-6 text-center">
+        <div class="mt-4 text-center">
             <p class="text-sm">Already have an account? 
                 <Link to="/login" class="font-medium text-red-500 hover:text-red-700">Log in</Link>
             </p>
