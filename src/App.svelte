@@ -10,7 +10,6 @@
     export let url = "";
 
     let route = '/';
-    console.log($isAuthenticated)
     $: loggedIn = $isAuthenticated ? 'Logged in' : 'Logged out';
 
     onMount(async () => {
@@ -23,7 +22,7 @@
 
     async function handleLogout() {
         await logout(); 
-        navigate('/login'); 
+        navigate('/'); 
     }
 </script>
 

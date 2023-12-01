@@ -72,22 +72,22 @@
 
 <div class="flex flex-col items-center bg-transparent">
     <h1 class="text-3xl p-4">Login</h1>
-    <form on:submit|preventDefault={login} class="border-2 px-5 py-6 rounded-xl shadow-md">
+    <form on:submit|preventDefault={login} class="border-2 px-4 py-4 rounded-xl shadow-md">
         <div>
             <label for="username" class="block text-md font-medium text-gray-100 text-left">Username</label>
             <input id="username" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="text" bind:value={username} />
-            <div class="min-h-[24px] ">
+            <div class="min-h-[20px] ">
                 {#if nameError}
-                    <p class="pt-1 text-sm text-red-500" out:fade={{ duration: 500 }}>{nameError}</p>
+                    <p class="pt-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{nameError}</p>
                 {/if}
             </div>
         </div>
         <div>
             <label for="password" class="block text-md font-medium text-gray-100 text-left">Password</label>
             <input id="password" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="password" bind:value={password} />
-            <div class="min-h-[24px] ">
+            <div class="min-h-[20px] ">
                 {#if passwordError}
-                    <p class="pt-1 text-sm text-red-500" out:fade={{ duration: 500 }}>{passwordError}</p>
+                    <p class="pt-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{passwordError}</p>
                 {/if}
             </div>
         </div>
@@ -100,7 +100,7 @@
         <div class="flex items-center justify-between mt-4">
             <button type="submit" class="w-full px-4 py-2 text-white bg-red-500 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline ">Submit</button>
         </div>
-        <div class="mt-6 text-center">
+        <div class="mt-4 text-center">
             <p class="text-sm">Don't have an account? 
                 <Link to="/sign-up" class="font-medium text-red-500 hover:text-red-700">Sign Up</Link>
             </p>

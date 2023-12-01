@@ -5,7 +5,7 @@
 
     async function getMessage() {
         try {
-            const res = await fetch('http://localhost:3000/api/message')
+            const res = await fetch('http://localhost:3000/api/message', { credentials: "include" })
             const data = await res.json();
             dispatch('messageFetched', data);
         } catch (error) {

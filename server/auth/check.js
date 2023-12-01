@@ -6,7 +6,6 @@ const router = express.Router();
 const secret = process.env.SECRET_KEY;
 
 const verifyJWT = (req, res, next) => {
-    console.log(req.cookies)
     const token = req.cookies.jwt;
     if (!token) {
         console.log('no token')
