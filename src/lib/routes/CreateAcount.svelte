@@ -87,7 +87,7 @@
     <form on:submit|preventDefault={submitForm} class="border-2 px-6 py-6 rounded-xl shadow-md">
         <div>
             <label for="username" class="block text-md font-medium text-gray-100 text-left">
-                Username (5-16 chars)
+                Username
             </label>
             <input id="username" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
                 type="text" 
@@ -101,7 +101,7 @@
         </div>
         <div>
             <label for="password" class="block text-md font-medium text-gray-100 text-left">
-                Password (8-16 chars)
+                Password
             </label>
             <input id="password" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
                 type="password" 

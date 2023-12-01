@@ -27,14 +27,21 @@ router.post('/login', express.json(), async (req, res) => {
 
         const valid = await bcrypt.compare(password, data.password);
 
-        const token = jwt.sign(
-            { userId: data.id, username: username }, 
-            secret,
-            { expiresIn: '3d' } 
-        );
-
         if (valid) {
-            res.json({ message: 'Login successful!', token });
+            const expire = req.body.remember ? '7d' : '1d';
+            const token = jwt.sign(
+                { userId: data.id, username: username }, 
+                secret, 
+                { expiresIn: expire }
+            );
+
+            const maxAge = req.body.remember ? 7 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000;
+            res.cookie('jwt', token, {
+                httpOnly: true,
+                // secure: process.env.NODE_ENV !== 'development',
+                maxAge: maxAge,
+            })
+            res.json({ message: 'Login successful!' });
         }
         else {
             res.status(401).json({ message: 'Invalid username or password' });
