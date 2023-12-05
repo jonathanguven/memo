@@ -1,12 +1,13 @@
 import { writable } from 'svelte/store';
 
 const url = import.meta.env.VITE_API_URL;
+
 export const isAuthenticated = writable(false);
 
 // check login status
 export async function checkAuthentication() {
     try {
-        const response = await fetch(`http://localhost:3000/auth/check`, { 
+        const response = await fetch(`${url}/auth/check`, { 
             credentials: 'include',
         });
         const data = await response.json();
@@ -16,6 +17,7 @@ export async function checkAuthentication() {
     }
 }
 
+// logout function is here to clear store
 export async function logout() {
     try {
         // Call the backend endpoint to clear the JWT cookie

@@ -21,15 +21,16 @@
 .navbar {
     background-color: #242424;
     color: white;
-    padding: 0.5rem 1.2rem;
+    padding: 0.5rem 1.8rem;
     display: flex;
     align-items: center;
 }
 
 .nav-link {
-    margin-left: 1.5rem;
+    margin-left: 30px;
     color: rgba(255, 255, 255, 0.87);
     text-decoration: none;
+    font-size: medium;
 }
 
 .nav-link:hover {
