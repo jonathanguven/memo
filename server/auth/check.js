@@ -1,6 +1,7 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
+import { supabase } from '../supabase.js';
 
 const router = express.Router();
 const secret = process.env.SECRET_KEY;
@@ -22,8 +23,25 @@ const verifyJWT = (req, res, next) => {
     });
 };
 
-router.get('/check', verifyJWT, (req, res) => {
-    res.json({ isAuthenticated: true, user: req.user });
+router.get('/check', verifyJWT, async (req, res) => {
+    try {
+        const id = req.user.id;
+        const { data: user, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('id', id)
+            .single(); 
+
+        if (!user || error) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        delete user.password;
+        res.json({ isAuthenticated: true, user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 });
 
 export default router;

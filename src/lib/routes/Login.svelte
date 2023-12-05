@@ -49,7 +49,11 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify({ username, password, remember })
+                body: JSON.stringify({ 
+                    username: username.trim(), 
+                    password, 
+                    remember 
+                })
             });
 
             const data = await response.json();
@@ -70,6 +74,9 @@
     }
 </script>
 
+<svelte:head>
+    <title>Login</title>
+</svelte:head>
 <div class="flex flex-col items-center bg-transparent">
     <h1 class="text-3xl p-4">Login</h1>
     <form on:submit|preventDefault={login} class="border-2 px-4 py-4 rounded-xl shadow-md">

@@ -8,8 +8,6 @@
     let img = '';
     let showMessage = false;
 
-    export let text = 'Home';
-
     function handleMessage(event) {
         msg = event.detail.message ? event.detail.message : '';
         if (event.detail.image) {
@@ -22,8 +20,11 @@
     }
 </script>
 
+<svelte:head>
+    <title>Flash</title>
+</svelte:head>
 <main class="flex flex-col items-center">
-    <h1>{text}</h1>
+    <h1 class="text-3xl">Home</h1>
     <div class="mt-4 mb-2">
         <Message on:messageFetched={handleMessage} />
         <Image on:messageFetched={handleMessage} />

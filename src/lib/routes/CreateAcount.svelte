@@ -88,6 +88,9 @@
     }
 </script>
 
+<svelte:head>
+    <title>Create</title>
+</svelte:head>
 <div class="flex flex-col items-center bg-transparent">
     <h1 class="text-3xl p-4">Create Account</h1>
     <form on:submit|preventDefault={submitForm} class="border-2 px-4 py-4 rounded-xl shadow-md">

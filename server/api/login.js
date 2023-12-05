@@ -23,7 +23,7 @@ router.post('/login', express.json(), async (req, res) => {
             secure: process.env.NODE_ENV !== 'development',
             maxAge: maxAge,
         })
-        res.json({ message: 'Login successful!' });
+        res.json({ message: 'Login successful!', username });
     } catch (error) {
         console.error('Login error: ', error);
         res.status(500).json({ message: 'An error occurred while processing your request' });
@@ -33,7 +33,7 @@ router.post('/login', express.json(), async (req, res) => {
 export async function handleLogin(username, password, remember) {
     const { data, error } = await supabase
         .from('users')
-        .select('password')
+        .select('id, username, password')
         .eq('username', username)
         .single();
 
@@ -46,7 +46,7 @@ export async function handleLogin(username, password, remember) {
     if (valid) {
         const expire = remember ? '7d' : '1d';
         const token = jwt.sign(
-            { userId: data.id, username: username }, 
+            { id: data.id, username: username }, 
             secret, 
             { expiresIn: expire }
         );
