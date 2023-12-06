@@ -6,7 +6,7 @@
     import { resetStores } from './stores/resetStores';
     
     import About from './lib/routes/About.svelte';
-    import CreateAcount from './lib/routes/CreateAcount.svelte';
+    import CreateAccount from './lib/routes/CreateAccount.svelte';
     import Home from './lib/routes/Home.svelte';
     import Login from './lib/routes/Login.svelte';
     import Profile from './lib/routes/Profile.svelte';
@@ -67,7 +67,7 @@
             <Route path="/about">
                 <About />
             </Route>
-            <Route path="/sign-up" component={CreateAcount}></Route>
+            <Route path="/sign-up" component={CreateAccount}></Route>
         </div>    
     </Router>
 </main>
