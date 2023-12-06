@@ -51,7 +51,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
                 body: JSON.stringify({ 
-                    username: username.trim(), 
+                    username: username.trim().toLowerCase(), 
                     password, 
                     remember 
                 })
