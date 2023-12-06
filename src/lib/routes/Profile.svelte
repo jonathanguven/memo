@@ -1,20 +1,17 @@
 <script>
-    import { onMount } from "svelte";
+    export let userData;
 
-    export let user;
+    let username = '';
+    let timestamp = '';
 
-    let username
-    let timestamp;
-
-    onMount(() => {
-        username = user.username;
-        let unformatted = user.created_at;
+    $: if (userData) {
+        username = userData.username;
+        let unformatted = userData.created_at;
         let date = new Date(unformatted);
-        timestamp = date.toLocaleDateString('en-US', { 
+        timestamp = 'Joined ' + date.toLocaleDateString('en-US', { 
             month: 'long', day: 'numeric', year: 'numeric' 
         });
-    })
-
+    }
 </script>
 
 <svelte:head>
@@ -25,6 +22,6 @@
         {username}
     </div>
     <div class="text-lg text-zinc-500">
-         Joined {timestamp}
+        {timestamp}
     </div>
 </div>
