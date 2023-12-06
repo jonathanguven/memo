@@ -1,6 +1,7 @@
 <script>
     import { Router, Route, Link, navigate, useLocation } from 'svelte-routing';
     import { isAuthenticated, checkAuthentication, logout } from './stores/authStore';
+    import { userData, fetchUserData } from './stores/userStore';
     import { onMount } from 'svelte';
 
     import About from './lib/routes/About.svelte';
@@ -10,26 +11,16 @@
     import Profile from './lib/routes/Profile.svelte';
     
     export let url = "";
-
     let route = '/';
-    let userData = null;
-
-    // TODO: fetch user data
 
     onMount(async () => {
         await checkAuthentication();
         if ($isAuthenticated) {
-            try {
-                const response = await fetch('http://localhost:3000/user', { credentials: 'include' });
-                if (!response.ok) throw new Error('Failed to fetch user data');
-                userData = await response.json();
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
+            await fetchUserData();
         }
     })
 
-    $: profileRoute = $isAuthenticated ? `/user/${userData?.username}` : '/login';
+    $: profileRoute = $isAuthenticated && $userData ? `/user/${$userData.username}` : '/login';
 
 
     function update(newRoute) {
@@ -71,7 +62,7 @@
             </Route>
 
             <Route path="/user/:username">
-                <Profile user="hi"/>
+                <Profile userData={$userData}/>
             </Route>
 
             <Route path="/about">
