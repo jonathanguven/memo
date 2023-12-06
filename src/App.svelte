@@ -1,9 +1,10 @@
 <script>
-    import { Router, Route, Link, navigate, useLocation } from 'svelte-routing';
-    import { isAuthenticated, checkAuthentication, logout } from './stores/authStore';
-    import { userData, fetchUserData } from './stores/userStore';
     import { onMount } from 'svelte';
-
+    import { Router, Route, Link, navigate } from 'svelte-routing';
+    import { isAuthenticated, checkAuthentication } from './stores/authStore';
+    import { userData, fetchUserData } from './stores/userStore';
+    import { resetStores } from './stores/resetStores';
+    
     import About from './lib/routes/About.svelte';
     import CreateAcount from './lib/routes/CreateAcount.svelte';
     import Home from './lib/routes/Home.svelte';
@@ -12,6 +13,7 @@
     
     export let url = "";
     let route = '/';
+    let profileRoute = '/login';
 
     onMount(async () => {
         await checkAuthentication();
@@ -20,8 +22,9 @@
         }
     })
 
-    $: profileRoute = $isAuthenticated && $userData ? `/user/${$userData.username}` : '/login';
-
+    $: if ($isAuthenticated && $userData) {
+        profileRoute = `/user/${$userData.username}`;
+    } 
 
     function update(newRoute) {
         route = newRoute;
@@ -29,13 +32,9 @@
     }
 
     async function handleLogout() {
-        await logout(); 
+        resetStores(); 
+        profileRoute = '/login'
         navigate('/'); 
-    }
-
-    function getBasePath(path) {
-        const segments = path.split('/');
-        return '/' + segments[1];
     }
 </script>
 
@@ -44,7 +43,7 @@
         <nav class="navbar">
             <Link to="/" class="brand hover:underline" on:click={() => update('/')}>Flash</Link>
             <Link to="/about" class="nav-link hover:underline {route === '/about' ? 'active' : ''}" on:click={() => update('/about')}>About</Link>
-            <Link to={profileRoute} class="nav-link hover:underline {getBasePath(route) === '/user' ? 'active' : ''}" on:click={() => update(profileRoute)}>Profile</Link>
+            <Link to={profileRoute} class="nav-link hover:underline {(route => '/' + route.split('/')[1]) === '/user' ? 'active' : ''}" on:click={() => update(profileRoute)}>Profile</Link>
             {#if $isAuthenticated}
                 <button class="nav-link hover:underline" on:click={handleLogout}>Logout</button>
             {:else}
