@@ -18,7 +18,7 @@ export async function checkAuthentication() {
 }
 
 // logout function is here to clear store
-export async function logout() {
+export async function clearAuth() {
     try {
         // Call the backend endpoint to clear the JWT cookie
         await fetch(`${url}/logout`, {

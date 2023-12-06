@@ -13,3 +13,7 @@ export async function fetchUserData() {
         userData.set(null);
     }
 }
+
+export async function clearUser() {
+    userData.set(null);
+}
