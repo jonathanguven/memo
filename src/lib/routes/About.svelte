@@ -18,7 +18,6 @@
     <div class="about">
         <p class="pb-4">
             Thanks for checking out my website! Flash is a flashcard based studying tool, think "Quizlet" and the similar websites.
-            I've implemented AI generated descriptions that serve as answer explanations for each flashcard, sort of a "how do you get that answer" feature.
         </p>
         <p class="pb-4">
             This project was made using svelte on the frontend and express on the backend.

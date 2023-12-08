@@ -24,7 +24,7 @@
     <title>Flash</title>
 </svelte:head>
 <main class="flex flex-col items-center">
-    <h1 class="text-3xl">Home</h1>
+    <h1 class="text-3xl hover:scale-110 transition-all duration-300 ease-in-out cursor-default">Home</h1>
     <div class="mt-4 mb-2">
         <Message on:messageFetched={handleMessage} />
         <Image on:messageFetched={handleMessage} />
