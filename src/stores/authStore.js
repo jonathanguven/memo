@@ -3,6 +3,7 @@ import { writable } from 'svelte/store';
 const url = import.meta.env.VITE_API_URL;
 
 export const isAuthenticated = writable(false);
+export const name = writable(undefined);
 
 // check login status
 export async function checkAuthentication() {
@@ -12,6 +13,7 @@ export async function checkAuthentication() {
         });
         const data = await response.json();
         isAuthenticated.set(data.isAuthenticated);
+        name.set(data.user.username);
     } catch (error) {
         console.error('Error checking authentication:', error);
     }

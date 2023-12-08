@@ -12,6 +12,7 @@ import login from './api/login.js'
 import check from './auth/check.js'
 import logout from './api/logout.js'
 import user from './api/user.js'
+import self from './api/self.js'
 
 const app = express();
 const port = 3000; 
@@ -33,6 +34,7 @@ app.use(create);
 app.use(login);
 app.use(logout);
 app.use('/auth', check);
+app.use(self);
 app.use(user);
 
 app.get('/', (req, res) => {

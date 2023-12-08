@@ -24,6 +24,12 @@
     padding: 0.5rem 1.8rem;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+.left-links, .right-links {
+    display: flex;
+    align-items: center;
 }
 
 .nav-link {

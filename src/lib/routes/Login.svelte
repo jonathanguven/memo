@@ -1,6 +1,5 @@
 <script>
     import { checkAuthentication } from '../../stores/authStore';
-    import { fetchUserData } from '../../stores/userStore';
     import { Link } from 'svelte-routing'
     import { fade } from 'svelte/transition'
     import { navigate } from 'svelte-routing'
@@ -62,7 +61,6 @@
             if (response.ok) {
                 // upon successful login, load up the stores
                 await checkAuthentication();
-                await fetchUserData();
                 navigate('/'); 
             } else {
                 loginMessage = data.message;

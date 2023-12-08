@@ -1,17 +1,21 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
+import jwt from 'jsonwebtoken'
 import { supabase } from '../supabase.js';
 import 'dotenv/config'
 
 const router = express.Router();
 
-router.get('/user/:username', async (req, res) => {
-    try {
-        const { username } = req.params;
+const secret = process.env.SECRET_KEY
 
+router.get('/self', cookieParser(), async (req, res) => {
+    try {
+        const token = req.cookies.jwt;
+        const decoded = jwt.verify(token, secret);
         const { data, error } = await supabase
             .from('users')
             .select('username, created_at')
-            .eq('username', username)
+            .eq('id', decoded.id)
             .single();
 
         if (error) throw error;
