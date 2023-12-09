@@ -17,7 +17,7 @@
     <a href="https://github.com/isaac-h-chan/unbias" target="_blank" class="icon pb-4">github.com/jonathanguven/</a>
     <div class="about">
         <p class="pb-4">
-            Thanks for checking out my website! Flash is a flashcard based studying tool, think "Quizlet" and the similar websites.
+            Thanks for checking out my website! Flash is a flashcard based studying tool, with some AI features built in!
         </p>
         <p class="pb-4">
             This project was made using svelte on the frontend and express on the backend.

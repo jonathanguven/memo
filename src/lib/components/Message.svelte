@@ -1,11 +1,12 @@
 <script>
     import { createEventDispatcher } from "svelte";
+    const url = import.meta.env.VITE_API_URL;
 
     const dispatch = createEventDispatcher();
 
     async function getMessage() {
         try {
-            const res = await fetch('http://localhost:3000/api/message', { credentials: "include" })
+            const res = await fetch(`${url}/api/message`, { credentials: "include" })
             const data = await res.json();
             dispatch('messageFetched', data);
         } catch (error) {

@@ -4,7 +4,7 @@
     import { fade } from 'svelte/transition'
     import { navigate } from 'svelte-routing'
 
-    const api = import.meta.env.VITE_API_URL;
+    const url = import.meta.env.VITE_API_URL;
 
     let username = '';
     let password = '';
@@ -45,7 +45,7 @@
         }
         try {
             console.log(JSON.stringify({ username, password }))
-            const response = await fetch(`${api}/login`, {
+            const response = await fetch(`${url}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
@@ -59,7 +59,6 @@
             const data = await response.json();
 
             if (response.ok) {
-                // upon successful login, load up the stores
                 await checkAuthentication();
                 navigate('/'); 
             } else {
