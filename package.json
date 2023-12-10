@@ -4,17 +4,21 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"nodemon server/server.js\"",
+    "dev": "concurrently \"vite\" \"nodemon server/src/server.js\"",
     "start": "node server/server.js",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.31",
+    "autoprefixer": "^10.4.14",
+    "flowbite": "^2.2.0",
+    "flowbite-svelte": "^0.44.20",
+    "postcss": "^8.4.24",
+    "postcss-load-config": "^4.0.1",
     "svelte": "^4.0.5",
-    "tailwindcss": "^3.3.5",
+    "tailwindcss": "^3.3.2",
     "vite": "^4.4.5"
   },
   "dependencies": {
@@ -30,6 +34,7 @@
     "node-fetch": "^3.3.2",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
-    "svelte-routing": "^2.8.0"
+    "svelte-routing": "^2.8.0",
+    "vitest": "^1.0.4"
   }
 }

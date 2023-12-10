@@ -57,7 +57,7 @@
         }
 
         try {
-            const response = await fetch(`${api}/create-account`, {
+            const response = await fetch(`${api}/user/create-account`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

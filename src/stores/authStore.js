@@ -11,9 +11,11 @@ export async function checkAuthentication() {
         const response = await fetch(`${url}/auth/check`, { 
             credentials: 'include',
         });
-        const data = await response.json();
-        isAuthenticated.set(data.isAuthenticated);
-        name.set(data.user.username);
+        if (response.ok) {
+            const data = await response.json();
+            isAuthenticated.set(data.isAuthenticated);
+            name.set(data.user.username);
+        }
     } catch (error) {
         console.error('Error checking authentication:', error);
     }
@@ -23,12 +25,13 @@ export async function checkAuthentication() {
 export async function clearAuth() {
     try {
         // Call the backend endpoint to clear the JWT cookie
-        await fetch(`${url}/logout`, {
+        await fetch(`${url}/user/logout`, {
             method: 'POST',
             credentials: 'include' 
         });
         // Update the isAuthenticated store
         isAuthenticated.set(false);
+        console.log("Successfully logged out");
     } catch (error) {
         console.error('Error during logout:', error);
     }
