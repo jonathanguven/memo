@@ -7,12 +7,13 @@ import cookieParser from 'cookie-parser';
 
 import message from './api/message.js'
 import image from './api/image.js'
-import create from './api/createAccount.js'
-import login from './api/login.js'
+import createUser from './user/createAccount.js'
+import login from './user/login.js'
 import check from './auth/check.js'
-import logout from './api/logout.js'
-import user from './api/user.js'
-import self from './api/self.js'
+import logout from './user/logout.js'
+import getUser from './user/user.js'
+import self from './user/self.js'
+import flashcards from './api/flashcards.js'
 
 const app = express();
 const port = 3000; 
@@ -30,12 +31,16 @@ app.use(cookieParser());
 // api endpoints
 app.use('/api', message);
 app.use('/api', image);
-app.use(create);
-app.use(login);
-app.use(logout);
-app.use('/auth', check);
+app.use('/user', createUser);
+app.use('/user', login);
+app.use('/user', logout);
 app.use(self);
-app.use(user);
+app.use(getUser);
+app.use('/auth', check);
+
+// TODO
+app.use('/api/flashcards-sets', flashcards);
+
 
 app.get('/', (req, res) => {
     res.send('Home URL')

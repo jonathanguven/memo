@@ -44,8 +44,7 @@
             return;
         }
         try {
-            console.log(JSON.stringify({ username, password }))
-            const response = await fetch(`${url}/login`, {
+            const response = await fetch(`${url}/user/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
@@ -60,6 +59,7 @@
 
             if (response.ok) {
                 await checkAuthentication();
+                console.log(`Logged in as ${username.trim().toLowerCase()}`)
                 navigate('/'); 
             } else {
                 loginMessage = data.message;

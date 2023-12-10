@@ -1,14 +1,11 @@
 import express from 'express';
 import fetch from 'node-fetch';
 import cookieParser from 'cookie-parser';
+import { authenticate } from '../middleware/authenticate.js'
 
 const router = express.Router();
 
-router.get('/image', async (req, res) => {
-    if (!req.cookies.jwt) {
-        return res.status(401).json({ message: 'Log in to use endpoint 2' });
-    }
-
+router.get('/image', authenticate, async (req, res) => {
     let img;
     try {
         const response = await fetch('https://api.thecatapi.com/v1/images/search');
