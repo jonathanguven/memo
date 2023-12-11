@@ -34,6 +34,7 @@
     "node-fetch": "^3.3.2",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
+    "supertest": "^6.3.3",
     "svelte-routing": "^2.8.0",
     "vitest": "^1.0.4"
   }
