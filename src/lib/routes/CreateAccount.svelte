@@ -70,17 +70,18 @@
             });
             const data = await response.json();
             msg = data.message;
+            showMessage = !response.ok
 
             if (response.ok) {
                 await checkAuthentication();
                 navigate('/'); 
             } else {
-                msg = data.message;
                 setTimeout(() => {
                     msg = '';
+                    showMessage = false;
                 }, 2500);
             }
-
+            
             name = password = confirm = '';
         } catch (error) {
             console.error('Error Submitting Data: ', error);

@@ -39,7 +39,7 @@ app.use(getUser);
 app.use('/auth', check);
 
 // TODO
-app.use('/api/flashcards-sets', flashcards);
+app.use('/api/flashcard-sets', flashcards);
 
 
 app.get('/', (req, res) => {
