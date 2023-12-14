@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import supertest from 'supertest';
 import express from 'express';
 import login from '../src/user/login.js';
@@ -10,18 +10,18 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser())
 
-app.use('/api', login);
-
+app.use('/user', login);
 app.use('/api/flashcard-sets', flashcards);
 
+// POST HTTP Request
 describe('POST /api/flashcard-sets', () => {
     let setID;
     let jwt;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         // login to get jwt token
         const loginResponse = await supertest(app)
-            .post('/api/login')
+            .post('/user/login')
             .send({
                 username: 'testUser',
                 password: 'password',
@@ -31,6 +31,21 @@ describe('POST /api/flashcard-sets', () => {
         const jwtCookie = loginResponse.headers['set-cookie'][0];
         jwt = jwtCookie.split(';')[0]; 
     });
+
+    afterAll(async () => {
+        if (setID) {
+            // Delete the created flashcard set from the database after each test
+            await supabase 
+                .from('flashcards')
+                .delete()
+                .match({ parent: setID })
+            await supabase // delete flashcard set
+                .from('flashcard_sets')
+                .delete()
+                .match({ id: setID });
+        }
+    });
+
     it('should create a new flashcard set and return 201 with the user ID 44', async () => {
         const newFlashcardSet = {
             title: 'Test Set',
@@ -54,18 +69,123 @@ describe('POST /api/flashcard-sets', () => {
         expect(response.body.flashcardSet).toBeDefined();
         
     });
+});
 
-    afterEach(async () => {
+// GET HTTP Request
+describe('POST /api/flashcard-sets', () => {
+    let setID, privateID;
+    let jwt;
+
+    beforeAll(async() => {
+        const loginResponse = await supertest(app)
+            .post('/user/login')
+            .send({
+                username: 'testUser',
+                password: 'password',
+                remember: true
+            });
+
+        const jwtCookie = loginResponse.headers['set-cookie'][0];
+        jwt = jwtCookie.split(';')[0]; 
+
+        // create new flashcard set
+        const publicSet = {
+            title: 'Test Set',
+            description: 'Test Description',
+            flashcards: [
+                { front: 'Front 1', back: 'Back 1', description: 'sup' },
+                { front: 'Front 2', back: 'Back 2', description: 'sup' }
+            ],
+            is_public: true
+        };
+
+        const privateSet = {
+            title: 'Private Test Set',
+            description: 'Private Test Description',
+            flashcards: [
+                { front: 'Private Front 1', back: 'Private Back 1', description: 'hello' },
+                { front: 'Private Front 2', back: 'Private Back 2', description: 'hello' }
+            ],
+            is_public: false
+        };
+
+        const response = await supertest(app)
+            .post('/api/flashcard-sets')
+            .set('Cookie', jwt)
+            .send(publicSet);
+        
+        setID = response.body.flashcardSet[0].id;
+
+        const privateResponse = await supertest(app)
+            .post('/api/flashcard-sets')
+            .set('Cookie', jwt)
+            .send(privateSet);
+
+        privateID = privateResponse.body.flashcardSet[0].id;
+    });
+
+    afterAll(async () => {
         if (setID) {
-            // Delete the created flashcard set from the database after each test
-            await supabase // delete flashcards with matching parent ID
+            // delete the created flashcard after each test
+            await supabase
                 .from('flashcards')
                 .delete()
                 .match({ parent: setID })
-            await supabase // delete flashcard set
+            await supabase 
                 .from('flashcard_sets')
                 .delete()
                 .match({ id: setID });
         }
+        if (privateID) {
+            await supabase
+                .from('flashcards')
+                .delete()
+                .match({ parent: privateID })
+            await supabase 
+                .from('flashcard_sets')
+                .delete()
+                .match({ id: privateID });
+        }
     });
-  });
+
+    it('should retrieve a public flashcard set', async () => {
+        const response = await supertest(app)
+            .get(`/api/flashcard-sets/${setID}`)
+            .set('Cookie', jwt);
+
+        expect(response.status).toBe(200);
+        expect(response.body.flashcardSet).toBeDefined();
+        expect(response.body.flashcardSet.is_public).toBe(true);
+    });
+
+    it('should successfully retrieve a users own private flashcard set', async () => {
+        const response = await supertest(app)
+            .get(`/api/flashcard-sets/${privateID}`)
+            .set('Cookie', jwt);
+
+        expect(response.status).toBe(200);
+        expect(response.body.flashcardSet).toBeDefined();
+        expect(response.body.flashcardSet.is_public).toBe(false);
+    });
+
+    it('should unsuccessfully retrieve a foreign private flashcard set', async () => {
+        // set up unauthorized user
+        const loginResponse = await supertest(app)
+            .post('/user/login')
+            .send({
+                username: 'invalidUser',
+                password: 'password',
+                remember: true
+            });
+
+        const jwtCookie = loginResponse.headers['set-cookie'][0];
+        jwt = jwtCookie.split(';')[0]; 
+
+        const response = await supertest(app)
+            .get(`/api/flashcard-sets/${privateID}`)
+            .set('Cookie', jwt);
+
+        expect(response.status).toBe(403);
+        expect(response.body.message).toBe('You do not have access to this page!');
+    });
+});
