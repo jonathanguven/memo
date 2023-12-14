@@ -8,8 +8,8 @@ export async function fetchUserData(username) {
             throw new Error(`Error: ${response.status}`);
         }
 
-        const user = await response.json();
-        return user;
+        const data = await response.json();
+        return data.user;
     } catch (error) {
         console.error('Failed to fetch user data:', error);
         return null; 

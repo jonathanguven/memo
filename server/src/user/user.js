@@ -8,15 +8,29 @@ router.get('/user/:username', async (req, res) => {
     try {
         const { username } = req.params;
 
-        const { data, error } = await supabase
+        const { data: user, error } = await supabase
             .from('users')
-            .select('username, created_at')
+            .select(`
+                id, 
+                username, 
+                created_at,
+                flashcard_sets (
+                    id,
+                    title,
+                    description,
+                    created_at,
+                    is_private
+                )
+            `)
             .eq('username', username)
-            .single();
+            .single()
+            .filter('flashcard_sets.is_private', 'eq', false);
+
+            console.log(user.flashcard_sets)
 
         if (error) throw error;
 
-        res.json(data);
+        res.json({user});
     } catch (err) {
         res.status(500).json({ error: 'Internal Server Error' });
     }

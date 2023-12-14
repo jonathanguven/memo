@@ -54,7 +54,7 @@ describe('POST /api/flashcard-sets', () => {
                 { front: 'Front 1', back: 'Back 1', description: 'sup' },
                 { front: 'Front 2', back: 'Back 2', description: 'sup' }
             ],
-            is_public: true
+            is_private: false
         };
   
         const response = await supertest(app)
@@ -96,7 +96,7 @@ describe('POST /api/flashcard-sets', () => {
                 { front: 'Front 1', back: 'Back 1', description: 'sup' },
                 { front: 'Front 2', back: 'Back 2', description: 'sup' }
             ],
-            is_public: true
+            is_private: false
         };
 
         const privateSet = {
@@ -106,7 +106,7 @@ describe('POST /api/flashcard-sets', () => {
                 { front: 'Private Front 1', back: 'Private Back 1', description: 'hello' },
                 { front: 'Private Front 2', back: 'Private Back 2', description: 'hello' }
             ],
-            is_public: false
+            is_private: true
         };
 
         const response = await supertest(app)
@@ -155,7 +155,7 @@ describe('POST /api/flashcard-sets', () => {
 
         expect(response.status).toBe(200);
         expect(response.body.flashcardSet).toBeDefined();
-        expect(response.body.flashcardSet.is_public).toBe(true);
+        expect(response.body.flashcardSet.is_private).toBe(false);
     });
 
     it('should successfully retrieve a users own private flashcard set', async () => {
@@ -165,7 +165,7 @@ describe('POST /api/flashcard-sets', () => {
 
         expect(response.status).toBe(200);
         expect(response.body.flashcardSet).toBeDefined();
-        expect(response.body.flashcardSet.is_public).toBe(false);
+        expect(response.body.flashcardSet.is_private).toBe(true);
     });
 
     it('should unsuccessfully retrieve a foreign private flashcard set', async () => {

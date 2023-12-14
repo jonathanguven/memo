@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { fetchUserData } from "../../api/users";
+    import { fetchUserData } from "../../api/getUsers";
 
     export let username;
 

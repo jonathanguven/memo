@@ -10,10 +10,10 @@ const router = express.Router();
 router.post('/', authenticate, async (req, res) => {
 	const userId = req.id; 
 	try {
-		const { title, description, flashcards, is_public } = req.body;
+		const { title, description, flashcards, is_private } = req.body;
 		let { data: flashcardSet, error: flashcardSetError } = await supabase
 			.from('flashcard_sets')
-			.insert([{ user_id: userId, title, description, is_public }])
+			.insert([{ user_id: userId, title, description, is_private }])
 			.select();
 		if (flashcardSetError) throw flashcardSetError;
 		
@@ -55,7 +55,7 @@ router.get('/:id', authenticate, async (req, res) => {
 		}
 
 		// check for public or if user is owner
-		if (!flashcardSet.is_public && flashcardSet.user_id !== userId) {
+		if (flashcardSet.is_private && flashcardSet.user_id !== userId) {
 			return res.status(403).json({ message: 'You do not have access to this page!' });
 		}
 

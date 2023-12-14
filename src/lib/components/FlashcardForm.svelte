@@ -8,7 +8,7 @@
     let title = '';
     let description = '';
     let flashcards = [{ front: '', back: '' }];
-    let isPublic = false;
+    let isPrivate = false;
     let msg = '';
     let showError = false;
   
@@ -31,7 +31,7 @@
             body: JSON.stringify({
                 title,
                 description,
-                is_public: isPublic,
+                is_private: isPrivate,
                 flashcards
             })
         });
@@ -67,8 +67,8 @@
     </div>
     <div>
         <label>
-            <input type="checkbox" bind:checked={isPublic} />
-            Public Set
+            <input type="checkbox" bind:checked={isPrivate} />
+            Private Set
         </label>
     </div>
     
