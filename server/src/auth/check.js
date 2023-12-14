@@ -4,7 +4,7 @@ import 'dotenv/config'
 import { supabase } from '../supabase.js';
 
 const router = express.Router();
-const secret = process.env.SECRET_KEY;
+const secret = process.env.JWT_SECRET;
 
 const verifyJWT = (req, res, next) => {
     const token = req.cookies.jwt;

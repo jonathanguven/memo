@@ -2,7 +2,9 @@ const url = import.meta.env.VITE_API_URL;
 
 export async function fetchUserData(username) {
     try {
-        const response = await fetch(`${url}/user/${username}`);
+        const response = await fetch(`${url}/user/${username}`, {
+            credentials: "include"
+        });
         
         if (!response.ok) {
             throw new Error(`Error: ${response.status}`);

@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import 'dotenv/config';
 import { supabase } from '../supabase.js';
 
-const secret = process.env.SECRET_KEY
+const secret = process.env.JWT_SECRET;
 
 const router = express.Router();
 

@@ -6,7 +6,7 @@ import 'dotenv/config'
 
 const router = express.Router();
 
-const secret = process.env.SECRET_KEY
+const secret = process.env.JWT_SECRET;
 
 router.get('/self', cookieParser(), async (req, res) => {
     try {

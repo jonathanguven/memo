@@ -5,7 +5,7 @@ import { findUserById } from './supabase.js'
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.SECRET_KEY,
+    secretOrKey: process.env.JWT_SECRET,
 }
 
 passport.use(new jwtStrategy(options, async (jwt_payload, done) => {
