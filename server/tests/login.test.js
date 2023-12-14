@@ -33,8 +33,8 @@ describe('POST /api/login', () => {
         const response = await supertest(app)
         .post('/api/login')
         .send({
-            username: 'invalidUser',
-            password: 'invalidPassword',
+            username: 'invalid',
+            password: 'invalid',
             remember: false
         });
 

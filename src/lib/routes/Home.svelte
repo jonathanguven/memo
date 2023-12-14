@@ -30,7 +30,7 @@
         <Image on:messageFetched={handleMessage} />
     </div>
 
-    <div class="min-h-[24px] flex justify-center items-center">
+    <div class="min-h-[24px] flex justify-center items-center mb-3">
         {#if showMessage}
             <p out:fade={{ duration: 500 }}>{msg}</p>
         {/if}
