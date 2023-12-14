@@ -29,16 +29,16 @@ app.use(passport.initialize());
 app.use(cookieParser());
 
 // api endpoints
-app.use('/api', message);
-app.use('/api', image);
 app.use('/user', createUser);
 app.use('/user', login);
 app.use('/user', logout);
 app.use(self);
 app.use(getUser);
+
 app.use('/auth', check);
 
-// TODO
+app.use('/api', message);
+app.use('/api', image);
 app.use('/api/flashcard-sets', flashcards);
 
 
