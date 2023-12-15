@@ -148,7 +148,7 @@ describe('GET /api/flashcard-sets', () => {
         }
     });
 
-    it('should retrieve a public flashcard set', async () => {
+    it('should retrieve a public flashcard set with flashcards', async () => {
         const response = await supertest(app)
             .get(`/api/flashcard-sets/${setID}`)
             .set('Cookie', jwt);
@@ -156,6 +156,8 @@ describe('GET /api/flashcard-sets', () => {
         expect(response.status).toBe(200);
         expect(response.body.flashcardSet).toBeDefined();
         expect(response.body.flashcardSet.is_private).toBe(false);
+        expect(response.body.flashcardSet.flashcards).toBeDefined();
+        expect(Array.isArray(response.body.flashcardSet.flashcards)).toBe(true);
     });
 
     it('should successfully retrieve a users own private flashcard set', async () => {
@@ -167,6 +169,8 @@ describe('GET /api/flashcard-sets', () => {
         expect(response.status).toBe(200);
         expect(response.body.flashcardSet).toBeDefined();
         expect(response.body.flashcardSet.is_private).toBe(true);
+        expect(response.body.flashcardSet.flashcards).toBeDefined();
+        expect(Array.isArray(response.body.flashcardSet.flashcards)).toBe(true);
     });
 
     it('should unsuccessfully retrieve a foreign private flashcard set', async () => {

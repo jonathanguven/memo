@@ -6,7 +6,7 @@ import { supabase } from '../supabase.js';
 
 const router = express.Router();
 
-// creating flashcard set endpoint
+// creating flashcard set 
 router.post('/', authenticate, async (req, res) => {
 	const userId = req.id; 
 	try {
@@ -36,7 +36,7 @@ router.post('/', authenticate, async (req, res) => {
 	}
 });
 
-// Get a specific flashcard set
+// Get a specific flashcard set and corresponding flashcards
 router.get('/:id', authenticate, async (req, res) => {
 	const userId = req.id; 
 	const setId = req.params.id;
