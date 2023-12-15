@@ -11,7 +11,7 @@ export async function fetchUserData(username) {
         }
 
         const data = await response.json();
-        return data.user;
+        return data;
     } catch (error) {
         console.error('Failed to fetch user data:', error);
         return null; 

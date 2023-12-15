@@ -56,12 +56,12 @@
     }
 </script>
   
-<form on:submit|preventDefault={submitForm}>
-    <div>
+<form class="flex flex-col" on:submit|preventDefault={submitForm}>
+    <div class="flex flex-col">
         <label for="name">Name</label>
         <input id="name" type="text" bind:value={title} />
     </div>
-    <div>
+    <div class="flex flex-col">
         <label for="description">Description</label>
         <textarea id="description" bind:value={description}></textarea>
     </div>
@@ -76,11 +76,11 @@
         <div class="flashcard-input">
             <textarea placeholder="Front" bind:value={flashcard.front}></textarea>
             <textarea placeholder="Back" bind:value={flashcard.back}></textarea>
-            <button type="button" on:click={() => removeFlashcard(index)}>Remove</button>
+            <button type="button" on:click={() => removeFlashcard(index)}>X</button>
         </div>
     {/each}
     
-    <button type="button" on:click={addFlashcard}>Add flashcard</button>
+    <button type="button" on:click={addFlashcard}>+ Add flashcard</button>
     <button type="submit">Submit</button>
 </form>
   

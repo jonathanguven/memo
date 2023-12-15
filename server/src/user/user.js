@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.get('/user/:username', cookieParser(), async (req, res) => {
     let self = false;
+    let setNum = 0;
     try {
         const { username } = req.params;
 
@@ -39,11 +40,16 @@ router.get('/user/:username', cookieParser(), async (req, res) => {
         }
 
         const { data: user, error } = await query;
-        console.log(user.flashcard_sets)
 
         if (error) throw error;
 
-        res.json({ user, self });
+        if (user && user.flashcard_sets) {
+            setNum = user.flashcard_sets.length;
+        }
+
+        console.log('total sets: ' + setNum);
+        console.log('self: ' + self)
+        res.json({ user, self, setNum });
     } catch (err) {
         if (err.name === 'JsonWebTokenError') {
             res.status(401).json({ error: 'Unauthorized' });
