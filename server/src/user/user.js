@@ -1,3 +1,4 @@
+// grabs all flashcard sets of a user
 import express from 'express';
 import { supabase } from '../supabase.js';
 import cookieParser from 'cookie-parser';
