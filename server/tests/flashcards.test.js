@@ -72,7 +72,7 @@ describe('POST /api/flashcard-sets', () => {
 });
 
 // GET HTTP Request
-describe('POST /api/flashcard-sets', () => {
+describe('GET /api/flashcard-sets', () => {
     let setID, privateID;
     let jwt;
 
@@ -162,7 +162,8 @@ describe('POST /api/flashcard-sets', () => {
         const response = await supertest(app)
             .get(`/api/flashcard-sets/${privateID}`)
             .set('Cookie', jwt);
-
+        
+        //console.log(response)
         expect(response.status).toBe(200);
         expect(response.body.flashcardSet).toBeDefined();
         expect(response.body.flashcardSet.is_private).toBe(true);

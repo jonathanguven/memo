@@ -43,7 +43,21 @@ router.get('/:id', authenticate, async (req, res) => {
 	try {
 		const { data: flashcardSet, error } = await supabase
 			.from('flashcard_sets')
-			.select()
+			.select(`
+				id,
+				title,
+				description,
+				created_at, 
+				updated_at,
+				is_private,
+				user_id,
+				flashcards (
+					id, 
+					front, 
+					back, 
+					description
+				) 
+			`)
 			.eq('id', setId)
 			.single();
 		
@@ -60,6 +74,7 @@ router.get('/:id', authenticate, async (req, res) => {
 		}
 
 		// return flashcard set
+		console.log(flashcardSet);
 		res.status(200).json({ flashcardSet });
 
 	} catch (error) {
@@ -67,12 +82,12 @@ router.get('/:id', authenticate, async (req, res) => {
 	}
 });
 
-//   // Update a specific flashcard set
-// router.put('/:id', authenticate, async (req, res) => {
-// 	const id = req.id; 
-// 	const setId = req.params.id;
-// 	// ... logic to update the flashcard set if id matches ...
-// });
+  // Update a specific flashcard set
+router.put('/:id', authenticate, async (req, res) => {
+	const userId = req.id; 
+	const setId = req.params.id;
+	// ... logic to update the flashcard set if id matches ...
+});
 
 //   // Delete a specific flashcard set
 // router.delete('/:id', authenticate, async (req, res) => {
