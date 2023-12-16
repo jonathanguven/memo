@@ -13,7 +13,7 @@ import check from './auth/check.js'
 import logout from './user/logout.js'
 import getUser from './user/user.js'
 import self from './user/self.js'
-import flashcards from './api/flashcards.js'
+import flashcards from './api/getSet.js'
 import flashcardSets from './api/publicSets.js'
 
 const app = express();

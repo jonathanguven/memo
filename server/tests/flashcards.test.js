@@ -2,7 +2,7 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import supertest from 'supertest';
 import express from 'express';
 import login from '../src/user/login.js';
-import flashcards from '../src/api/flashcards.js';
+import flashcards from '../src/api/getSet.js';
 import { supabase } from '../src/supabase.js';
 import cookieParser from 'cookie-parser';
 
