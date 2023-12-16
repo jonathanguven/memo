@@ -35,7 +35,7 @@
         <h1 class="text-3xl">Flashcard Sets</h1>
         <div>
             {#each flashcardSets as { title }, i}
-                <div>{i}: {title}</div>
+                <div>{i + 1}: {title}</div>
             {/each}
         </div>
     {:else}
