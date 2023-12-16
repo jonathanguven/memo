@@ -68,7 +68,7 @@
         </Route>
 
         <Route path="/flashcards">
-            <ProtectedRoute component={FlashcardSets} />
+            <FlashcardSets />
         </Route>
         
         <Route path="/about">
