@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cookieParser())
 
 app.use('/user', login);
-app.use('/api/flashcard-sets', flashcards);
+app.use('/api', flashcards);
 
 // POST HTTP Request
 describe('POST /api/flashcard-sets', () => {

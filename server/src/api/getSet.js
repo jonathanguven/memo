@@ -7,7 +7,7 @@ import { supabase } from '../supabase.js';
 const router = express.Router();
 
 // creating flashcard set 
-router.post('/', authenticate, async (req, res) => {
+router.post('/flashcard-sets', authenticate, async (req, res) => {
 	const userId = req.id; 
 	try {
 		const { title, description, flashcards, is_private } = req.body;
@@ -37,7 +37,7 @@ router.post('/', authenticate, async (req, res) => {
 });
 
 // Get a specific flashcard set and corresponding flashcards
-router.get('/:id', authenticate, async (req, res) => {
+router.get('/flashcard-sets/:id', authenticate, async (req, res) => {
 	const userId = req.id; 
 	const setId = req.params.id;
 	try {
@@ -83,7 +83,7 @@ router.get('/:id', authenticate, async (req, res) => {
 });
 
   // Update a specific flashcard set
-router.put('/:id', authenticate, async (req, res) => {
+router.put('/flashcard-sets/:id', authenticate, async (req, res) => {
 	const userId = req.id; 
 	const setId = req.params.id;
 	// ... logic to update the flashcard set if id matches ...
