@@ -1,33 +1,15 @@
 <script>
-    import { Spinner } from 'flowbite-svelte';
-    import { onMount } from "svelte";
     import { fetchUserData } from "../../api/getUsers";
 
     export let username;
 
-    let me;
+    let promise = fetchUserData(username);
 
-    let name = '';
-    let timestamp = '';
-    let found = false
-    let loading = true
-    let total = 0;
-
-    onMount(async () => {
-        const data = await fetchUserData(username);
-        const user = data.user
-        loading = false;
-        if (user) {
-            found = true;
-            name = user.username;
-            me = data.self;
-            total = data.setNum;
-            let unformatted = user.created_at;
-            let date = new Date(unformatted);
-            timestamp = 'Joined ' + date.toLocaleDateString('en-US', { 
-                month: 'long', day: 'numeric', year: 'numeric' 
-            });
-        } 
+    const formatDate = ((unformatted) => {
+        const date = new Date(unformatted);
+        return 'Joined ' + date.toLocaleDateString('en-US', { 
+            month: 'long', day: 'numeric', year: 'numeric' 
+        });
     });
 </script>
 
@@ -35,7 +17,7 @@
     <title>{username}</title>
 </svelte:head>
 <div class="flex flex-col items-center">
-    {#if loading}
+    {#await promise}
         <!-- loading spinner -->
         <div role="status" class="mt-8">
             <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,26 +26,30 @@
             </svg>
             <span class="sr-only">Loading...</span>
         </div>
-    {:else if found}
+    {:then data}
+    {#if data.user}
         <div class="text-3xl pb-2">
-            {name}
+            {data.user.username}
         </div>
         <div class="text-lg text-zinc-500">
-            {timestamp}
+            {formatDate(data.user.created_at)}
         </div>
         <div class="text-lg text-zinc-500">
-            Total sets: {total}
+            Total sets: {data.setNum}
         </div>
-        {#if me}
+        {#if data.self}
             <div class="text-lg text-zinc-500">
                 My Account!
             </div>
         {/if}
-
     {:else}
         <div class="text-3xl pb-2">Error!</div>
         <div class="text-lg text-zinc-500">
             User '{username}' Not Found
         </div>
     {/if}
+    {:catch error}
+        <div class="text-3xl pb-2">Error!</div>
+        <div class="text-lg text-zinc-500">{error}</div>
+    {/await}
 </div>
