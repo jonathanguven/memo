@@ -252,6 +252,18 @@ describe('POST /api/flashcard-sets', () => {
     });
 
     afterAll(async () => {
+        if (setID) {
+            // Delete the created flashcard set from the database after each test
+            await supabase 
+                .from('flashcards')
+                .delete()
+                .match({ parent: setID })
+            await supabase // delete flashcard set
+                .from('flashcard_sets')
+                .delete()
+                .match({ id: setID });
+        }
+        
         if (setID2) {
             // Delete the created flashcard set from the database after each test
             await supabase 
@@ -274,7 +286,7 @@ describe('POST /api/flashcard-sets', () => {
         expect(response.body).toEqual({ message: 'Successfully Deleted!' });
     });
 
-    it('attempt to delete flashcard set with unauthorized request', async () => {
+    it('attempts to delete flashcard set with unauthorized request', async () => {
         // make unauthorized JWT token
         unauthorizedJwt = jwt.sign({ id: 'unauthorizedUserId', username: 'unauthorizedUser' }, process.env.JWT_SECRET);
         const response = await supertest(app)
@@ -284,4 +296,29 @@ describe('POST /api/flashcard-sets', () => {
         expect(response.status).toBe(403);
         expect(response.body).toEqual({ message: 'Unauthorized access.' });
     });
+
+    it('attemps to delete flashcard without being logged in', async() => {
+        const newFlashcardSet = {
+            title: 'Test Set',
+            description: 'Test Description',
+            flashcards: [
+                { front: 'Front 1', back: 'Back 1', description: 'sup' },
+                { front: 'Front 2', back: 'Back 2', description: 'sup' }
+            ],
+            is_private: false
+        };
+  
+        const postResponse = await supertest(app)
+            .post('/api/flashcard-sets')
+            .set('Cookie', token) 
+            .send(newFlashcardSet);
+        
+        setID = postResponse.body.flashcardSet[0].id;
+
+        const response = await supertest(app)
+            .delete(`/api/flashcard-sets/${setID}`)
+        
+        expect(response.status).toBe(401);
+        expect(response.body).toEqual({ message: 'Access denied, no token provided.' });
+    })
 });
