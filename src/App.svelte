@@ -8,7 +8,8 @@
     import About from './lib/routes/About.svelte';
     import Create from './lib/routes/Create.svelte';
     import CreateAccount from './lib/routes/CreateAccount.svelte';
-    import FlashcardSets from './lib/routes/FlashcardSets.svelte';
+    import FlashcardRoutes from './lib/routes/FlashcardsRoute.svelte';
+    import FlashcardSets from './lib/components/FlashcardSets.svelte';
     import Home from './lib/routes/Home.svelte';
     import Login from './lib/routes/Login.svelte';
     import Profile from './lib/routes/Profile.svelte';
@@ -68,7 +69,7 @@
         </Route>
 
         <Route path="/flashcards">
-            <FlashcardSets />
+            <FlashcardRoutes />
         </Route>
         
         <Route path="/about">
@@ -77,6 +78,10 @@
 
         <Route path="/user/:username" let:params>
             <Profile username={params.username}></Profile>
+        </Route>
+
+        <Route path="/flashcardsets/:id" let:params>
+            <FlashcardSets id={params.id}></FlashcardSets>
         </Route>
 
         <Route path="/login">

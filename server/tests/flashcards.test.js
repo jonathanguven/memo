@@ -3,7 +3,7 @@ import supertest from 'supertest';
 import express, { request } from 'express';
 import login from '../src/user/login.js';
 import jwt from 'jsonwebtoken';
-import flashcards from '../src/api/getSet.js';
+import flashcards from '../src/api/flashcardSet.js';
 import { supabase } from '../src/supabase.js';
 import cookieParser from 'cookie-parser';
 

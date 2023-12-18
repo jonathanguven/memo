@@ -15,7 +15,7 @@ router.get('/flashcards', async (req, res) => {
             .eq('is_private', false);
 
         if (error) throw error;
-
+        console.log(flashcardSets)
         res.json({ flashcardSets });
     } catch (err) {
         res.status(500).json({ error: 'Internal Server Error', details: err.message });

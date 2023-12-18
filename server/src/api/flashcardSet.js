@@ -1,6 +1,4 @@
 import express from 'express';
-import cookieParser from 'cookie-parser';
-import jwt from 'jsonwebtoken';
 import { authenticate } from '../middleware/authenticate.js'
 import { supabase } from '../supabase.js';
 

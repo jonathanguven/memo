@@ -1,5 +1,6 @@
 <script>
     import { fetchPublicSets } from "../../api/getPublicSets";
+    import { Link } from 'svelte-routing';
 
     let promise = fetchPublicSets();
 </script>
@@ -21,9 +22,9 @@
     {:then flashcardSets} 
         
         {#if flashcardSets.length > 0}
-            <div>
+            <div class="flex flex-col">
                 {#each flashcardSets as { title, users }, i}
-                    <div>{i + 1}: {title} - {users.username}</div>
+                    <Link to="/flashcardsets/{flashcardSets[i].id}">{i + 1}: {title} - {users.username}</Link>
                 {/each}
             </div>
         {:else}
