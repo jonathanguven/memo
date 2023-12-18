@@ -35,12 +35,21 @@
             {formatDate(data.user.created_at)}
         </div>
         <div class="text-lg text-zinc-500">
-            Total sets: {data.setNum}
+            Total sets: {data.user.flashcard_sets.length}
         </div>
-        {#if data.self}
+        <!-- {#if data.self}
             <div class="text-lg text-zinc-500">
                 My Account!
             </div>
+        {/if} -->
+        {#if data.user.flashcard_sets.length > 0}
+            <div>
+                {#each data.user.flashcard_sets as { title }, i}
+                    <div>{i + 1}: {title} - {data.user.username}</div>
+                {/each}
+            </div>
+        {:else}
+            <div>No flashcard sets available.</div>
         {/if}
     {:else}
         <div class="text-3xl pb-2">Error!</div>

@@ -82,18 +82,51 @@ router.get('/flashcard-sets/:id', authenticate, async (req, res) => {
 	}
 });
 
-  // Update a specific flashcard set
+// Update a specific flashcard set
 router.put('/flashcard-sets/:id', authenticate, async (req, res) => {
 	const userId = req.id; 
 	const setId = req.params.id;
 	// ... logic to update the flashcard set if id matches ...
 });
 
-//   // Delete a specific flashcard set
-// router.delete('/:id', authenticate, async (req, res) => {
-// 	const id = req.id; 
-// 	const setId = req.params.id;
-// 	// ... logic to delete the flashcard set if id matches ...
-// });
+// Delete a specific flashcard set
+router.delete('/flashcard-sets/:id', authenticate, async (req, res) => {
+	const userId = req.id; 
+	const setId = req.params.id;
+	try {
+		const { data: flashcardSet, error: fetchError } = await supabase
+            .from('flashcard_sets')
+            .select('user_id')
+            .eq('id', setId)
+            .single();
+
+        if (fetchError) throw fetchError;
+
+		// check for unauthorized user
+        if (flashcardSet.user_id !== userId) {
+            return res.status(403).json({ message: 'Unauthorized access.' });
+        }
+
+		const { error: flashcardError } = await supabase
+			.from('flashcards')
+			.delete()
+			.match({ parent: setId })
+		
+		if (flashcardError) throw flashcardError;
+
+		const { error: flashcardSetError } = await supabase
+            .from('flashcard_sets')
+            .delete()
+            .match({ id: setId });
+
+        if (flashcardSetError) throw flashcardSetError;
+
+		// delete success message
+		res.status(200).json({ message: 'Successfully Deleted!' });
+
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+	}
+});
 
 export default router;

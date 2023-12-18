@@ -40,17 +40,12 @@ router.get('/user/:username', cookieParser(), async (req, res) => {
             query = query.filter('flashcard_sets.is_private', 'eq', false)
         }
 
-        const { data: user, error } = await query;
+        const { data, error } = await query;
 
         if (error) throw error;
 
-        if (user && user.flashcard_sets) {
-            setNum = user.flashcard_sets.length;
-        }
-
-        console.log('total sets: ' + setNum);
-        console.log('self: ' + self)
-        res.json({ user, self, setNum });
+        const response = { user: data, self };
+        res.json(response);
     } catch (err) {
         if (err.name === 'JsonWebTokenError') {
             res.status(401).json({ error: 'Unauthorized' });
