@@ -49,6 +49,7 @@ router.get('/flashcard-sets/:id', authenticate, async (req, res) => {
 				updated_at,
 				is_private,
 				user_id,
+				users (username),
 				flashcards (
 					id, 
 					front, 

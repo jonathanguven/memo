@@ -25,7 +25,7 @@
     })
 
     $: if ($isAuthenticated) {
-        profileRoute = `/user/${$name}`;
+        profileRoute = `/users/${$name}`;
     } 
 
     function update(newRoute) {
@@ -76,7 +76,7 @@
             <About />
         </Route>
 
-        <Route path="/user/:username" let:params>
+        <Route path="/users/:username" let:params>
             <Profile username={params.username}></Profile>
         </Route>
 

@@ -20,7 +20,6 @@
             <span class="sr-only">Loading...</span>
         </div>
     {:then flashcardSets} 
-        
         {#if flashcardSets.length > 0}
             <div class="flex flex-col">
                 {#each flashcardSets as { title, users }, i}
