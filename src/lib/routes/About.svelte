@@ -14,7 +14,7 @@
             />
         </svg>
     </a>
-    <a href="https://github.com/isaac-h-chan/unbias" target="_blank" class="icon pb-4">github.com/jonathanguven/</a>
+    <a href="https://github.com/jonathanguven/memo" target="_blank" class="icon pb-4">github.com/jonathanguven/</a>
     <div class="about">
         <p class="pb-4">
             Thanks for checking out my website! Flash is a flashcard based studying tool, with some AI features built in!
