@@ -5,10 +5,6 @@ export async function fetchUserData(username) {
         const response = await fetch(`${url}/user/${username}`, {
             credentials: "include"
         });
-        
-        if (!response.ok) {
-            throw new Error(`Error: ${response.status}`);
-        }
 
         const data = await response.json();
         return data;
