@@ -74,7 +74,6 @@ router.get('/flashcard-sets/:id', authenticate, async (req, res) => {
 		}
 
 		// return flashcard set
-		console.log(flashcardSet);
 		res.status(200).json({ flashcardSet });
 
 	} catch (error) {

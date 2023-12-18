@@ -166,7 +166,6 @@ describe('GET /api/flashcard-sets', () => {
             .get(`/api/flashcard-sets/${privateID}`)
             .set('Cookie', jwt);
         
-        //console.log(response)
         expect(response.status).toBe(200);
         expect(response.body.flashcardSet).toBeDefined();
         expect(response.body.flashcardSet.is_private).toBe(true);

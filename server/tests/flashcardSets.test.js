@@ -15,8 +15,6 @@ describe('GET /flashcards', () => {
     it('should retrieve all public flashcard sets', async () => {
         const response = await supertest(app)
             .get('/api/flashcards');
-        
-        console.log(response.body)
 
         expect(response.status).toBe(200);
         expect(Array.isArray(response.body.flashcardSets)).toBe(true);
