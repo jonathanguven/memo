@@ -1,6 +1,6 @@
 <script>
     import { fetchUserData } from "../../api/getUsers";
-
+    import { Link } from 'svelte-routing';
     export let username;
 
     let promise = fetchUserData(username);
@@ -43,9 +43,11 @@
             </div>
         {/if} -->
         {#if data.user.flashcard_sets.length > 0}
-            <div>
+            <div class="flex flex-col">
                 {#each data.user.flashcard_sets as { title }, i}
-                    <div>{i + 1}: {title} - {data.user.username}</div>
+                    <Link to="/flashcardsets/{data.user.flashcard_sets[i].id}" class="hover:underline">
+                        {i + 1}: {title} - {data.user.username}
+                    </Link>
                 {/each}
             </div>
         {:else}

@@ -9,7 +9,7 @@
     import Create from './lib/routes/Create.svelte';
     import CreateAccount from './lib/routes/CreateAccount.svelte';
     import FlashcardRoutes from './lib/routes/FlashcardsRoute.svelte';
-    import FlashcardSets from './lib/components/FlashcardSets.svelte';
+    import FlashcardSets from './lib/routes/FlashcardSet.svelte';
     import Home from './lib/routes/Home.svelte';
     import Login from './lib/routes/Login.svelte';
     import Profile from './lib/routes/Profile.svelte';
@@ -45,8 +45,8 @@
     <nav class="navbar">
         <div class="left">
             <Link to="/" class="brand hover:underline" on:click={() => update('/')}>Flash</Link>
-            <Link to="/flashcards" class="nav-link hover:underline {route === '/flashcards' ? 'active' : ''}" on:click={() => update('/flashcards')}>Cards</Link>
-            <Link to="/flashcards/new" class="nav-link hover:underline {route === '/flashcards/new' ? 'active' : ''}" on:click={() => update('/flashcards/new')}>Create</Link>
+            <Link to="/flashcardsets" class="nav-link hover:underline {route === '/flashcards' ? 'active' : ''}" on:click={() => update('/flashcards')}>Cards</Link>
+            <Link to="/flashcardsets/new" class="nav-link hover:underline {route === '/flashcards/new' ? 'active' : ''}" on:click={() => update('/flashcards/new')}>Create</Link>
         </div>
         <div class="right">
             <Link to="/about" class="nav-link hover:underline {route === '/about' ? 'active' : ''}" on:click={() => update('/about')}>About</Link>
@@ -64,11 +64,11 @@
             <Home />
         </Route>
 
-        <Route path="/flashcards/new">
+        <Route path="/flashcardsets/new">
             <ProtectedRoute component={Create} />
         </Route>
 
-        <Route path="/flashcards">
+        <Route path="/flashcardsets">
             <FlashcardRoutes />
         </Route>
         

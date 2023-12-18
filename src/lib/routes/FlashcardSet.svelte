@@ -34,7 +34,7 @@
             {formatDate(data.flashcardSet.created_at)}
         </div>
         <div class="text-lg text-zinc-500">
-            By <Link to="/users/{data.flashcardSet.users.username}">{data.flashcardSet.users.username}</Link>
+            By <Link to="/users/{data.flashcardSet.users.username}" class="hover:underline">{data.flashcardSet.users.username}</Link>
         </div>
     {:catch error}
         <div class="text-3xl pb-2">Error loading flashcard set: {error.message}</div>

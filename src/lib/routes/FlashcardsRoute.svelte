@@ -23,7 +23,9 @@
         {#if flashcardSets.length > 0}
             <div class="flex flex-col">
                 {#each flashcardSets as { title, users }, i}
-                    <Link to="/flashcardsets/{flashcardSets[i].id}">{i + 1}: {title} - {users.username}</Link>
+                    <Link to="/flashcardsets/{flashcardSets[i].id}" class="hover:underline">
+                        {i + 1}: {title} - {users.username}
+                    </Link>
                 {/each}
             </div>
         {:else}
