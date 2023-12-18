@@ -2,7 +2,6 @@
     import { fade } from 'svelte/transition'
 
     import Image from '../components/Image.svelte';
-    import Message from '../components/Message.svelte'
 
     let msg = '';
     let img = '';
@@ -26,11 +25,10 @@
 <main class="flex flex-col items-center">
     <h1 class="text-3xl hover:scale-110 transition-all duration-300 ease-in-out cursor-default">Home</h1>
     <div class="mt-4 mb-2">
-        <Message on:messageFetched={handleMessage} />
         <Image on:messageFetched={handleMessage} />
     </div>
 
-    <div class="min-h-[24px] flex justify-center items-center mb-3">
+    <div class="min-h-[16px] flex justify-center items-center">
         {#if showMessage}
             <p out:fade={{ duration: 500 }}>{msg}</p>
         {/if}
