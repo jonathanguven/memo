@@ -5,7 +5,6 @@ import 'dotenv/config';
 import passport from './auth.js';
 import cookieParser from 'cookie-parser';
 
-import message from './api/message.js'
 import image from './api/image.js'
 import createUser from './user/createAccount.js'
 import login from './user/login.js'
@@ -38,7 +37,6 @@ app.use(getUser);
 
 app.use('/auth', check);
 
-app.use('/api', message);
 app.use('/api', image);
 app.use('/api', flashcards);
 app.use('/api', flashcardSets);
