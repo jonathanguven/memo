@@ -3,7 +3,7 @@
 </script>
 
 <div class="flex flex-col items-center">
-    <h1 class="text-3xl mb-4">Create</h1>
+    <h1 class="text-3xl mb-4">Create Flashcard Set</h1>
     <div class="w-full" style="min-width: 516px;">
         <FlashcardForm />
     </div>
