@@ -19,7 +19,6 @@
     <title>Set {id}</title>
 </svelte:head>
 <div class="flex flex-col items-center">
-    <h1 class="text-3xl mb-2">Flashcard Set {id}</h1>
     {#await promise}
         <!-- loading spinner -->
         <div role="status" class="mt-3">
@@ -30,12 +29,26 @@
             <span class="sr-only">Loading...</span>
         </div>
     {:then data} 
+        <h1 class="text-3xl mb-2">{data.flashcardSet.title}</h1>
+        <div class="text-lg text-zinc-500">
+            {data.flashcardSet.description}
+        </div>
         <div class="text-lg text-zinc-500">
             {formatDate(data.flashcardSet.created_at)}
         </div>
         <div class="text-lg text-zinc-500">
             By <Link to="/users/{data.flashcardSet.users.username}" class="hover:underline">{data.flashcardSet.users.username}</Link>
         </div>
+
+        {#each data.flashcardSet.flashcards as card, i}
+            <div class="mt-8 text-center">
+                <div>{i + 1}</div>
+                <div>Front: {card.front}</div>
+                <div>Back: {card.back}</div>
+                <Link to="/">edit</Link>
+            </div>
+        {/each}
+        
     {:catch error}
         <div class="text-3xl pb-2">Error loading flashcard set: {error.message}</div>
     {/await}

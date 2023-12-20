@@ -44,7 +44,7 @@
 <Router {url}>
     <nav class="navbar">
         <div class="left">
-            <Link to="/" class="brand hover:underline" on:click={() => update('/')}>Flash</Link>
+            <Link to="/" class="brand hover:underline" on:click={() => update('/')}>Memo</Link>
             <Link to="/flashcardsets" class="nav-link hover:underline {route === '/flashcards' ? 'active' : ''}" on:click={() => update('/flashcards')}>Cards</Link>
             <Link to="/flashcardsets/new" class="nav-link hover:underline {route === '/flashcards/new' ? 'active' : ''}" on:click={() => update('/flashcards/new')}>Create</Link>
         </div>
