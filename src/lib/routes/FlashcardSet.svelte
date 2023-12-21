@@ -4,9 +4,26 @@
     import { Link } from 'svelte-routing';
     import { onMount } from "svelte";
 
+    import { ChevronLeft, ChevronRight, ChevronsDown, ChevronsUp, PlusCircle } from 'lucide-svelte';
+
     export let id;
 
     let promise = fetchFlashcardSet(id);
+    let index = 0;
+    let show = false;
+
+    const goBack = () => {
+        if (index > 0) {
+            index--;
+        }
+    }
+
+    const goNext = (length) => {
+        if (index < length - 1) {
+            index++;
+        }
+    }
+
     let showLoading = false;
 
     onMount(() => {
@@ -25,6 +42,11 @@
             month: 'long', day: 'numeric', year: 'numeric' 
         });
     });
+
+    const showCards = () => {
+        show = !show;
+        console.log('show switching to: ' + show)
+    }
 </script>
 
 <svelte:head>
@@ -43,22 +65,77 @@
             </div>
         {/if}
     {:then data} 
-        <h1 class="text-3xl mb-2">{data.flashcardSet.title}</h1>
-        <div class="text-lg text-zinc-500">
+        {#if data.flashcardSet.flashcards.length > 0}
+            <div class="m-4">
+                <Flashcard 
+                    front={data.flashcardSet.flashcards[index].front} 
+                    back={data.flashcardSet.flashcards[index].back} 
+                    description={data.flashcardSet.flashcards[index].description}
+                />
+            </div>
+
+            <div class="flex items-center justify-center mb-8">
+                <button
+                    class="mx-4 px-4 py-1 rounded hover:bg-zinc-800 font-bold"
+                    on:click={goBack}
+                    disabled={index === 0}
+                >
+                    <ChevronLeft size={32}/>
+                </button>
+                <span class="text-xl">{index + 1} / {data.flashcardSet.flashcards.length}</span>
+                <button
+                    class="mx-4 px-4 py-1 rounded hover:bg-zinc-800 font-bold"
+                    on:click={() => goNext(data.flashcardSet.flashcards.length)}
+                    disabled={index === data.flashcardSet.flashcards.length - 1}
+                >
+                    <ChevronRight size={32}/>
+                </button>
+            </div>
+        {/if}
+
+        <h1 class="text-3xl mb-2 text-white">{data.flashcardSet.title}</h1>
+        <div class="text-xl text-white mb-2">
+            by <Link to="/users/{data.flashcardSet.users.username}" class="hover:underline">{data.flashcardSet.users.username}</Link>
+        </div>
+        
+        <div class="text-xl text-gray-400 font-normal mb-8">
             {data.flashcardSet.description}
         </div>
-        <div class="text-lg text-zinc-500">
-            {formatDate(data.flashcardSet.created_at)}
-        </div>
-        <div class="text-lg text-zinc-500">
-            By <Link to="/users/{data.flashcardSet.users.username}" class="hover:underline">{data.flashcardSet.users.username}</Link>
-        </div>
 
-        {#each data.flashcardSet.flashcards as card, i}
-            <div class="m-4">
-                <Flashcard front={card.front} back={card.back} description={card.description}/>
+        {#if !show}
+            <div 
+                class="text-xl text-gray-300 font-normal mb-4 hover:text-zinc-500 active:text-zinc-600"
+                on:click={showCards} 
+                on:keydown={showCards}
+                tabindex="0"  
+                role="button"  
+                aria-label="show cards"
+            >                
+                <ChevronsDown size={36} />
             </div>
-        {/each}
+        {:else}
+            <div 
+                class="text-xl text-gray-300 font-normal mb-4 hover:text-zinc-500 active:text-zinc-600"
+                on:click={showCards} 
+                on:keydown={showCards}
+                tabindex="0"  
+                role="button"  
+                aria-label="hide cards"
+            >
+                <ChevronsUp size={36} />
+            </div>
+            <div class="mx-auto flex flex-col justify-center" style="width: 720px;">
+                {#each data.flashcardSet.flashcards as card}
+                    <div class="flex justify-between bg-zinc-800 border-2 mb-3 p-4 rounded-md shadow" style="min-height: 56px;">
+                        <div class="w-1/3 border-r-2">{card.front}</div>
+                        <div class="w-2/3 pl-4">{card.back}</div>
+                    </div>
+                {/each}
+                <div class="flex justify-center items-center mb-3 rounded-md shadow hover:text-zinc-500 active:text-zinc-600">
+                    <PlusCircle size={40} />
+                </div>
+            </div>
+        {/if}
         
     {:catch error}
         <div class="text-3xl pb-2">Error loading flashcard set: {error.message}</div>
