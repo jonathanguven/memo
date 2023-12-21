@@ -66,7 +66,6 @@
         {/if}
     {:then data} 
         {#if data.flashcardSet.flashcards.length > 0}
-            <h1 class="text-4xl text-white px-4 self-start">{data.flashcardSet.title}</h1>
             <div class="m-4">
                 <Flashcard 
                     front={data.flashcardSet.flashcards[index].front} 
@@ -93,7 +92,8 @@
                 </button>
             </div>
         {/if}
-
+        
+        <h1 class="text-4xl text-white px-4 mb-2">{data.flashcardSet.title}</h1>
         <div class="text-xl text-white mb-2">
             by <Link to="/users/{data.flashcardSet.users.username}" class="hover:underline">{data.flashcardSet.users.username}</Link>
         </div>
