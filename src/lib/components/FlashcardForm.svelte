@@ -171,19 +171,17 @@
                 + Add flashcard
             </button>
         </div>
-        <div class="min-h-[24px] ">
+        <div class="min-h-[24px] text-center">
             {#if flashcardsError}
                 <p class="py-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{flashcardsError}</p>
             {/if}
         </div>
         <div class="flex justify-center">
-            <button type="submit" class="w-full px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-500 hover:bg-red-400 focus:outline-none focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out" style="min-height: 38px;">
+            <button type="submit" class="w-full px-4 border border-transparent text-md leading-5 font-medium rounded-md text-white bg-red-500 hover:bg-red-400 focus:outline-none focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out" style="min-height: 38px;">
                 Submit
             </button>
         </div>
     </form>
-
-    
 </div>
 
 <style>
