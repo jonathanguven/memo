@@ -8,11 +8,9 @@ router.get('/flashcards', async (req, res) => {
     try {
         const { data: flashcardSets, error } = await supabase
             .from('flashcard_sets')
-            .select(`
-                *,
-                users (id, username)
-            `)
-            .eq('is_private', false);
+            .select(`*, users (id, username)`)
+            .order('id', {ascending: true})
+            .eq('is_private', false)
 
         if (error) throw error;
         // console.log(flashcardSets)
