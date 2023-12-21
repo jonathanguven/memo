@@ -35,11 +35,11 @@
                 <div>{back}</div>
             {/if}
         </div>
-        <div class="flex absolute bottom-2 left-2 py-1 px-2 rounded">
+        <div class="flex absolute bottom-2 left-2 py-1 px-2 rounded text-xl">
             {isFront ? 'Front' : 'Back'} 
         </div>
         <div class="flex absolute top-2 left-2 p-1 rounded hover:bg-zinc-700">
-            <ArrowLeftRight />
+            <ArrowLeftRight size={36} />
         </div>
     </div>
 </div>

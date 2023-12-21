@@ -124,16 +124,13 @@
             >
                 <ChevronsUp size={36} />
             </div>
-            <div class="mx-auto flex flex-col justify-center" style="width: 720px;">
+            <div class="mx-auto flex flex-col justify-center mb-12" style="width: 720px;">
                 {#each data.flashcardSet.flashcards as card}
                     <div class="flex justify-between bg-zinc-800 border-2 mb-3 p-4 rounded-md shadow" style="min-height: 56px;">
                         <div class="w-1/3 border-r-2">{card.front}</div>
                         <div class="w-2/3 pl-4">{card.back}</div>
                     </div>
                 {/each}
-                <div class="flex justify-center items-center mb-3 rounded-md shadow hover:text-zinc-500 active:text-zinc-600">
-                    <PlusCircle size={40} />
-                </div>
             </div>
         {/if}
         
