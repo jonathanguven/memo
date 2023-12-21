@@ -126,7 +126,9 @@
                         bind:value={description} 
                         class="shadow appearance-none border rounded w-full mb-0 py-2 px-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
                         placeholder="This isn't even math" 
-                        on:input={e => autoGrow(e.target)} style="overflow-y: hidden;" rows="1"></textarea>
+                        on:input={e => autoGrow(e.target)} 
+                        style="overflow-y: hidden; min-height: 38px;"
+                        rows="1"></textarea>
             <div class="min-h-[24px] mt-0">
                 {#if descriptionError}
                     <p class="pt-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{descriptionError}</p>
