@@ -66,6 +66,7 @@
         {/if}
     {:then data} 
         {#if data.flashcardSet.flashcards.length > 0}
+            <h1 class="text-4xl text-white px-4">{data.flashcardSet.title}</h1>
             <div class="m-4">
                 <Flashcard 
                     front={data.flashcardSet.flashcards[index].front} 
@@ -93,7 +94,6 @@
             </div>
         {/if}
 
-        <h1 class="text-3xl mb-2 text-white">{data.flashcardSet.title}</h1>
         <div class="text-xl text-white mb-2">
             by <Link to="/users/{data.flashcardSet.users.username}" class="hover:underline">{data.flashcardSet.users.username}</Link>
         </div>
@@ -125,6 +125,9 @@
                 <ChevronsUp size={36} />
             </div>
             <div class="mx-auto flex flex-col justify-center mb-12" style="width: 720px;">
+                <div class="py-4 text-2xl font-semibold text-white" style="margin-left: 2px;">
+                    Cards in this set ({data.flashcardSet.flashcards.length})
+                </div>
                 {#each data.flashcardSet.flashcards as card}
                     <div class="flex justify-between bg-zinc-800 border-2 mb-3 p-4 rounded-md shadow" style="min-height: 56px;">
                         <div class="w-1/3 border-r-2">{card.front}</div>
