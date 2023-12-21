@@ -10,7 +10,7 @@
     }
 
     function handleKeydown(event) {
-        if (event,key === 'Enter' || event.key === ' ') {
+        if (event.key === 'Enter' || event.key === ' ') {
             toggle();
         }
     }
@@ -18,7 +18,7 @@
 
 <div class="flex items-center justify-center">
     <div 
-        class="flex items-center justify-center w-96 h-64 bg-zinc-800 shadow-lg rounded-lg cursor-pointer" 
+        class="relative border-2 p-16 flex items-center justify-center w-96 h-64 bg-zinc-800 shadow-lg rounded-lg cursor-pointer" 
         on:click={toggle}
         on:keydown={handleKeydown}
         tabindex="0"  
@@ -27,10 +27,13 @@
     >
         <div class="text-center text-3xl">
             {#if isFront}
-                <div class="text-3xl">{front}</div>
+                <div>{front}</div>
             {:else}
-                <div class="text-3xl">{back}</div>
+                <div>{back}</div>
             {/if}
+        </div>
+        <div class="absolute bottom-2 left-2 py-1 px-2 rounded hover:bg-zinc-700">
+            {isFront ? 'Front' : 'Back'}
         </div>
     </div>
 </div>
