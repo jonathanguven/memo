@@ -110,7 +110,7 @@
             <label class="block text-sm font-medium text-neutral-300 mb-1" for="title">
                 Name
             </label>
-            <input id="title" bind:value={title} class="mb-1 shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-700 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline" placeholder="Discrete Mathematics">
+            <input id="title" bind:value={title} class="mb-1 shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:border-red-500 focus:shadow-outline" placeholder="Discrete Mathematics">
             <div class="min-h-[24px] ">
                 {#if titleError}
                     <p class="pt-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{titleError}</p>
@@ -124,7 +124,7 @@
             </label>
             <textarea   id="description" 
                         bind:value={description} 
-                        class="shadow appearance-none border rounded w-full mb-0 py-2 px-3 bg-zinc-700 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline resize-none" 
+                        class="shadow appearance-none border rounded w-full mb-0 py-2 px-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
                         placeholder="This isn't even math" 
                         on:input={e => autoGrow(e.target)} style="overflow-y: hidden;" rows="1"></textarea>
             <div class="min-h-[24px] mt-0">
@@ -142,7 +142,7 @@
                     </label>
                     <textarea   id={`front-${index}`} 
                                 bind:value={flashcard.front} 
-                                class="shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-700 text-gray-200 leading-tight focus:outline-none focus:shadow-outline resize-none" 
+                                class="shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
                                 placeholder="Question"
                                 on:input={e => autoGrow(e.target)} 
                                 style="overflow-y: hidden; min-height: 38px;"
@@ -154,13 +154,13 @@
                     </label>
                     <textarea   id={`back-${index}`} 
                                 bind:value={flashcard.back} 
-                                class="shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-700 text-gray-200 leading-tight focus:outline-none focus:shadow-outline resize-none" 
+                                class="shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
                                 placeholder="Answer"
                                 on:input={e => autoGrow(e.target)} 
                                 style="overflow-y: hidden; min-height: 38px;"
                                 rows="1"></textarea>
                 </div>
-                <button type="button" class="mx-4 mt-6 text-gray-200 hover:text-red-500 focus:outline-none" on:click={() => removeFlashcard(index)}>
+                <button type="button" class="border-none rounded mt-6 pb-2 pt-1 px-4 text-gray-200 font-bold hover:bg-zinc-700 focus:outline-none" on:click={() => removeFlashcard(index)}>
                     —
                 </button>
             </div>
@@ -177,7 +177,7 @@
             {/if}
         </div>
         <div class="flex justify-center">
-            <button type="submit" class="w-full px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-500 hover:bg-red-400 focus:outline-none focus:shadow-outline-blue active:bg-red-700 transition duration-150 ease-in-out" style="min-height: 38px;">
+            <button type="submit" class="w-full px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-500 hover:bg-red-400 focus:outline-none focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out" style="min-height: 38px;">
                 Submit
             </button>
         </div>
