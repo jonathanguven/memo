@@ -1,5 +1,6 @@
 <script>
     import { fetchFlashcardSet } from "../../api/getFlashcardSet";
+    import Flashcard from "../components/Flashcard.svelte";
     import { Link } from 'svelte-routing';
 
     export let id;
@@ -41,11 +42,8 @@
         </div>
 
         {#each data.flashcardSet.flashcards as card, i}
-            <div class="mt-8 text-center">
-                <div>{i + 1}</div>
-                <div>Front: {card.front}</div>
-                <div>Back: {card.back}</div>
-                <Link to="/">edit</Link>
+            <div class="m-4">
+                <Flashcard front={card.front} back={card.back} description={card.description}/>
             </div>
         {/each}
         
