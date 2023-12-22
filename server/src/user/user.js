@@ -8,13 +8,23 @@ import 'dotenv/config'
 const router = express.Router();
 
 router.get('/user/:username', cookieParser(), async (req, res) => {
-    let self = false;
-    let setNum = 0;
     try {
         const { username } = req.params;
+        let self = false;
+        let userId;
 
         const token = req.cookies.jwt;
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        if (token) {
+            try {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                userId = decoded.id;
+                if (decoded.username === username) {
+                    self = true;
+                }
+            } catch (error) {
+                console.error('Token verification error:', error.message);
+            }
+        }
 
         let query = supabase
             .from('users')
@@ -33,11 +43,8 @@ router.get('/user/:username', cookieParser(), async (req, res) => {
             .eq('username', username)
             .single();
 
-        if (decoded && decoded.username === username) {
-            query = query;
-            self = true;
-        } else {
-            query = query.filter('flashcard_sets.is_private', 'eq', false)
+        if (!self) {
+            query = query.filter('flashcard_sets.is_private', 'eq', false);
         }
 
         const { data, error } = await query;

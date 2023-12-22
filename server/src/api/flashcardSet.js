@@ -1,6 +1,8 @@
 import express from 'express';
 import { authenticate } from '../middleware/authenticate.js'
 import { supabase } from '../supabase.js';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 const router = express.Router();
 
@@ -35,9 +37,20 @@ router.post('/flashcard-sets', authenticate, async (req, res) => {
 });
 
 // Get a specific flashcard set and corresponding flashcards
-router.get('/flashcard-sets/:id', authenticate, async (req, res) => {
-	const userId = req.id; 
+router.get('/flashcard-sets/:id', async (req, res) => {
 	const setId = req.params.id;
+	let userId;
+
+	const token = req.cookies.jwt;
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            userId = decoded.id;
+        } catch (error) {
+            res.status(401).json({ message: 'Invalid token.' });
+        }
+    }
+
 	try {
 		const { data: flashcardSet, error } = await supabase
 			.from('flashcard_sets')
