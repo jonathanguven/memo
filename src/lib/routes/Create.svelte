@@ -24,9 +24,6 @@
   
     function removeFlashcard(index) {
         flashcards = flashcards.filter((_, i) => i !== index);
-        if (flashcards.length === 0) {
-            addFlashcard(); 
-        }
     }
 
     function validateForm() {
@@ -130,7 +127,7 @@
                             class="shadow appearance-none border rounded w-full mb-0 p-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
                             placeholder="This isn't even math" 
                             on:input={e => autoGrow(e.target)} 
-                            style="overflow-y: hidden; min-height: 38px;"
+                            style="overflow-y: hidden; min-height: 50px; line-height: 150%;"
                             rows="1"></textarea>
                 <div class="min-h-[24px] mt-0">
                     {#if descriptionError}
@@ -140,17 +137,17 @@
             </div>
     
             {#each flashcards as flashcard, index}
-                <div class="flex items-center mb-4">
+                <div class="flex mb-4">
                     <div class="flex flex-col flex-1 mr-6">
                         <label class="block text-sm font-medium text-gray-300 mb-1" for={`front-${index}`}>
                             Front
                         </label>
                         <textarea   id={`front-${index}`} 
                                     bind:value={flashcard.front} 
-                                    class="shadow appearance-none border rounded w-full py-3 px-3 bg-zinc-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
                                     placeholder="Question"
                                     on:input={e => autoGrow(e.target)} 
-                                    style="overflow-y: hidden; min-height: 38px;"
+                                    style="overflow-y: hidden; min-height: 42px; line-height: 150%;"
                                     rows="1"></textarea>
                     </div>
                     <div class="flex flex-col flex-1 mr-4">
@@ -159,10 +156,10 @@
                         </label>
                         <textarea   id={`back-${index}`} 
                                     bind:value={flashcard.back} 
-                                    class="shadow appearance-none border rounded w-full py-3 px-3 bg-zinc-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
                                     placeholder="Answer"
                                     on:input={e => autoGrow(e.target)} 
-                                    style="overflow-y: hidden; min-height: 40px;"
+                                    style="overflow-y: hidden; min-height: 42px; line-height: 150%;"
                                     rows="1"></textarea>
                     </div>
                     <button type="button" class="border-none rounded mt-6 pb-3 pt-2 px-4 text-gray-200 font-bold hover:bg-zinc-700 focus:outline-none" on:click={() => removeFlashcard(index)}>
@@ -171,8 +168,8 @@
                 </div>
             {/each}
     
-            <div class="flex items-center mt-6">
-                <button type="button" class="text-md flex items-center px-7 py-3 border border-transparent leading-4 font-medium rounded-md text-gray-200 hover:bg-zinc-700 focus:outline-none" on:click={addFlashcard}>
+            <div class="flex items-center">
+                <button type="button" class="text-md flex items-center px-4 py-3 mr-6 border border-transparent leading-4 font-medium rounded-md text-gray-200 hover:bg-zinc-700 focus:outline-none" on:click={addFlashcard}>
                     + Add flashcard
                 </button>
                 <label for="remember-me" class="text-md flex items-center pl-6 leading-4 font-medium rounded-md text-gray-200">
