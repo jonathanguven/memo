@@ -106,88 +106,94 @@
 
 <div class="flex flex-col items-center">
     <h1 class="text-3xl mb-4">Create Flashcard Set</h1>
-    <div class="w-full" style="min-width: 516px;">
-        <div class="bg-zinc-800 rounded-lg shadow px-6 pt-4 pb-8 border" style="min-width: 40vw">
-            <form on:submit|preventDefault={submitForm}>
-                <div>
-                    <label class="block text-sm font-medium text-neutral-300 mb-1" for="title">
-                        Name
-                    </label>
-                    <input id="title" bind:value={title} class="mb-1 shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:border-red-500 focus:shadow-outline" placeholder="Discrete Mathematics">
-                    <div class="min-h-[24px] ">
-                        {#if titleError}
-                            <p class="pt-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{titleError}</p>
-                        {/if}
-                    </div>
-                </div>
-        
-                <div>
-                    <label class="block text-sm font-medium text-neutral-300 mb-1" for="description">
-                        Description
-                    </label>
-                    <textarea   id="description" 
-                                bind:value={description} 
-                                class="shadow appearance-none border rounded w-full mb-0 py-2 px-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
-                                placeholder="This isn't even math" 
-                                on:input={e => autoGrow(e.target)} 
-                                style="overflow-y: hidden; min-height: 38px;"
-                                rows="1"></textarea>
-                    <div class="min-h-[24px] mt-0">
-                        {#if descriptionError}
-                            <p class="pt-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{descriptionError}</p>
-                        {/if}
-                    </div>
-                </div>
-        
-                {#each flashcards as flashcard, index}
-                    <div class="flex items-center mb-4">
-                        <div class="flex flex-col flex-1 mr-6">
-                            <label class="block text-sm font-medium text-gray-300 mb-1" for={`front-${index}`}>
-                                Front
-                            </label>
-                            <textarea   id={`front-${index}`} 
-                                        bind:value={flashcard.front} 
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
-                                        placeholder="Question"
-                                        on:input={e => autoGrow(e.target)} 
-                                        style="overflow-y: hidden; min-height: 38px;"
-                                        rows="1"></textarea>
-                        </div>
-                        <div class="flex flex-col flex-1 mr-4">
-                            <label class="block text-sm font-medium text-gray-300 mb-1" for={`back-${index}`}>
-                                Back
-                            </label>
-                            <textarea   id={`back-${index}`} 
-                                        bind:value={flashcard.back} 
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
-                                        placeholder="Answer"
-                                        on:input={e => autoGrow(e.target)} 
-                                        style="overflow-y: hidden; min-height: 38px;"
-                                        rows="1"></textarea>
-                        </div>
-                        <button type="button" class="border-none rounded mt-6 pb-2 pt-1 px-4 text-gray-200 font-bold hover:bg-zinc-700 focus:outline-none" on:click={() => removeFlashcard(index)}>
-                            —
-                        </button>
-                    </div>
-                {/each}
-        
-                <div class="flex items-center mt-6">
-                    <button type="button" class="text-md flex items-center px-4 py-3 border border-transparent leading-4 font-medium rounded-md text-gray-200 hover:bg-zinc-700 focus:outline-none" on:click={addFlashcard}>
-                        + Add flashcard
-                    </button>
-                </div>
-                <div class="min-h-[24px] text-center">
-                    {#if flashcardsError}
-                        <p class="py-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{flashcardsError}</p>
+    <div class="w-full" style="min-width: 480px;">
+    <div class="bg-zinc-800 rounded-lg shadow px-6 pt-4 pb-6 border" style="min-width: 40vw">
+        <form on:submit|preventDefault={submitForm}>
+            <div>
+                <label class="block text-sm font-medium text-neutral-300 mb-1" for="title">
+                    Name
+                </label>
+                <input id="title" bind:value={title} class="mb-1 shadow appearance-none border rounded w-full p-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:border-red-500 focus:shadow-outline" placeholder="Discrete Mathematics">
+                <div class="min-h-[24px] ">
+                    {#if titleError}
+                        <p class="pt-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{titleError}</p>
                     {/if}
                 </div>
-                <div class="flex justify-center">
-                    <button type="submit" class="w-full px-4 border border-transparent text-md leading-5 font-medium rounded-md text-white bg-red-500 hover:bg-red-400 focus:outline-none focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out" style="min-height: 38px;">
-                        Submit
+            </div>
+    
+            <div>
+                <label class="block text-sm font-medium text-neutral-300 mb-1" for="description">
+                    Description
+                </label>
+                <textarea   id="description" 
+                            bind:value={description} 
+                            class="shadow appearance-none border rounded w-full mb-0 p-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
+                            placeholder="This isn't even math" 
+                            on:input={e => autoGrow(e.target)} 
+                            style="overflow-y: hidden; min-height: 38px;"
+                            rows="1"></textarea>
+                <div class="min-h-[24px] mt-0">
+                    {#if descriptionError}
+                        <p class="pt-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{descriptionError}</p>
+                    {/if}
+                </div>
+            </div>
+    
+            {#each flashcards as flashcard, index}
+                <div class="flex items-center mb-4">
+                    <div class="flex flex-col flex-1 mr-6">
+                        <label class="block text-sm font-medium text-gray-300 mb-1" for={`front-${index}`}>
+                            Front
+                        </label>
+                        <textarea   id={`front-${index}`} 
+                                    bind:value={flashcard.front} 
+                                    class="shadow appearance-none border rounded w-full py-3 px-3 bg-zinc-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
+                                    placeholder="Question"
+                                    on:input={e => autoGrow(e.target)} 
+                                    style="overflow-y: hidden; min-height: 38px;"
+                                    rows="1"></textarea>
+                    </div>
+                    <div class="flex flex-col flex-1 mr-4">
+                        <label class="block text-sm font-medium text-gray-300 mb-1" for={`back-${index}`}>
+                            Back
+                        </label>
+                        <textarea   id={`back-${index}`} 
+                                    bind:value={flashcard.back} 
+                                    class="shadow appearance-none border rounded w-full py-3 px-3 bg-zinc-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
+                                    placeholder="Answer"
+                                    on:input={e => autoGrow(e.target)} 
+                                    style="overflow-y: hidden; min-height: 40px;"
+                                    rows="1"></textarea>
+                    </div>
+                    <button type="button" class="border-none rounded mt-6 pb-3 pt-2 px-4 text-gray-200 font-bold hover:bg-zinc-700 focus:outline-none" on:click={() => removeFlashcard(index)}>
+                        —
                     </button>
                 </div>
-            </form>
-        </div>
+            {/each}
+    
+            <div class="flex items-center mt-6">
+                <button type="button" class="text-md flex items-center px-7 py-3 border border-transparent leading-4 font-medium rounded-md text-gray-200 hover:bg-zinc-700 focus:outline-none" on:click={addFlashcard}>
+                    + Add flashcard
+                </button>
+                <label for="remember-me" class="text-md flex items-center pl-6 leading-4 font-medium rounded-md text-gray-200">
+                    <input id="remember-me" type="checkbox" bind:checked={isPrivate} />
+                    <span class="pl-1">Private</span>
+                </label>
+            </div>
+
+            <div class="min-h-[24px] text-center">
+                {#if flashcardsError}
+                    <p class="py-1 text-xs text-red-500" out:fade={{ duration: 500 }}>{flashcardsError}</p>
+                {/if}
+            </div>
+
+            <div class="flex justify-center">
+                <button type="submit" class="w-full border border-transparent text-md leading-5 font-medium rounded-md text-white bg-red-500 hover:bg-red-400 focus:outline-none focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out" style="min-height: 38px;">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
     </div>
     
 </div>
