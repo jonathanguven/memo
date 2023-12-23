@@ -10,6 +10,9 @@
     $: if (key) {
         isFront = true;
     }
+    $: if (front || back) {
+        isFront = true;
+    }
 
     function toggle() {
         isFront = !isFront;
