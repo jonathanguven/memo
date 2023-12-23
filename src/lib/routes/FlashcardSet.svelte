@@ -68,6 +68,7 @@
         {#if data.flashcardSet.flashcards.length > 0}
             <div class="m-4">
                 <Flashcard 
+                    key={index}
                     front={data.flashcardSet.flashcards[index].front} 
                     back={data.flashcardSet.flashcards[index].back} 
                     description={data.flashcardSet.flashcards[index].description}

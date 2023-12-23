@@ -6,6 +6,10 @@
     import { ArrowLeftRight } from 'lucide-svelte';
 
     let isFront = true;
+    export let key;
+    $: if (key) {
+        isFront = true;
+    }
 
     function toggle() {
         isFront = !isFront;
