@@ -2,6 +2,8 @@
     import { createEventDispatcher } from 'svelte';
     import { fade } from 'svelte/transition';
     import { navigate } from 'svelte-routing'
+
+    import { X, Plus } from 'lucide-svelte';
   
     const dispatch = createEventDispatcher();
     const url = import.meta.env.VITE_API_URL;
@@ -162,15 +164,15 @@
                                     style="overflow-y: hidden; min-height: 42px; line-height: 150%;"
                                     rows="1"></textarea>
                     </div>
-                    <button type="button" class="border-none rounded mt-6 pb-3 pt-2 px-4 text-gray-200 font-bold hover:bg-zinc-700 focus:outline-none" on:click={() => removeFlashcard(index)}>
-                        —
+                    <button type="button" class="border-none rounded mt-6 pb-2 pt-2 px-4 text-gray-200 font-bold hover:bg-zinc-700 focus:outline-none" on:click={() => removeFlashcard(index)}>
+                        <X />
                     </button>
                 </div>
             {/each}
     
             <div class="flex items-center">
-                <button type="button" class="text-md flex items-center px-4 py-3 mr-6 border border-transparent leading-4 font-medium rounded-md text-gray-200 hover:bg-zinc-700 focus:outline-none" on:click={addFlashcard}>
-                    + Add flashcard
+                <button type="button" class="text-md flex items-center px-4 pr-5 py-3 mr-3 border border-transparent leading-4 font-medium rounded-md text-gray-200 hover:bg-zinc-700 focus:outline-none" on:click={addFlashcard}>
+                    <span class="pr-1"><Plus size={20} /></span> Add flashcard
                 </button>
                 <label for="remember-me" class="text-md flex items-center pl-6 leading-4 font-medium rounded-md text-gray-200">
                     <input id="remember-me" type="checkbox" bind:checked={isPrivate} />
