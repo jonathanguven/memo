@@ -72,12 +72,10 @@ router.get('/flashcard-sets/:id', async (req, res) => {
 			`)
 			.eq('id', setId)
 			.single();
-		
-		if (error) throw error;
 
 		// no flashcard set found
 		if (!flashcardSet) {
-			return res.status(404).json({ message: 'Flashcard set not found '})
+			return res.status(404).json({ message: 'Flashcard set not found!' })
 		}
 
 		// check for public or if user is owner
