@@ -9,7 +9,7 @@
     import Create from './lib/routes/Create.svelte';
     import CreateAccount from './lib/routes/CreateAccount.svelte';
     import FlashcardRoutes from './lib/routes/FlashcardsRoute.svelte';
-    import FlashcardSets from './lib/routes/FlashcardSet.svelte';
+    import FlashcardSets from './lib/routes/FlashcardPage.svelte';
     import Home from './lib/routes/Home.svelte';
     import Login from './lib/routes/Login.svelte';
     import Profile from './lib/routes/Profile.svelte';

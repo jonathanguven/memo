@@ -2,6 +2,8 @@
     import { fetchUserData } from "../../api/getUsers";
     import { Link } from 'svelte-routing';
     import { onMount } from "svelte";
+    import FlashcardSet from "../components/FlashcardSet.svelte";
+
     export let username;
 
     let promise = fetchUserData(username);
@@ -58,10 +60,10 @@
         {/if} -->
         {#if data.user.flashcard_sets.length > 0}
             <div class="flex flex-col">
-                {#each data.user.flashcard_sets as { title }, i}
-                    <Link to="/flashcardsets/{data.user.flashcard_sets[i].id}" class="hover:underline">
-                        {i + 1}: {title} - {data.user.username}
-                    </Link>
+                {#each data.user.flashcard_sets as { title, description }, i}
+                    <div class="m-4">
+                        <FlashcardSet front={title} back={description} id={data.user.flashcard_sets[i].id}/>
+                    </div>
                 {/each}
             </div>
         {:else}

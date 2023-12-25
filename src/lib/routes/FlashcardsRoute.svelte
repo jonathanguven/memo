@@ -2,6 +2,7 @@
     import { fetchPublicSets } from "../../api/getPublicSets";
     import { Link } from 'svelte-routing';
     import { onMount } from "svelte";
+    import FlashcardSet from "../components/FlashcardSet.svelte";
 
     let promise = fetchPublicSets();
     let showLoading = false;
@@ -36,10 +37,10 @@
     {:then flashcardSets} 
         {#if flashcardSets.length > 0}
             <div class="flex flex-col">
-                {#each flashcardSets as { title, users }, i}
-                    <Link to="/flashcardsets/{flashcardSets[i].id}" class="hover:underline">
-                        {i + 1}: {title} - {users.username}
-                    </Link>
+                {#each flashcardSets as { title, description, users }, i}
+                    <div class="m-4">
+                        <FlashcardSet front={title} back={description} id={flashcardSets[i].id}/>
+                    </div>
                 {/each}
             </div>
         {:else}
