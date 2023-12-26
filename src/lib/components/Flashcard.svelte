@@ -1,7 +1,7 @@
 <script>
     export let front;
     export let back;
-    export const description = '';
+    export let description;
 
     import { ArrowLeftRight } from 'lucide-svelte';
 
@@ -40,6 +40,7 @@
                 <div>{front}</div>
             {:else}
                 <div>{back}</div>
+                <div>{description}</div>
             {/if}
         </div>
         <div class="flex absolute bottom-2 left-2 py-1 px-2 rounded text-xl">

@@ -39,7 +39,7 @@
             <div class="flex flex-col">
                 {#each flashcardSets as { title, description, users }, i}
                     <div class="m-4">
-                        <FlashcardSet front={title} back={description} id={flashcardSets[i].id}/>
+                        <FlashcardSet title={title} description={description} id={flashcardSets[i].id}/>
                     </div>
                 {/each}
             </div>

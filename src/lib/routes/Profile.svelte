@@ -21,7 +21,7 @@
 
     const formatDate = ((unformatted) => {
         const date = new Date(unformatted);
-        return 'Joined ' + date.toLocaleDateString('en-US', { 
+        return date.toLocaleDateString('en-US', { 
             month: 'long', day: 'numeric', year: 'numeric' 
         });
     });
@@ -48,7 +48,7 @@
             {data.user.username}
         </div>
         <div class="text-lg text-zinc-500">
-            {formatDate(data.user.created_at)}
+            Joined {formatDate(data.user.created_at)}
         </div>
         <div class="text-lg text-zinc-500">
             Total sets: {data.user.flashcard_sets.length}
@@ -60,9 +60,14 @@
         {/if} -->
         {#if data.user.flashcard_sets.length > 0}
             <div class="flex flex-col">
-                {#each data.user.flashcard_sets as { title, description }, i}
+                {#each data.user.flashcard_sets as { title, description, created_at }, i}
                     <div class="m-4">
-                        <FlashcardSet front={title} back={description} id={data.user.flashcard_sets[i].id}/>
+                        <FlashcardSet 
+                            title={title} 
+                            description={description} 
+                            id={data.user.flashcard_sets[i].id}
+                            timestamp={formatDate(created_at)}
+                        />
                     </div>
                 {/each}
             </div>
