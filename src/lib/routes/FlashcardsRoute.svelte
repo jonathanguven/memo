@@ -16,6 +16,13 @@
             clearTimeout(timer);
         };
     });
+
+    const formatDate = ((unformatted) => {
+        const date = new Date(unformatted);
+        return date.toLocaleDateString('en-US', { 
+            month: 'long', day: 'numeric', year: 'numeric' 
+        });
+    });
 </script>
 
 <svelte:head>
@@ -37,9 +44,13 @@
     {:then flashcardSets} 
         {#if flashcardSets.length > 0}
             <div class="flex flex-col">
-                {#each flashcardSets as { title, description, users }, i}
+                {#each flashcardSets as { title, description, users, created_at }, i}
                     <div class="m-4">
-                        <FlashcardSet title={title} description={description} id={flashcardSets[i].id}/>
+                        <FlashcardSet 
+                            title={title} 
+                            description={description} 
+                            id={flashcardSets[i].id} 
+                            timestamp={formatDate(created_at)}/>
                     </div>
                 {/each}
             </div>
