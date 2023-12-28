@@ -27,12 +27,13 @@
         // implement delete 
     }
 
+    function toggle() {
+        openMenu = !openMenu;
+    }
     function handleClick(event, action) {
         event.stopPropagation(); // stop event bubbling
 
-        if (action === 'menu') {
-            openMenu = !openMenu;
-        } else if (action === 'edit') {
+        if (action === 'edit') {
             editCard();
         } else if (action === 'delete') {
             deleteCard();
@@ -41,6 +42,7 @@
         } else if (action === 'toggle') {
             isTitle = !isTitle;
         }
+        openMenu = false;
     }
 
     function handleKeydown(event) {
@@ -82,13 +84,14 @@
         {#if self}
             <button 
                 class="flex absolute top-2 right-2 p-1 rounded hover:bg-zinc-700"
-                on:mouseenter={(event) => handleClick(event, 'menu')}>
+                on:mouseenter={toggle}
+            >
                 <Menu size={36} />
             </button>
             {#if openMenu}
                 <div 
                     class="flex flex-col absolute top-14 right-2 bg-zinc-900 shadow-md rounded-lg p-2"
-                    on:mouseleave={(event) => handleClick(event, 'menu')}
+                    on:mouseleave={toggle}
                     tabindex="0"  
                     role="button"
                     aria-label="Toggle Menu"

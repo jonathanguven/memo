@@ -1,12 +1,15 @@
 <script>
+    import { ArrowLeftRight } from 'lucide-svelte';
+
     export let front;
     export let back;
     export let description;
+    export let key;
 
-    import { ArrowLeftRight } from 'lucide-svelte';
+    console.log(description)
 
     let isFront = true;
-    export let key;
+    
     $: if (key) {
         isFront = true;
     }
@@ -40,7 +43,6 @@
                 <div>{front}</div>
             {:else}
                 <div>{back}</div>
-                <div>{description}</div>
             {/if}
         </div>
         <div class="flex absolute bottom-2 left-2 py-1 px-2 rounded text-xl">
