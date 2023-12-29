@@ -44,13 +44,16 @@
     {:then flashcardSets} 
         {#if flashcardSets.length > 0}
             <div class="flex flex-col">
-                {#each flashcardSets as { title, description, users, created_at }, i}
-                    <div class="m-4">
+                {#each flashcardSets as { title, description, users, created_at, is_private }, i}
+                    <div class="m-2">
                         <FlashcardSet 
                             title={title} 
                             description={description} 
                             id={flashcardSets[i].id} 
-                            timestamp={formatDate(created_at)}/>
+                            timestamp={formatDate(created_at)}
+                            length={flashcardSets.length}
+                            username={users.username}
+                        />
                     </div>
                 {/each}
             </div>

@@ -55,7 +55,7 @@
         </div>
         {#if data.user.flashcard_sets.length > 0}
             <div class="flex flex-col">
-                {#each data.user.flashcard_sets as { title, description, created_at }, i}
+                {#each data.user.flashcard_sets as { title, description, created_at, is_private }, i}
                     <div class="m-4">
                         <FlashcardSet 
                             title={title} 
@@ -63,6 +63,9 @@
                             id={data.user.flashcard_sets[i].id}
                             timestamp={formatDate(created_at)}
                             self={data.self}
+                            username={data.user.username}
+                            length={data.user.flashcard_sets.length}
+                            isPrivate={is_private}
                         />
                     </div>
                 {/each}

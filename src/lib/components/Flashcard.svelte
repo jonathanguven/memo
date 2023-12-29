@@ -13,6 +13,7 @@
     $: if (key) {
         isFront = true;
     }
+
     $: if (front || back) {
         isFront = true;
     }
@@ -30,7 +31,7 @@
 
 <div class="flex items-center justify-center">
     <div 
-        class="relative border-2 p-16 flex items-center justify-center bg-zinc-800 shadow-lg rounded-lg cursor-pointer" 
+        class="relative border-2 p-16 flex items-center justify-center bg-zinc-800 shadow-lg rounded-xl cursor-pointer" 
         on:click={toggle}
         on:keydown={handleKeydown}
         tabindex="0"  
