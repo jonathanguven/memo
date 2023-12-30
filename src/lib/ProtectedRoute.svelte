@@ -7,12 +7,21 @@
     export let component;
     export let props = {};
 
-    onMount(async () => {
-        await checkAuthentication();
-        if (!$isAuthenticated) {
+    let authCheckPromise = checkAuthentication();
+    let authenticated;
+
+    authCheckPromise.then(() => {
+        authenticated = $isAuthenticated;
+        if (!authenticated) {
             navigate('/login');
         }
-    })
+    });
 </script>
 
-<svelte:component this={component} {...props}/>
+{#await authCheckPromise then _}
+    {#if authenticated}
+        <svelte:component this={component} {...props} />
+    {/if}
+{:catch error}
+    <p>Error checking authentication: {error.message}</p>
+{/await}

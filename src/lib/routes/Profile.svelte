@@ -56,7 +56,7 @@
         {#if data.user.flashcard_sets.length > 0}
             <div class="flex flex-col">
                 {#each data.user.flashcard_sets as { title, description, created_at, is_private }, i}
-                    <div class="m-4">
+                    <div class="m-2">
                         <FlashcardSet 
                             title={title} 
                             description={description} 
