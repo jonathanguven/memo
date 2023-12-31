@@ -6,8 +6,14 @@
 
     export let username;
 
-    let promise = fetchUserData(username);
+    let userData;
+    let flashcardSets = [];
+    let promise = fetchUserData(username).then(data => {
+        userData = data.user;
+        flashcardSets = data.user ? data.user.flashcard_sets: [];
+    }).catch(error => console.error('Error:', error));
     let showLoading = false;
+    
 
     onMount(() => {
         const timer = setTimeout(() => {
@@ -25,6 +31,10 @@
             month: 'long', day: 'numeric', year: 'numeric' 
         });
     });
+
+    function handleDelete(setId) {
+        flashcardSets = flashcardSets.filter(set => set.id !== setId);
+    }
 </script>
 
 <svelte:head>
@@ -42,30 +52,25 @@
                 <span class="sr-only">Loading...</span>
             </div>
         {/if}
-    {:then data}
-    {#if data.user}
-        <div class="text-3xl pb-2">
-            {data.user.username}
+    {:then}
+    {#if userData}
+        <div class="text-3xl pb-2">{userData.username}</div>
+        <div class="text-lg text-zinc-500">
+            Joined {formatDate(userData.created_at)}
         </div>
         <div class="text-lg text-zinc-500">
-            Joined {formatDate(data.user.created_at)}
+            Total sets: {flashcardSets.length}
         </div>
-        <div class="text-lg text-zinc-500">
-            Total sets: {data.user.flashcard_sets.length}
-        </div>
-        {#if data.user.flashcard_sets.length > 0}
+        {#if flashcardSets.length > 0}
             <div class="flex flex-col">
-                {#each data.user.flashcard_sets as { title, description, created_at, is_private }, i}
+                {#each flashcardSets as flashcardSet}
                     <div class="m-2">
                         <FlashcardSet 
-                            title={title} 
-                            description={description} 
-                            id={data.user.flashcard_sets[i].id}
-                            timestamp={formatDate(created_at)}
-                            self={data.self}
-                            username={data.user.username}
-                            length={data.user.flashcard_sets.length}
-                            isPrivate={is_private}
+                            {...flashcardSet}
+                            self={userData.username === username}
+                            username={userData.username}
+                            length={flashcardSets.length}
+                            onDelete={handleDelete}
                         />
                     </div>
                 {/each}

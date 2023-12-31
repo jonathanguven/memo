@@ -7,10 +7,13 @@
     export let description;
     export let timestamp = '';
     export let self = false;
-    export let isPrivate = false;
+    export let is_private = false;
     export let id;
     export let length;
     export let username;
+    export let created_at; 
+
+    export let onDelete
 
     let isTitle = true;
     let openMenu = false;
@@ -29,6 +32,9 @@
     async function deleteCard() {
         console.log(`Deleting card ${id}`);
         const result = await deleteFlashcard(id);
+        if (result.message) {
+            onDelete(id); 
+        }
     }
 
     function toggle() {
@@ -142,7 +148,7 @@
             <div class="absolute bottom-14 right-2 shadow-lg bg-zinc-900 rounded-lg p-2">
                 Created {timestamp}
             </div>
-            {#if isPrivate}
+            {#if is_private}
                 <div class="absolute bottom-2 right-14 shadow-lg bg-zinc-900 rounded-lg p-2" style="height: 44px;">
                     <LockKeyhole />
                 </div>
