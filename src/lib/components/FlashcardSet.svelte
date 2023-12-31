@@ -1,6 +1,7 @@
 <script>
     import { Link, navigate } from 'svelte-routing';
     import { MoreVertical, ArrowLeftRight, Info, Menu, PenSquare, Trash2, LockKeyhole } from 'lucide-svelte';
+    import { deleteFlashcard } from '../../api/deleteFlashcard';
 
     export let title;
     export let description;
@@ -25,9 +26,9 @@
         // implement edit 
     }
 
-    function deleteCard() {
+    async function deleteCard() {
         console.log(`Deleting card ${id}`);
-        // implement delete 
+        const result = await deleteFlashcard(id);
     }
 
     function toggle() {

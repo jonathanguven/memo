@@ -59,7 +59,7 @@
         </div>
     </nav>
 
-    <div class="flex justify-center flex-grow mt-16">
+    <div class="flex justify-center flex-grow my-16">
         <Route path="/">
             <Home />
         </Route>
