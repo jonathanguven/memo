@@ -30,7 +30,7 @@
     }
 
     async function deleteCard() {
-        console.log(`Deleting card ${id}`);
+        console.log(`Deleting card ${id} created at ${created_at}`);
         const result = await deleteFlashcard(id);
         if (result.message) {
             onDelete(id); 
