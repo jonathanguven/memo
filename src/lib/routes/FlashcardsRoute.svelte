@@ -29,7 +29,7 @@
     <title>Flashcard Sets</title>
 </svelte:head>
 <div class="flex flex-col items-center w-full">
-    <h1 class="text-3xl mb-2">Flashcard Sets</h1>
+    <h1 class="text-4xl font-medium py-1">Flashcard Sets</h1>
     {#await promise}
         {#if showLoading}
             <!-- loading spinner -->

@@ -6,7 +6,7 @@
 </script>
 
 <div class="flex flex-col items-center">
-    <div class="text-3xl">About</div>
+    <div class="text-4xl font-medium py-1">About</div>
     <a href={link} target="_blank" rel="noopener noreferrer" class="m-6">
         <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 24 24" class="invert icon">
             <path

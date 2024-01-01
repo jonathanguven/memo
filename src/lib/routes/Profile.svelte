@@ -54,7 +54,7 @@
         {/if}
     {:then}
     {#if userData}
-        <div class="text-3xl pb-2">{userData.username}</div>
+        <div class="text-4xl font-medium py-4">{userData.username}</div>
         <div class="text-lg text-zinc-500">
             Joined {formatDate(userData.created_at)}
         </div>
