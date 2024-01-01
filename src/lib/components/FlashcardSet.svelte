@@ -156,7 +156,7 @@
 <style>
     .flashcard {
         width: 100%;
-        aspect-ratio: 9/5;
+        aspect-ratio: 20/12;
     }
     .tooltip {
         position: relative;

@@ -97,7 +97,7 @@
 <style>
     .item {
         flex: 0 32%;
-        margin-bottom: 1%;
+        margin-bottom: 2%;
         margin-left: 1%;
     }
     

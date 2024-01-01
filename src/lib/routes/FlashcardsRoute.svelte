@@ -28,7 +28,7 @@
 <svelte:head>
     <title>Flashcard Sets</title>
 </svelte:head>
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center w-full">
     <h1 class="text-3xl mb-2">Flashcard Sets</h1>
     {#await promise}
         {#if showLoading}
@@ -43,9 +43,9 @@
         {/if}
     {:then flashcardSets} 
         {#if flashcardSets.length > 0}
-            <div class="flex flex-col">
+            <div class="flex flex-wrap justify-start w-full mt-6">
                 {#each flashcardSets as { title, description, users, created_at, is_private }, i}
-                    <div class="m-2">
+                    <div class="item px-2">
                         <FlashcardSet 
                             title={title} 
                             description={description} 
@@ -72,3 +72,26 @@
         <div class="text-3xl pb-2">Error loading flashcard sets: {error.message}</div>
     {/await}
 </div>
+
+<style>
+    .item {
+        flex: 0 32%;
+        margin-bottom: 2%;
+        margin-left: 1%;
+    }
+    
+    @media (max-width: 1200px) {
+        .item {
+            flex: 0 47%; 
+            margin-left: 2%;
+            margin-bottom: 3%;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .item {
+            flex: 0 100%; 
+            margin-bottom: 5%;
+        }
+    }
+</style>
