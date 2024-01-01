@@ -9,8 +9,6 @@
     export let self = false;
     export let is_private = false;
     export let id;
-    export let length;
-    export let username;
     export let created_at; 
 
     export let onDelete
@@ -62,12 +60,10 @@
     }
 </script>
 
-<div class="flex items-center justify-center">
-    <div>
+<div>
     <button 
-        class="relative border-2 p-16 flex items-center justify-center bg-zinc-800 shadow-xl rounded-xl cursor-pointer" 
+        class="flashcard relative border-2 p-16 flex items-center justify-center bg-zinc-800 shadow-xl rounded-xl cursor-pointer" 
         on:click={redirect(id)}
-        style="width: 720px; height: 405px"
     >
         <div class="text-center text-3xl">
             {#if isTitle}
@@ -155,11 +151,13 @@
             {/if}
         {/if}
     </button>
-    
-    </div>
 </div>
 
 <style>
+    .flashcard {
+        width: 100%;
+        aspect-ratio: 9/5;
+    }
     .tooltip {
         position: relative;
         display: inline-block;

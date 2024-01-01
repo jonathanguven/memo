@@ -40,7 +40,7 @@
 <svelte:head>
     <title>{username}</title>
 </svelte:head>
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center w-full">
     {#await promise}
         <!-- loading spinner -->
         {#if showLoading}
@@ -62,15 +62,13 @@
             Total sets: {flashcardSets.length}
         </div>
         {#if flashcardSets.length > 0}
-            <div class="flex flex-col">
+            <div class="flex flex-wrap justify-start w-full mt-6">
                 {#each flashcardSets as flashcardSet}
-                    <div class="m-2">
+                    <div class="item px-2">
                         <FlashcardSet 
                             {...flashcardSet}
                             timestamp={formatDate(flashcardSet.created_at)}
                             self={userData.username === username}
-                            username={userData.username}
-                            length={flashcardSets.length}
                             onDelete={handleDelete}
                         />
                         <div class="flex justify-end py-1 px-3 text-lg text-white">
@@ -95,3 +93,25 @@
         <div class="text-lg text-zinc-500">{error}</div>
     {/await}
 </div>
+
+<style>
+    .item {
+        flex: 0 32%;
+        margin-bottom: 1%;
+        margin-left: 1%;
+    }
+    
+    @media (max-width: 1200px) {
+        .item {
+            flex: 0 47%; 
+            margin-left: 2%;
+            margin-bottom: 2%;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .item {
+            flex: 0 100%; 
+        }
+    }
+</style>
