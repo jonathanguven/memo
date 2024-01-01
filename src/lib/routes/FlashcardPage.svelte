@@ -137,11 +137,11 @@
                                 <div class="flex justify-between items-center bg-zinc-800 border-b-2 border-neutral-700 rounded-b-none rounded-md px-4 py-2" style="min-height: 24px;">
                                     <div class="text-lg font-bold">{i+1}</div>    
                                     <div class="flex gap-4">
-                                        <button class="hover:text-amber-300"><PenSquare /></button>
+                                        <button class="hover:text-blue-500"><PenSquare /></button>
                                         <button class="hover:text-red-500"><Trash2 /></button>
                                     </div> 
                                 </div>
-                                <div class="flex justify-between bg-zinc-800 my-2 rounded-md" style="min-height: 56px;">
+                                <div class="flex justify-between bg-zinc-800 py-2 rounded-md" style="min-height: 56px;">
                                     <div class="flex items-center w-1/3 px-4 py-2 border-r-2 border-neutral-700">{card.front}</div>
                                     <div class="flex items-center w-2/3 px-4 py-2">{card.back}</div>       
                                 </div>

@@ -67,6 +67,7 @@
                     <div class="m-2">
                         <FlashcardSet 
                             {...flashcardSet}
+                            timestamp={formatDate(flashcardSet.created_at)}
                             self={userData.username === username}
                             username={userData.username}
                             length={flashcardSets.length}
