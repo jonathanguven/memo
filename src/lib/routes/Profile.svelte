@@ -73,6 +73,11 @@
                             length={flashcardSets.length}
                             onDelete={handleDelete}
                         />
+                        <div class="flex justify-end py-1 px-3 text-lg text-white">
+                            <div>
+                                {flashcardSets.length} cards
+                            </div>
+                        </div>
                     </div>
                 {/each}
             </div>

@@ -155,14 +155,7 @@
             {/if}
         {/if}
     </button>
-    <div class="flex justify-between py-1 px-3 text-lg text-white">
-        <div>
-            by <Link to="/users/{username}" class="hover:underline">{username}</Link>
-        </div>
-        <div>
-            {length} cards
-        </div>
-    </div>
+    
     </div>
 </div>
 

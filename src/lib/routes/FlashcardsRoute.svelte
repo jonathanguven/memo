@@ -54,6 +54,14 @@
                             length={flashcardSets.length}
                             username={users.username}
                         />
+                        <div class="flex justify-between py-1 px-3 text-lg text-white">
+                            <div>
+                                by <Link to="/users/{users.username}" class="hover:underline">{users.username}</Link>
+                            </div>
+                            <div>
+                                {flashcardSets.length} cards
+                            </div>
+                        </div>
                     </div>
                 {/each}
             </div>
