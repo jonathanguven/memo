@@ -1,6 +1,5 @@
 <script>
     import { fetchUserData } from "../../api/getUsers";
-    import { Link } from 'svelte-routing';
     import { onMount } from "svelte";
     import FlashcardSet from "../components/FlashcardSet.svelte";
 
@@ -16,6 +15,13 @@
     }).catch(error => console.error('Error:', error));
     let showLoading = false;
     
+    $: if (username) {
+        promise = fetchUserData(username).then(data => {
+        userData = data.user;
+        self = data.self;
+        flashcardSets = data.user ? data.user.flashcard_sets: [];
+    }).catch(error => console.error('Error:', error));
+    }
 
     onMount(() => {
         const timer = setTimeout(() => {
