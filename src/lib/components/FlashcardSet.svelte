@@ -148,7 +148,7 @@
                 <div class="absolute bottom-14 right-2 shadow-lg bg-zinc-900 rounded-lg p-2" style="height: 44px;">
                     <LockKeyhole />
                 </div>
-            {:else}
+            {:else if !is_private && self}
                 <div class="absolute bottom-14 right-2 shadow-lg bg-zinc-900 rounded-lg p-2" style="height: 44px;">
                     <UnlockKeyhole />
                 </div>
