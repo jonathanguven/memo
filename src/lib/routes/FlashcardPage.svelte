@@ -99,7 +99,7 @@
             </div>
             <h1 class="text-4xl text-white px-4 mb-2">{data.flashcardSet.title}</h1>
             <div class="text-xl text-white mb-2">
-                by <Link to="/users/{data.flashcardSet.users.username}" class="hover:underline">{data.flashcardSet.users.username}</Link>
+                by <Link to="/user/{data.flashcardSet.users.username}" class="hover:underline">{data.flashcardSet.users.username}</Link>
             </div>
             
             <div class="text-xl text-gray-400 font-normal mb-8">

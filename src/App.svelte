@@ -46,11 +46,6 @@
         <div class="left">
             <Link to="/" class="text-gray-300 brand hover:underline" on:click={() => update('/')}>Memo</Link>
             <Link to="/about" class="text-gray-300 nav-link hover:underline {route === '/about' ? 'active' : ''}" on:click={() => update('/about')}>About</Link>
-            <a href={profileRoute} 
-                class={`text-gray-300 nav-link hover:underline ${$isAuthenticated ? '' : 'opacity-50 cursor-not-allowed pointer-events-none'} {(route => '/' + route.split('/')[1]) === '/user' ? 'active' : ''}`} 
-                on:click={() => update(profileRoute)}>
-                    Profile
-            </a>
             <Link to="/flashcardsets" class="text-gray-300 nav-link hover:underline {route === '/flashcards' ? 'active' : ''}" on:click={() => update('/flashcards')}>Cards</Link>
             <Link to="/flashcardsets/new" 
                 class={`text-gray-300 nav-link hover:underline ${$isAuthenticated ? '' : 'opacity-50 cursor-not-allowed pointer-events-none'} {route === '/flashcards/new' ? 'active' : ''}`}
@@ -60,11 +55,16 @@
         </div>
         <div class="right">
             {#if $isAuthenticated}
-                <button class="nav-link bg-gray-100 hover:bg-zinc-300 active:bg-zinc-700 active:text-gray-100 hover:text-zinc-700 text-zinc-700 px-3 py-2 rounded-lg transition duration-150 ease-in-out " on:click={handleLogout}>Logout</button>
+                <Link to={profileRoute} 
+                    class={`text-gray-300 nav-link px-3 py-2 hover:underline ${$isAuthenticated ? '' : 'opacity-50 cursor-not-allowed pointer-events-none'} {(route => '/' + route.split('/')[1]) === '/user' ? 'active' : ''}`} 
+                    on:click={() => update(profileRoute)}>
+                        Profile
+                </Link>
+                <button class="signup bg-gray-100 hover:bg-zinc-300 active:bg-zinc-700 active:text-gray-100 hover:text-zinc-700 text-zinc-700 px-3 py-2 rounded-lg transition duration-150 ease-in-out " on:click={handleLogout}>Logout</button>
             {:else}
-                <Link to="/login" class="text-gray-300 nav-link hover:underline {route === '/login' ? 'active' : ''}" on:click={() => update('/login')}>Login</Link>
+                <Link to="/login" class="text-gray-300 nav-link hover:underline hover:bg-zinc-600 hover:text-gray-100 px-3 py-2 rounded-lg transition duration-150 ease-in-out {route === '/login' ? 'active' : ''}" on:click={() => update('/login')}>Login</Link>
                 <Link to="/sign-up" 
-                    class="nav-link bg-gray-100 hover:bg-zinc-300 active:bg-zinc-700 active:text-gray-100 hover:text-zinc-700 text-zinc-700 px-3 py-2 rounded-lg transition duration-150 ease-in-out {route === '/sign-up' ? 'active' : ''}" 
+                    class="signup bg-gray-100 hover:bg-zinc-400 active:bg-zinc-700 active:text-gray-100 hover:text-zinc-700 text-zinc-700 px-3 py-2 rounded-lg transition duration-150 ease-in-out {route === '/sign-up' ? 'active' : ''}" 
                     on:click={() => update('/sign-up')}>
                     Sign Up
                 </Link>

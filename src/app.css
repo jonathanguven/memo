@@ -36,6 +36,11 @@
   align-items: center;
 }
 
+.signup {
+  font-size: 18px;
+  margin-left: 8px;
+}
+
 .nav-link {
   margin-left: 30px;
   text-decoration: none;
