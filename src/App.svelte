@@ -50,7 +50,7 @@
         </div>
         <div class="right">
             <Link to="/about" class="nav-link hover:underline {route === '/about' ? 'active' : ''}" on:click={() => update('/about')}>About</Link>
-            <Link to={profileRoute} class="nav-link hover:underline {(route => '/' + route.split('/')[1]) === '/user' ? 'active' : ''}" on:click={() => update(profileRoute)}>Profile</Link>
+            <a href={profileRoute} class="nav-link hover:underline {(route => '/' + route.split('/')[1]) === '/user' ? 'active' : ''}" on:click={() => update(profileRoute)}>Profile</a>
             {#if $isAuthenticated}
                 <button class="nav-link hover:underline" on:click={handleLogout}>Logout</button>
             {:else}
