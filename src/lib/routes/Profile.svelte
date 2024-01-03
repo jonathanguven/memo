@@ -7,9 +7,11 @@
     export let username;
 
     let userData;
+    let self;
     let flashcardSets = [];
     let promise = fetchUserData(username).then(data => {
         userData = data.user;
+        self = data.self;
         flashcardSets = data.user ? data.user.flashcard_sets: [];
     }).catch(error => console.error('Error:', error));
     let showLoading = false;
@@ -68,7 +70,7 @@
                         <FlashcardSet 
                             {...flashcardSet}
                             timestamp={formatDate(flashcardSet.created_at)}
-                            self={userData.username === username}
+                            self={self}
                             onDelete={handleDelete}
                         />
                         <div class="flex justify-end py-1 px-3 text-lg text-white">
