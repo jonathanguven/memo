@@ -1,6 +1,6 @@
 <script>
     import { Link, navigate } from 'svelte-routing';
-    import { MoreVertical, ArrowLeftRight, Info, Menu, PenSquare, Trash2, LockKeyhole } from 'lucide-svelte';
+    import { MoreVertical, ArrowLeftRight, Info, Menu, PenSquare, Trash2, LockKeyhole, UnlockKeyhole } from 'lucide-svelte';
     import { deleteFlashcard } from '../../api/deleteFlashcard';
 
     export let title;
@@ -84,7 +84,7 @@
                 role="button"
                 tabindex="0"
         >
-            <ArrowLeftRight size={36} />
+            <ArrowLeftRight size={32} />
         </div>
 
         <!-- popover for options -->
@@ -127,7 +127,7 @@
             {/if}
         {:else}
             <div class="flex absolute top-2 right-2 p-1 rounded cursor-not-allowed">
-                <Menu size={36} color="#424242"/>
+                <Menu size={32} color="#424242"/>
             </div>
         {/if}
         
@@ -138,15 +138,19 @@
             tabindex="-2"  
             role="button"
             aria-label="Toggle info">
-            <Info size={36} />
+            <Info size={32} />
         </div>
         {#if info}
-            <div class="absolute bottom-14 right-2 shadow-lg bg-zinc-900 rounded-lg p-2">
+            <div class="absolute bottom-2 right-14 shadow-lg bg-zinc-900 rounded-lg p-2">
                 Created {timestamp}
             </div>
             {#if is_private}
-                <div class="absolute bottom-2 right-14 shadow-lg bg-zinc-900 rounded-lg p-2" style="height: 44px;">
+                <div class="absolute bottom-14 right-2 shadow-lg bg-zinc-900 rounded-lg p-2" style="height: 44px;">
                     <LockKeyhole />
+                </div>
+            {:else}
+                <div class="absolute bottom-14 right-2 shadow-lg bg-zinc-900 rounded-lg p-2" style="height: 44px;">
+                    <UnlockKeyhole />
                 </div>
             {/if}
         {/if}
