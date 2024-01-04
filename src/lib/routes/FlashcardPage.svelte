@@ -1,5 +1,6 @@
 <script>
     import { fetchFlashcardSet } from "../../api/getFlashcardSet";
+    import { isAuthenticated, checkAuthentication, name } from '../../stores/authStore.js';
     import Flashcard from "../components/Flashcard.svelte";
     import { Link } from 'svelte-routing';
     import { onMount } from "svelte";
@@ -7,10 +8,27 @@
     import { ChevronLeft, ChevronRight, ChevronsDown, ChevronsUp, PlusCircle, PenSquare, Trash2 } from 'lucide-svelte';
 
     export let id;
+    let self = false;
 
-    let promise = fetchFlashcardSet(id);
+    let flashcardSetData;
     let index = 0;
     let show = false;
+    let error;
+
+    onMount(async () => {
+        await checkAuthentication();
+        showLoading = true;
+        fetchFlashcardSet(id)
+            .then(data => {
+                flashcardSetData = data;
+                showLoading = false;
+                self = $name === flashcardSetData?.flashcardSet?.users?.username;
+            })
+            .catch(e => {
+                error = e;
+                showLoading = false;
+            });
+    })
 
     const goBack = () => {
         if (index > 0) {
@@ -45,7 +63,6 @@
 
     const showCards = () => {
         show = !show;
-        console.log('show switching to: ' + show)
     }
 </script>
 
@@ -53,7 +70,7 @@
     <title>Set {id}</title>
 </svelte:head>
 <div class="flex flex-col items-center">
-    {#await promise}
+    {#if !flashcardSetData}
         <!-- loading spinner -->
         {#if showLoading}
             <div role="status" class="mt-3">
@@ -64,19 +81,19 @@
                 <span class="sr-only">Loading...</span>
             </div>
         {/if}
-    {:then data} 
-        {#if data.message}
+    {:else} 
+        {#if flashcardSetData.message}
             <div class="text-3xl pb-2">Error!</div>
             <div class="text-lg text-zinc-500">
-                {data.message}
+                {flashcardSetData.message}
             </div>
-        {:else if data.flashcardSet.flashcards.length > 0}
+        {:else if flashcardSetData.flashcardSet.flashcards.length > 0}
             <div class="m-4">
                 <Flashcard 
                     key={index}
-                    front={data.flashcardSet.flashcards[index].front} 
-                    back={data.flashcardSet.flashcards[index].back} 
-                    description={data.flashcardSet.flashcards[index].description}
+                    front={flashcardSetData.flashcardSet.flashcards[index].front} 
+                    back={flashcardSetData.flashcardSet.flashcards[index].back} 
+                    description={flashcardSetData.flashcardSet.flashcards[index].description}
                 />
             </div>
 
@@ -88,22 +105,22 @@
                 >
                     <ChevronLeft size={32}/>
                 </button>
-                <span class="text-xl">{index + 1} / {data.flashcardSet.flashcards.length}</span>
+                <span class="text-xl">{index + 1} / {flashcardSetData.flashcardSet.flashcards.length}</span>
                 <button
                     class="mx-4 px-4 py-1 rounded hover:bg-zinc-800 font-bold"
-                    on:click={() => goNext(data.flashcardSet.flashcards.length)}
-                    disabled={index === data.flashcardSet.flashcards.length - 1}
+                    on:click={() => goNext(flashcardSetData.flashcardSet.flashcards.length)}
+                    disabled={index === flashcardSetData.flashcardSet.flashcards.length - 1}
                 >
                     <ChevronRight size={32}/>
                 </button>
             </div>
-            <h1 class="text-4xl text-white px-4 mb-2">{data.flashcardSet.title}</h1>
+            <h1 class="text-4xl text-white px-4 mb-2">{flashcardSetData.flashcardSet.title}</h1>
             <div class="text-xl text-white mb-2">
-                by <Link to="/user/{data.flashcardSet.users.username}" class="hover:underline">{data.flashcardSet.users.username}</Link>
+                by <Link to="/user/{flashcardSetData.flashcardSet.users.username}" class="hover:underline">{flashcardSetData.flashcardSet.users.username}</Link>
             </div>
             
             <div class="text-xl text-gray-400 font-normal mb-8">
-                {data.flashcardSet.description}
+                {flashcardSetData.flashcardSet.description}
             </div>
             {#if !show}
                 <div 
@@ -129,17 +146,19 @@
                 </div>
                 <div class="mx-auto flex flex-col justify-center mb-12" style="width: 720px;">
                     <div class="py-4 text-2xl font-semibold text-white" style="margin-left: 2px;">
-                        Cards in this set ({data.flashcardSet.flashcards.length})
+                        Cards in this set ({flashcardSetData.flashcardSet.flashcards.length})
                     </div>
-                    {#each data.flashcardSet.flashcards as card, i}
+                    {#each flashcardSetData.flashcardSet.flashcards as card, i}
                         <div class="my-2">
                             <div class="border-2 rounded-lg">
                                 <div class="flex justify-between items-center bg-zinc-800 border-b-2 border-neutral-700 rounded-b-none rounded-md px-4 py-2" style="min-height: 24px;">
                                     <div class="text-lg font-bold">{i+1}</div>    
-                                    <div class="flex gap-4">
-                                        <button class="hover:text-blue-500"><PenSquare /></button>
-                                        <button class="hover:text-red-500"><Trash2 /></button>
-                                    </div> 
+                                    {#if self}
+                                        <div class="flex gap-4">
+                                            <button class="hover:text-blue-500"><PenSquare /></button>
+                                            <button class="hover:text-red-500"><Trash2 /></button>
+                                        </div> 
+                                    {/if}
                                 </div>
                                 <div class="flex justify-between bg-zinc-800 py-2 rounded-md" style="min-height: 56px;">
                                     <div class="flex items-center w-1/3 px-4 py-2 border-r-2 border-neutral-700">{card.front}</div>
@@ -151,7 +170,8 @@
                 </div>
             {/if}
         {/if}
-    {:catch error}
-        <div class="text-3xl pb-2">Error loading flashcard set: {error.message}</div>
-    {/await}
+        {#if flashcardSetData.error}
+            <div class="text-3xl pb-2">Error loading flashcard set: {flashcardSetData.error.message}</div>
+        {/if}
+    {/if}
 </div>
