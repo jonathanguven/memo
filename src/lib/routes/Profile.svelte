@@ -66,11 +66,11 @@
         <div class="text-lg text-zinc-500">
             Joined {formatDate(userData.created_at)}
         </div>
-        <div class="text-lg text-zinc-500">
+        <div class="text-lg text-zinc-500 mb-6">
             Total sets: {flashcardSets.length}
         </div>
         {#if flashcardSets.length > 0}
-            <div class="flex flex-wrap justify-start w-full mt-6">
+            <div class="flex flex-wrap justify-start w-full">
                 {#each flashcardSets as flashcardSet}
                     <div class="item px-2">
                         <FlashcardSet 
@@ -88,7 +88,7 @@
                 {/each}
             </div>
         {:else}
-            <div>No flashcard sets available.</div>
+            <div class="text-2xl">This user has no public flashcard sets!</div>
         {/if}
     {:else}
         <div class="text-3xl pb-2">Error!</div>
@@ -109,7 +109,7 @@
         margin-left: 1%;
     }
     
-    @media (max-width: 1200px) {
+    @media (max-width: 1400px) {
         .item {
             flex: 0 47%; 
             margin-left: 2%;

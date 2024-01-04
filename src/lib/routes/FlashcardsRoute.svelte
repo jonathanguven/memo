@@ -80,7 +80,7 @@
         margin-left: 1%;
     }
     
-    @media (max-width: 1200px) {
+    @media (max-width: 1500px) {
         .item {
             flex: 0 47%; 
             margin-left: 2%;
