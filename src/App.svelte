@@ -18,6 +18,7 @@
     
     export let url = "";
     let route = '/';
+    $: baseRoute = route ? '/' + route.split('/')[1] : '';
     let profileRoute = '/login';
 
     onMount(async () => {
@@ -48,15 +49,15 @@
             <Link to="/about" class="text-gray-300 nav-link hover:underline {route === '/about' ? 'active' : ''}" on:click={() => update('/about')}>About</Link>
             <Link to="/flashcardsets" class="text-gray-300 nav-link hover:underline {route === '/flashcards' ? 'active' : ''}" on:click={() => update('/flashcards')}>Cards</Link>
             <Link to="/flashcardsets/new" 
-                class={`text-gray-300 nav-link hover:underline ${$isAuthenticated ? '' : 'opacity-50 cursor-not-allowed pointer-events-none'} {route === '/flashcards/new' ? 'active' : ''}`}
-                on:click={() => update('/flashcards/new')}>
+                class={`text-gray-300 nav-link hover:underline ${$isAuthenticated ? '' : 'opacity-50 cursor-not-allowed pointer-events-none'} ${route === '/flashcardsets/new' ? 'active' : ''}`}
+                on:click={() => update('/flashcardsets/new')}>
                     Create
             </Link>
         </div>
         <div class="right">
             {#if $isAuthenticated}
                 <Link to={profileRoute} 
-                    class={`text-gray-300 nav-link px-3 py-2 hover:underline ${$isAuthenticated ? '' : 'opacity-50 cursor-not-allowed pointer-events-none'} {(route => '/' + route.split('/')[1]) === '/user' ? 'active' : ''}`} 
+                    class={`text-gray-300 nav-link px-3 py-2 hover:underline ${$isAuthenticated ? '' : 'opacity-50 cursor-not-allowed pointer-events-none'} ${baseRoute === '/user' ? 'active' : ''}`} 
                     on:click={() => update(profileRoute)}>
                         Profile
                 </Link>
