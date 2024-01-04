@@ -1,6 +1,6 @@
 <script>
-    import { Link, navigate } from 'svelte-routing';
-    import { MoreVertical, ArrowLeftRight, Info, Menu, PenSquare, Trash2, LockKeyhole, UnlockKeyhole } from 'lucide-svelte';
+    import { navigate } from 'svelte-routing';
+    import { ArrowLeftRight, Info, Menu, PenSquare, Trash2, LockKeyhole, UnlockKeyhole } from 'lucide-svelte';
     import { deleteFlashcard } from '../../api/deleteFlashcard';
 
     export let title;
@@ -16,6 +16,7 @@
     let isTitle = true;
     let openMenu = false;
     let info = false;
+    let popup = false;
 
     function redirect(id) {
         console.log(`redirecting to flashcard set ${id}`);
@@ -27,9 +28,10 @@
         // implement edit 
     }
 
-    async function deleteCard() {
+    async function deleteConfirm() {
         console.log(`Deleting card ${id} created at ${created_at}`);
         const result = await deleteFlashcard(id);
+        popup = false;
         if (result.message) {
             onDelete(id); 
         }
@@ -38,13 +40,18 @@
     function toggle() {
         openMenu = !openMenu;
     }
+
+    function showModal() {
+        popup = !popup;
+    }
+
     function handleClick(event, action) {
         event.stopPropagation(); // stop event bubbling
 
         if (action === 'edit') {
             editCard();
         } else if (action === 'delete') {
-            deleteCard();
+            showModal();
         } else if (action === 'info') {
             info = !info
         } else if (action === 'toggle') {
@@ -155,6 +162,29 @@
             {/if}
         {/if}
     </button>
+    {#if popup}
+    <div class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 px-4">
+        <div class="modal bg-zinc-900 w-full max-w-lg mx-auto rounded-lg shadow-xl p-6">
+            <h3 class="text-2xl text-white font-semibold mb-4">Are you absolutely sure?</h3>
+            <p class="text-md text-zinc-400 mb-6">
+                This action cannot be undone. This will permanently delete your flashcard set and remove it from our servers.
+            </p>
+            <div class="flex justify-end space-x-3">
+                <button 
+                    class="modal px-4 py-1 rounded text-white hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition ease-in-out duration-150"
+                    on:click={showModal}>
+                        Cancel
+                </button>
+                <button 
+                    class="px-4 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition ease-in-out duration-150"
+                    on:click={deleteConfirm}>
+                        Continue
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    {/if}
 </div>
 
 <style>
@@ -185,5 +215,11 @@
     .tooltip:hover .tooltiptext {
         visibility: visible;
         opacity: 1;
+    }
+
+    .modal {
+        border: solid;
+        border-width: 0.5px;
+        border-color: rgb(88, 88, 88);
     }
 </style>
