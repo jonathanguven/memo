@@ -32,7 +32,7 @@
 <svelte:head>
     <title>Flashcard Sets</title>
 </svelte:head>
-<div class="flex flex-col items-center w-full">
+<div class="flex flex-col items-center w-full max-h-full">
     <h1 class="text-4xl font-medium py-1 mb-6">Flashcard Sets</h1>
     {#await promise}
         {#if showLoading}
@@ -82,6 +82,7 @@
         flex: 0 32%;
         margin-bottom: 2%;
         margin-left: 1%;
+        max-height: 300px;
     }
     
     @media (max-width: 1500px) {

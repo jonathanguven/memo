@@ -109,9 +109,13 @@
     <div class="bg-zinc-800 rounded-lg shadow px-6 pt-4 pb-6 border" style="min-width: 40vw">
         <form on:submit|preventDefault={submitForm}>
             <div>
-                <label class="block text-sm font-medium text-neutral-300 mb-1" for="title">
-                    Name
-                </label>
+                <div class="flex justify-between">
+                    <label class="block text-sm font-medium text-neutral-300 mb-1" for="title">
+                        Name
+                    </label>
+                    <div class="text-sm text-neutral-300">{title.length} / 30</div>
+                </div>
+                
                 <input id="title" bind:value={title} class="mb-1 shadow appearance-none border rounded w-full p-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:border-red-500 focus:shadow-outline" placeholder="Discrete Mathematics">
                 <div class="min-h-[24px] ">
                     {#if titleError}
@@ -121,9 +125,12 @@
             </div>
     
             <div>
-                <label class="block text-sm font-medium text-neutral-300 mb-1" for="description">
-                    Description
-                </label>
+                <div class="flex justify-between">
+                    <label class="block text-sm font-medium text-neutral-300 mb-1" for="description">
+                        Description
+                    </label>
+                    <div class="text-sm text-neutral-300">{description.length} / 200</div>
+                </div>
                 <textarea   id="description" 
                             bind:value={description} 
                             class="shadow appearance-none border rounded w-full mb-0 p-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 

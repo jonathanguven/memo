@@ -18,6 +18,35 @@
     let info = false;
     let popup = false;
 
+    let titleElement;
+    let descriptionElement;
+
+    // Function to check if an element's content is overflowing
+    function isOverflowing(element) {
+        return element && element.scrollHeight > element.clientHeight;
+    }
+
+    function checkOverflow() {
+        if (titleElement) {
+            titleElement.classList.toggle('items-start', isOverflowing(titleElement));
+            titleElement.classList.toggle('items-center', !isOverflowing(titleElement));
+        }
+        if (descriptionElement) {
+            descriptionElement.classList.toggle('items-start', isOverflowing(descriptionElement));
+            descriptionElement.classList.toggle('items-center', !isOverflowing(descriptionElement));
+        }
+    }
+
+    import { afterUpdate } from 'svelte';
+    afterUpdate(() => {
+        checkOverflow();
+    });
+    
+    // Reactive statements to update classes based on overflow
+    $: titleClass = isOverflowing(titleElement) ? 'items-start' : 'items-center';
+    $: descriptionClass = isOverflowing(descriptionElement) ? 'items-start' : 'items-center';
+
+
     function redirect(id) {
         console.log(`redirecting to flashcard set ${id}`);
         navigate(`/flashcardsets/${id}`);
@@ -69,14 +98,14 @@
 
 <div>
     <button 
-        class="flashcard relative border-2 p-16 flex items-center justify-center bg-zinc-800 shadow-xl rounded-xl cursor-pointer" 
+        class="flashcard relative border-2 p-12 flex items-center justify-center bg-zinc-800 shadow-xl rounded-xl cursor-pointer" 
         on:click={redirect(id)}
     >
-        <div class="text-center text-3xl">
+        <div class="wrap flex justify-center text-3xl w-full min-h-full {titleClass}" bind:this={titleElement}>
             {#if isTitle}
                 <div>{title}</div>
             {:else}
-                <div>{description}</div>
+                <div class="flex justify-center w-full min-h-full {descriptionClass}" bind:this={descriptionElement}>{description}</div>
             {/if}
         </div>
 
@@ -191,7 +220,31 @@
     .flashcard {
         width: 100%;
         aspect-ratio: 20/12;
+        overflow: hidden;
     }
+
+    .wrap {
+        max-height: 100%;
+        overflow-y: auto; 
+    }
+
+    .wrap::-webkit-scrollbar {
+        width: 4px; /* Width of the scrollbar */
+    }
+
+    .wrap::-webkit-scrollbar-track {
+        background: transparent; /* Transparent track */
+    }
+
+    .wrap::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.6); /* Scrollbar handle color */
+        border-radius: 2px; /* Rounded corners on the scrollbar handle */
+    }
+
+    .wrap::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 255, 255, 0.8); /* Scrollbar handle color on hover */
+    }
+
     .tooltip {
         position: relative;
         display: inline-block;
