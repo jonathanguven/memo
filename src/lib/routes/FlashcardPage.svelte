@@ -161,8 +161,8 @@
                                     {/if}
                                 </div>
                                 <div class="flex justify-between bg-zinc-800 py-2 rounded-md" style="min-height: 56px;">
-                                    <div class="flex items-center w-1/3 px-4 py-2 border-r-2 border-neutral-700">{card.front}</div>
-                                    <div class="flex items-center w-2/3 px-4 py-2">{card.back}</div>       
+                                    <div class="flex items-start w-1/3 px-4 py-2 border-r-2 border-neutral-700">{card.front}</div>
+                                    <div class="flex items-start w-2/3 px-4 py-2">{card.back}</div>       
                                 </div>
                             </div>
                         </div>
