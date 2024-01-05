@@ -119,7 +119,7 @@
                 by <Link to="/user/{flashcardSetData.flashcardSet.users.username}" class="hover:underline">{flashcardSetData.flashcardSet.users.username}</Link>
             </div>
             
-            <div class="text-xl text-gray-400 font-normal mb-8">
+            <div class="text-xl text-center text-gray-400 font-normal mb-8 max-w-2xl">
                 {flashcardSetData.flashcardSet.description}
             </div>
             {#if !show}
