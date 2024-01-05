@@ -1,4 +1,5 @@
 <script>
+    import { afterUpdate } from 'svelte';
     import { navigate } from 'svelte-routing';
     import { ArrowLeftRight, Info, Menu, PenSquare, Trash2, LockKeyhole, UnlockKeyhole } from 'lucide-svelte';
     import { deleteFlashcard } from '../../api/deleteFlashcard';
@@ -21,7 +22,6 @@
     let titleElement;
     let descriptionElement;
 
-    // Function to check if an element's content is overflowing
     function isOverflowing(element) {
         return element && element.scrollHeight > element.clientHeight;
     }
@@ -37,12 +37,10 @@
         }
     }
 
-    import { afterUpdate } from 'svelte';
     afterUpdate(() => {
         checkOverflow();
     });
 
-    // Reactive statements to update classes based on overflow
     $: titleClass = isOverflowing(titleElement) ? 'items-start' : 'items-center';
     $: descriptionClass = isOverflowing(descriptionElement) ? 'items-start' : 'items-center';
 
