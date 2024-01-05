@@ -98,7 +98,7 @@
 
 <div>
     <button 
-        class="flashcard relative border-2 py-8 px-12 flex items-center justify-center bg-zinc-800 shadow-xl rounded-xl cursor-pointer" 
+        class="flashcard relative border-2 py-8 px-14 flex items-center justify-center bg-zinc-800 shadow-xl rounded-xl cursor-pointer" 
         on:click={redirect(id)}
     >
         <div class="wrap flex justify-center text-3xl w-full min-h-full {titleClass}" bind:this={titleElement}>
