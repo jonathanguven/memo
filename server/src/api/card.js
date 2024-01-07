@@ -12,7 +12,6 @@ router.post('/flashcard-sets/:setId/flashcards', authenticate, async (req, res) 
     try {
         const { front, back, description } = req.body;
 
-        // Check if the flashcard set exists and belongs to the user
         const { data: flashcardSet, error: flashcardSetError } = await supabase
             .from('flashcard_sets')
             .select('id, user_id')
@@ -27,7 +26,6 @@ router.post('/flashcard-sets/:setId/flashcards', authenticate, async (req, res) 
             return res.status(403).json({ message: 'Unauthorized access.' });
         }
 
-        // Insert new flashcard into the 'flashcards' table
         const { error: flashcardError } = await supabase
             .from('flashcards')
             .insert([
@@ -56,7 +54,6 @@ router.delete('/flashcard-sets/:setId/flashcards/:cardId', authenticate, async (
     const cardId = req.params.cardId;
 
     try {
-        // Check if the flashcard set exists and belongs to the user
         const { data: flashcardSet, error: flashcardSetError } = await supabase
             .from('flashcard_sets')
             .select('id, user_id')
@@ -71,7 +68,6 @@ router.delete('/flashcard-sets/:setId/flashcards/:cardId', authenticate, async (
             return res.status(403).json({ message: 'Unauthorized access.' });
         }
 
-        // Delete the flashcard
         const { error: flashcardError } = await supabase
             .from('flashcards')
             .delete()

@@ -3,6 +3,7 @@
     import { navigate } from 'svelte-routing';
     import { ArrowLeftRight, Info, Menu, PenSquare, Trash2, LockKeyhole, UnlockKeyhole } from 'lucide-svelte';
     import { deleteFlashcard } from '../../api/deleteFlashcard';
+    import { togglePrivacy } from '../../api/togglePrivacy';
 
     export let title;
     export let description;
@@ -50,9 +51,14 @@
         navigate(`/flashcardsets/${id}`);
     }
 
-    function editCard() {
-        console.log(`Editing card ${id}`);
-        // implement edit 
+    async function editPrivacy() {
+        console.log(`Editing privacy of set ${id}`);
+        const response = await togglePrivacy(id);
+        if (response && !response.error) {
+            is_private = !is_private;
+        } else {
+            console.error('Error toggling privacy:', response?.error);
+        }
     }
 
     async function deleteConfirm() {
@@ -75,8 +81,8 @@
     function handleClick(event, action) {
         event.stopPropagation(); // stop event bubbling
 
-        if (action === 'edit') {
-            editCard();
+        if (action === 'togglePrivacy') {
+            editPrivacy();
         } else if (action === 'delete') {
             showModal();
         } else if (action === 'info') {
@@ -137,15 +143,28 @@
                     role="button"
                     aria-label="Toggle Menu"
                 >
-                    <div class="tooltip">
-                        <button 
-                            class="block hover:bg-zinc-700 p-2 rounded"
-                            on:click={(event) => handleClick(event, 'edit')}
-                        >
-                            <PenSquare />
-                        </button>
-                        <span class="tooltiptext py-1 px-3 bg-zinc-950">Edit Card</span>
-                    </div>
+                    {#if is_private}
+                        <div class="tooltip">
+                            <button 
+                                class="block hover:bg-zinc-700 p-2 rounded"
+                                on:click={(event) => handleClick(event, 'togglePrivacy')}
+                            >
+                                <LockKeyhole />
+                            </button>
+                            <span class="tooltiptext py-1 px-3 bg-zinc-950">Make Public</span>
+                        </div>
+                    {:else}
+                        <div class="tooltip">
+                            <button 
+                                class="block hover:bg-zinc-700 p-2 rounded"
+                                on:click={(event) => handleClick(event, 'togglePrivacy')}
+                            >
+                                <UnlockKeyhole />
+                            </button>
+                            <span class="tooltiptext py-1 px-3 bg-zinc-950">Make Private</span>
+                        </div>
+                    {/if}
+                    
                     <div class="tooltip">
                         <button 
                             class="block hover:bg-zinc-700 p-2 rounded"

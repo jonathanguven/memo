@@ -91,11 +91,40 @@ router.get('/flashcard-sets/:id', async (req, res) => {
 	}
 });
 
-// Update a specific flashcard set
+// Update a specific flashcard set - make public and private
 router.put('/flashcard-sets/:id', authenticate, async (req, res) => {
 	const userId = req.id; 
 	const setId = req.params.id;
-	// ... logic to update the flashcard set if id matches ...
+	
+	try {
+        const { data: existingSet, error: fetchError } = await supabase
+            .from('flashcard_sets')
+            .select('is_private, user_id')
+            .eq('id', setId)
+            .single();
+
+        if (fetchError) throw fetchError;
+
+        if (!existingSet) {
+            return res.status(404).json({ message: 'Flashcard set not found!' });
+        }
+        if (existingSet.user_id !== userId) {
+            return res.status(403).json({ message: 'Unauthorized access.' });
+        }
+
+        const newIsPrivate = !existingSet.is_private;
+
+        const { error: updateError } = await supabase
+            .from('flashcard_sets')
+            .update({ is_private: newIsPrivate })
+            .match({ id: setId });
+
+        if (updateError) throw updateError;
+
+        res.status(200).json({ message: 'Flashcard set updated successfully', is_private: newIsPrivate });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 });
 
 // Delete a specific flashcard set
