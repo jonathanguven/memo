@@ -38,6 +38,12 @@
             setTimeout(() => {
                 titleError = '';
             }, 2000);
+        } else if (title.length > 50) {
+            titleError = `* Title must be less than 50 characters`;
+            isValid = false;
+            setTimeout(() => {
+                titleError = '';
+            }, 2000);
         }
 
         if (description.length === 0) {
@@ -46,10 +52,22 @@
             setTimeout(() => {
                 descriptionError = '';
             }, 2000);
+        } else if (description.length > 200) {
+            descriptionError = `* Description must be less than 200 characters`;
+            isValid = false;
+            setTimeout(() => {
+                descriptionError = '';
+            }, 2000);
         }
 
         if (flashcards.some(fc => fc.front.trim() === '' || fc.back.trim() === '')) {
             flashcardsError = '* All flashcards must have both front and back content';
+            isValid = false;
+            setTimeout(() => {
+                flashcardsError = '';
+            }, 2000);
+        } else if (flashcards.some(fc => fc.front.length > 400 || fc.back.length > 400)) {
+            flashcardsError = `* Front and Back must each be less than 400 characters`;
             isValid = false;
             setTimeout(() => {
                 flashcardsError = '';
@@ -113,7 +131,7 @@
                     <label class="block text-sm font-medium text-neutral-300 mb-1" for="title">
                         Name
                     </label>
-                    <div class="text-sm text-neutral-300">{title.length} / 30</div>
+                    <div class="text-sm text-neutral-300">{title.length} / 50</div>
                 </div>
                 
                 <input id="title" bind:value={title} class="mb-1 shadow appearance-none border rounded w-full p-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:border-red-500 focus:shadow-outline" placeholder="Discrete Mathematics">
@@ -148,9 +166,12 @@
             {#each flashcards as flashcard, index}
                 <div class="flex mb-4">
                     <div class="flex flex-col flex-1 mr-6">
-                        <label class="block text-sm font-medium text-gray-300 mb-1" for={`front-${index}`}>
-                            Front
-                        </label>
+                        <div class="flex justify-between">
+                            <label class="block text-sm font-medium text-gray-300 mb-1" for={`front-${index}`}>
+                                Front
+                            </label>
+                            <div class="text-sm text-neutral-300">{flashcard.front.length} / 400</div>
+                        </div>
                         <textarea   id={`front-${index}`} 
                                     bind:value={flashcard.front} 
                                     class="shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
@@ -160,9 +181,12 @@
                                     rows="1"></textarea>
                     </div>
                     <div class="flex flex-col flex-1 mr-4">
-                        <label class="block text-sm font-medium text-gray-300 mb-1" for={`back-${index}`}>
-                            Back
-                        </label>
+                        <div class="flex justify-between">
+                            <label class="block text-sm font-medium text-gray-300 mb-1" for={`back-${index}`}>
+                                Back
+                            </label>
+                            <div class="text-sm text-neutral-300">{flashcard.back.length} / 400</div>
+                        </div>
                         <textarea   id={`back-${index}`} 
                                     bind:value={flashcard.back} 
                                     class="shadow appearance-none border rounded w-full py-2 px-3 bg-zinc-800 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none" 
