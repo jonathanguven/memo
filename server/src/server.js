@@ -14,6 +14,7 @@ import getUser from './user/user.js'
 import self from './user/self.js'
 import flashcards from './api/flashcardSet.js'
 import flashcardSets from './api/publicSets.js'
+import card from './api/card.js'
 
 const app = express();
 const port = 3000; 
@@ -40,6 +41,7 @@ app.use('/auth', check);
 app.use('/api', image);
 app.use('/api', flashcards);
 app.use('/api', flashcardSets);
+app.use('/api', card);
 
 
 app.get('/', (req, res) => {

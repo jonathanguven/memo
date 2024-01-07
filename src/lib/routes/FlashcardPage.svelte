@@ -1,5 +1,6 @@
 <script>
     import { fetchFlashcardSet } from "../../api/getFlashcardSet";
+    import { deleteFlashcardFromSet } from "../../api/deleteFlashcardFromSet";
     import { isAuthenticated, checkAuthentication, name } from '../../stores/authStore.js';
     import Flashcard from "../components/Flashcard.svelte";
     import { Link } from 'svelte-routing';
@@ -28,7 +29,26 @@
                 error = e;
                 showLoading = false;
             });
-    })
+    });
+
+    async function deleteFlashcard(cardId) {
+        try {
+            await deleteFlashcardFromSet(id, cardId);
+            flashcardSetData.flashcardSet.flashcards = flashcardSetData.flashcardSet.flashcards.filter(card => card.id !== cardId);
+            flashcardSetData = { ...flashcardSetData };
+        } catch (e) {
+            console.error('Error deleting flashcard:', e);
+        }
+    }
+
+    async function addFlashcard(newCard) {
+        try {
+            const addedCard = await addFlashcardToSet(id, newCard);
+            flashcardSetData.flashcardSet.flashcards.push(addedCard);
+        } catch (e) {
+            console.error('Error adding flashcard:', e);
+        }
+    }
 
     const goBack = () => {
         if (index > 0) {
@@ -52,13 +72,6 @@
         return () => {
             clearTimeout(timer);
         };
-    });
-
-    const formatDate = ((unformatted) => {
-        const date = new Date(unformatted);
-        return 'Last Updated ' + date.toLocaleDateString('en-US', { 
-            month: 'long', day: 'numeric', year: 'numeric' 
-        });
     });
 
     const showCards = () => {
@@ -156,7 +169,7 @@
                                     {#if self}
                                         <div class="flex gap-4">
                                             <button class="hover:text-blue-500"><PenSquare /></button>
-                                            <button class="hover:text-red-500"><Trash2 /></button>
+                                            <button class="hover:text-red-500" on:click={() => deleteFlashcard(card.id)}><Trash2 /></button>
                                         </div> 
                                     {/if}
                                 </div>
@@ -169,6 +182,20 @@
                     {/each}
                 </div>
             {/if}
+        {:else}
+            <div class="flex flex-col items-center m-4">
+                <h1 class="text-4xl text-white px-4 mb-2">{flashcardSetData.flashcardSet.title}</h1>
+                <div class="text-xl text-white mb-2">
+                    by <Link to="/user/{flashcardSetData.flashcardSet.users.username}" class="hover:underline">{flashcardSetData.flashcardSet.users.username}</Link>
+                </div>
+                
+                <div class="text-xl text-center text-gray-400 font-normal mb-8 max-w-2xl">
+                    {flashcardSetData.flashcardSet.description}
+                </div>
+                <div class="text-xl text-gray-500">
+                    There are no items in this flashcard set!
+                </div>
+            </div>
         {/if}
         {#if flashcardSetData.error}
             <div class="text-3xl pb-2">Error loading flashcard set: {flashcardSetData.error.message}</div>
