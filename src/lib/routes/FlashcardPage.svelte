@@ -213,7 +213,7 @@
                     bind:value={editedDescription} 
                     rows="1"
                     on:input={e => autoGrow(e.target)} 
-                    class="shadow appearance-none overflow-hidden border w-1/2 rounded mb-0 p-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none"></textarea>
+                    class="shadow appearance-none overflow-hidden border w-1/2 rounded mb-0 p-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline resize-none"></textarea>
                 <div class="flex gap-2 my-4">
                     <button class="px-4 py-1 rounded text-white bg-zinc-500 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" on:click={saveDescription}>save</button>
                     <button class="px-2 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 w-16 transition ease-in-out duration-150" on:click={cancelDescriptionEdit}>cancel</button>
