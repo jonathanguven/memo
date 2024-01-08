@@ -23,7 +23,6 @@
 
     let editingTitle = false;
     let editingDescription = false;
-    let editingCard = false;
 
     let editedTitle = flashcardSetData?.flashcardSet?.title;
     let editedDescription = flashcardSetData?.flashcardSet?.description;
@@ -34,6 +33,11 @@
         showLoading = true;
         fetchFlashcardSet(id)
             .then(data => {
+                data.flashcardSet.flashcards = data.flashcardSet.flashcards.map(card => ({
+                    ...card,
+                    editing: false
+                }));
+
                 flashcardSetData = data;
                 showLoading = false;
                 self = $name === flashcardSetData?.flashcardSet?.users?.username;
@@ -156,9 +160,10 @@
         }
     }
 
-    async function editFlashcard() {
-        console.log('editing flashcard')
-        editingCard = !editingCard;
+    async function editFlashcard(cardIndex) {
+        console.log('editing flashcard ' + cardIndex)
+        flashcardSetData.flashcardSet.flashcards[cardIndex].editing = !flashcardSetData.flashcardSet.flashcards[cardIndex].editing;
+        flashcardSetData = { ...flashcardSetData }; 
     }
 
     function showTitleEdit() {
@@ -341,13 +346,13 @@
                                 <div class="text-lg font-bold">{i+1}</div>    
                                 {#if self}
                                     <div class="flex gap-4">
-                                        <button class="hover:text-blue-500" on:click={() => editFlashcard()}><PenSquare /></button>
+                                        <button class="hover:text-blue-500" on:click={() => editFlashcard(i)}><PenSquare /></button>
                                         <button class="hover:text-red-500" on:click={() => deleteFlashcard(card.id)}><Trash2 /></button>
                                     </div> 
                                 {/if}
                             </div>
                             <div class="flex justify-between bg-zinc-800 py-2 rounded-md" style="min-height: 56px;">
-                                {#if editingCard}
+                                {#if card.editing}
                                     <div class="flex items-start w-1/3 px-4 py-2 border-r-2 border-neutral-700">editing front</div>
                                     <div class="flex items-start w-2/3 px-4 py-2">Editing back</div> 
                                 {:else}
