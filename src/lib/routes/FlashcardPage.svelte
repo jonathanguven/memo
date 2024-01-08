@@ -381,8 +381,17 @@
                                     <div class="flex gap-4">
                                         {#if card.editing}
                                             <div class="flex justify-center gap-2">
-                                                <button class="px-4 py-1 rounded text-white bg-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" on:click={() => {saveCardChanges(i)}}>save</button>
-                                                <button class="px-2 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 w-16 transition ease-in-out duration-150" on:click={() => {cancelCardChanges(i)}}>cancel</button>
+                                                <button 
+                                                    class="px-4 py-1 rounded text-white bg-zinc-500 focus:outline-none focus:ring-2 {(card.front.length < 1 || card.front.length > 400 || card.back.length < 1 || card.back.length > 400) ? 'cursor-not-allowed' : 'hover:bg-zinc-700'} focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" 
+                                                    on:click={() => {saveCardChanges(i)}}
+                                                    disabled={(card.front.length < 1 || card.front.length > 400 || card.back.length < 1 || card.back.length > 400)}>
+                                                    save
+                                                </button>
+                                                <button 
+                                                    class="px-2 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 w-16 transition ease-in-out duration-150" 
+                                                    on:click={() => {cancelCardChanges(i)}}>
+                                                    cancel
+                                                </button>
                                             </div>
                                         {:else}
                                             <button class="hover:text-blue-500" on:click={() => startEditing(i)}><PenSquare /></button>
