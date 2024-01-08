@@ -26,7 +26,6 @@
 
     let editedTitle = flashcardSetData?.flashcardSet?.title;
     let editedDescription = flashcardSetData?.flashcardSet?.description;
-    
 
     onMount(async () => {
         await checkAuthentication();
@@ -35,7 +34,9 @@
             .then(data => {
                 data.flashcardSet.flashcards = data.flashcardSet.flashcards.map(card => ({
                     ...card,
-                    editing: false
+                    editing: false,
+                    originalFront: card.front,
+                    originalBack: card.back
                 }));
 
                 flashcardSetData = data;
@@ -140,6 +141,28 @@
         descriptionEdit = false;
         toggleDescriptionEdit();
     }
+    
+    function startEditing(index) {
+        console.log('editing flashcard ' + index)
+        flashcardSetData.flashcardSet.flashcards[index].editing = true;
+        flashcardSetData = { ...flashcardSetData }; 
+    }
+
+    async function saveCardChanges(index) {
+        let card = flashcardSetData.flashcardSet.flashcards[index];
+        // Add logic to save the changes to the backend here
+        console.log(`Saving changes for card ${index}`, card.front, card.back);
+        card.editing = false;
+        flashcardSetData = { ...flashcardSetData };
+    }
+
+    function cancelCardChanges(index) {
+        let card = flashcardSetData.flashcardSet.flashcards[index];
+        card.front = card.originalFront;
+        card.back = card.originalBack;
+        card.editing = false;
+        flashcardSetData = { ...flashcardSetData };
+    }
 
     async function deleteFlashcard(cardId) {
         try {
@@ -158,12 +181,6 @@
         } catch (e) {
             console.error('Error adding flashcard:', e);
         }
-    }
-
-    async function editFlashcard(cardIndex) {
-        console.log('editing flashcard ' + cardIndex)
-        flashcardSetData.flashcardSet.flashcards[cardIndex].editing = !flashcardSetData.flashcardSet.flashcards[cardIndex].editing;
-        flashcardSetData = { ...flashcardSetData }; 
     }
 
     function showTitleEdit() {
@@ -346,21 +363,46 @@
                                 <div class="text-lg font-bold">{i+1}</div>    
                                 {#if self}
                                     <div class="flex gap-4">
-                                        <button class="hover:text-blue-500" on:click={() => editFlashcard(i)}><PenSquare /></button>
-                                        <button class="hover:text-red-500" on:click={() => deleteFlashcard(card.id)}><Trash2 /></button>
+                                        {#if card.editing}
+                                            <div class="flex justify-center gap-2">
+                                                <button class="px-4 py-1 rounded text-white bg-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" on:click={() => {saveCardChanges(i)}}>save</button>
+                                                <button class="px-2 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 w-16 transition ease-in-out duration-150" on:click={() => {cancelCardChanges(i)}}>cancel</button>
+                                            </div>
+                                        {:else}
+                                            <button class="hover:text-blue-500" on:click={() => startEditing(i)}><PenSquare /></button>
+                                            <button class="hover:text-red-500" on:click={() => deleteFlashcard(card.id)}><Trash2 /></button>
+                                        {/if}
                                     </div> 
                                 {/if}
                             </div>
                             <div class="flex justify-between bg-zinc-800 py-2 rounded-md" style="min-height: 56px;">
                                 {#if card.editing}
-                                    <div class="flex items-start w-1/3 px-4 py-2 border-r-2 border-neutral-700">editing front</div>
-                                    <div class="flex items-start w-2/3 px-4 py-2">Editing back</div> 
+                                <textarea
+                                    class="w-1/3 px-4 py-2 overflow-hidden resize-none bg-transparent border-r-2 border-neutral-700 text-white focus:outline-none"
+                                    type="text"
+                                    rows="1"
+                                    on:input={e => autoGrow(e.target)}
+                                    bind:value={card.front}
+                                />                                    
+                                <textarea
+                                    class="w-2/3 px-4 py-2 overflow-hidden resize-none bg-transparent border-neutral-700 text-white focus:outline-none"
+                                    type="text"
+                                    rows="1"
+                                    on:input={e => autoGrow(e.target)}
+                                    bind:value={card.back}
+                                />                                
                                 {:else}
                                     <div class="flex items-start w-1/3 px-4 py-2 border-r-2 border-neutral-700">{card.front}</div>
                                     <div class="flex items-start w-2/3 px-4 py-2">{card.back}</div>       
                                 {/if}
                             </div>
                         </div>
+                        {#if card.editing}
+                            <div class="flex justify-between mb-4">
+                                <div class="flex items-start w-1/3 px-4 {(card.front.length < 1 || card.front.length > 400) ? 'text-red-500' : 'text-neutral-300'}">{card.front.length}/400</div>
+                                <div class="flex items-start w-2/3 px-4 {(card.back.length < 1 || card.back.length > 200) ? 'text-red-500' : 'text-neutral-300'}">{card.back.length}/400</div>
+                            </div>
+                        {/if} 
                     {/each}
                 </div>
             {/if}
