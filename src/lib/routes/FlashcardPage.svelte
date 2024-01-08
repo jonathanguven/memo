@@ -26,35 +26,6 @@
     let editedTitle = flashcardSetData?.flashcardSet?.title;
     let editedDescription = flashcardSetData?.flashcardSet?.description;
 
-    function toggleTitleEdit() {
-        editingTitle = !editingTitle;
-        editedTitle = flashcardSetData.flashcardSet.title;
-    }
-
-    function toggleDescriptionEdit() {
-        editingDescription = !editingDescription;
-        editedDescription = flashcardSetData.flashcardSet.description;
-    }
-
-    async function saveDescription() {
-        // Add logic to save the edited description to the backend
-        flashcardSetData.flashcardSet.description = editedDescription;
-        descriptionEdit = false;
-        toggleDescriptionEdit();
-    }
-
-    function cancelTitleEdit() {
-        editedTitle = flashcardSetData.flashcardSet.title;
-        titleEdit = false;
-        toggleTitleEdit();
-    }
-
-    function cancelDescriptionEdit() {
-        editedDescription = flashcardSetData.flashcardSet.description;
-        descriptionEdit = false;
-        toggleDescriptionEdit();
-    }
-
     onMount(async () => {
         await checkAuthentication();
         showLoading = true;
@@ -69,6 +40,16 @@
                 showLoading = false;
             });
     });
+
+    function toggleTitleEdit() {
+        editingTitle = !editingTitle;
+        editedTitle = flashcardSetData.flashcardSet.title;
+    }
+
+    function toggleDescriptionEdit() {
+        editingDescription = !editingDescription;
+        editedDescription = flashcardSetData.flashcardSet.description;
+    }
 
     async function saveTitle() {
         const newTitle = editedTitle.trim();
@@ -103,6 +84,54 @@
         } else {
             console.error('The title cannot be empty.');
         }
+    }
+
+
+    async function saveDescription() {
+        const newDescription = editedDescription.trim();
+
+        if (newDescription) {
+            try {
+                const response = await fetch(`${url}/api/flashcard-sets/${id}/update-description`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ description: newDescription })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    flashcardSetData.flashcardSet.description = newDescription;
+                    editingDescription = false; 
+                    descriptionEdit = false;
+                } else {
+                    throw new Error('Failed to update the description');
+                }
+            } catch (error) {
+                console.error('Error updating description:', error);
+            }
+        } else {
+            console.error('The description cannot be empty.');
+        }
+    }
+
+    function cancelTitleEdit() {
+        editedTitle = flashcardSetData.flashcardSet.title;
+        titleEdit = false;
+        toggleTitleEdit();
+    }
+
+    function cancelDescriptionEdit() {
+        editedDescription = flashcardSetData.flashcardSet.description;
+        descriptionEdit = false;
+        toggleDescriptionEdit();
     }
 
     async function deleteFlashcard(cardId) {
