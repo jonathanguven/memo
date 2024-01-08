@@ -279,12 +279,13 @@
         right: 130%;
         margin-bottom: 5px;
         opacity: 0;
-        transition: opacity 0.3s;
+        transition: opacity 0.3s, visibility 0s linear 1s;
     }
 
     .tooltip:hover .tooltiptext {
         visibility: visible;
         opacity: 1;
+        transition-delay: 0.3s;
     }
 
     .modal {

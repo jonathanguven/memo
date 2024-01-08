@@ -19,6 +19,45 @@
     let titleEdit = false;
     let descriptionEdit = false;
 
+    let editingTitle = false;
+    let editingDescription = false;
+    let editedTitle = flashcardSetData?.flashcardSet?.title;
+    let editedDescription = flashcardSetData?.flashcardSet?.description;
+
+    function toggleTitleEdit() {
+        editingTitle = !editingTitle;
+        editedTitle = flashcardSetData.flashcardSet.title;
+    }
+
+    function toggleDescriptionEdit() {
+        editingDescription = !editingDescription;
+        editedDescription = flashcardSetData.flashcardSet.description;
+    }
+
+    async function saveTitle() {
+        // Add logic to save the edited title to the backend
+        flashcardSetData.flashcardSet.title = editedTitle;
+        toggleTitleEdit();
+    }
+
+    async function saveDescription() {
+        // Add logic to save the edited description to the backend
+        flashcardSetData.flashcardSet.description = editedDescription;
+        toggleDescriptionEdit();
+    }
+
+    function cancelTitleEdit() {
+        editedTitle = flashcardSetData.flashcardSet.title;
+        titleEdit = false;
+        toggleTitleEdit();
+    }
+
+    function cancelDescriptionEdit() {
+        editedDescription = flashcardSetData.flashcardSet.description;
+        descriptionEdit = false;
+        toggleDescriptionEdit();
+    }
+
     onMount(async () => {
         await checkAuthentication();
         showLoading = true;
@@ -63,12 +102,14 @@
 
     const goBack = () => {
         if (index > 0) {
+            console.log('back');
             index--;
         }
     }
 
     const goNext = (length) => {
         if (index < length - 1) {
+            console.log('next');
             index++;
         }
     }
@@ -87,6 +128,11 @@
 
     const showCards = () => {
         show = !show;
+    }
+
+    function autoGrow(element) {
+        element.style.height = '5px';
+        element.style.height = (element.scrollHeight) + 'px';
     }
 </script>
 
@@ -137,33 +183,58 @@
                     <ChevronRight size={32}/>
                 </button>
             </div>
-            <div class="flex" on:mouseenter={showTitleEdit} on:mouseleave={showTitleEdit} tabindex="0" role="button">
-                <h1 
-                    class="relative text-4xl text-white px-4 mb-2"
-                    
-                >
-                    {flashcardSetData.flashcardSet.title}
-                </h1>
-                {#if titleEdit}
-                    <div class="absolute right-80 mt-2 mr-2">
-                        <Pencil size={28}/>
+            {#if editingTitle}
+                <input bind:value={editedTitle} class="text-4xl text-white bg-transparent border-b-2 border-white px-4 mb-2" />
+                <div class="flex gap-2 my-4">
+                    <button class="px-4 py-1 rounded text-white bg-zinc-500 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" on:click={saveTitle}>save</button>
+                    <button class="px-2 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 w-16 transition ease-in-out duration-150" on:click={cancelTitleEdit}>cancel</button>
+                </div>
+            {:else}
+                <div class="flex" on:mouseenter={showTitleEdit} on:mouseleave={showTitleEdit} tabindex="0" role="button">
+                    <div class="text-4xl px-4 mb-2 flex justify-center">
+                        <div class="relative inline-block text-center">
+                            <h1 class="text-white">{flashcardSetData.flashcardSet.title}</h1>
+                            {#if self && titleEdit}
+                                <button class="absolute hover:text-zinc-500 -right-16 top-2 transform -translate-x-full" on:click={toggleTitleEdit}>
+                                    <Pencil size={28} />
+                                </button>
+                            {/if}
+                        </div>
                     </div>
-                {/if}
-            </div>
+                </div>
+            {/if}
             
             <div class="text-xl text-white mb-2">
                 by <Link to="/user/{flashcardSetData.flashcardSet.users.username}" class="hover:underline">{flashcardSetData.flashcardSet.users.username}</Link>
             </div>
-            <div class="flex" on:mouseenter={showDescriptionEdit} on:mouseleave={showDescriptionEdit} tabindex="0" role="button">
-                <div class="text-xl text-center text-gray-400 font-normal mb-8 px-8 max-w-2xl">
-                    {flashcardSetData.flashcardSet.description}
+
+            {#if editingDescription}
+                <textarea 
+                    bind:value={editedDescription} 
+                    rows="1"
+                    on:input={e => autoGrow(e.target)} 
+                    class="shadow appearance-none overflow-hidden border w-1/2 rounded mb-0 p-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline focus:border-red-500 resize-none"></textarea>
+                <div class="flex gap-2 my-4">
+                    <button class="px-4 py-1 rounded text-white bg-zinc-500 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" on:click={saveDescription}>save</button>
+                    <button class="px-2 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 w-16 transition ease-in-out duration-150" on:click={cancelDescriptionEdit}>cancel</button>
                 </div>
-                {#if descriptionEdit}
-                    <div class="absolute right-96 mt-1 mr-2">
-                        <Pencil size={20}/>
+            {:else}
+                <div class="flex" on:mouseenter={showDescriptionEdit} on:mouseleave={showDescriptionEdit} tabindex="0" role="button">
+                    <div class="text-xl mb-2 flex justify-center">
+                        <div class="relative inline-block text-center">
+                            <div class="text-gray-400 font-normal px-8 max-w-2xl">
+                                {flashcardSetData.flashcardSet.description}
+                            </div>
+                            {#if self && descriptionEdit}
+                                <button class="absolute hover:text-zinc-500 -right-4 top-1 transform -translate-x-full" on:click={toggleDescriptionEdit}>
+                                    <Pencil size={20} />
+                                </button>
+                            {/if}
+                        </div>
                     </div>
-                {/if}
-            </div>
+                </div>
+            {/if}
+
             {#if !show}
                 <div 
                     class="text-xl text-gray-300 font-normal mb-4 hover:text-zinc-500 active:text-zinc-600"
@@ -191,21 +262,19 @@
                         Cards in this set ({flashcardSetData.flashcardSet.flashcards.length})
                     </div>
                     {#each flashcardSetData.flashcardSet.flashcards as card, i}
-                        <div class="my-2">
-                            <div class="border-2 rounded-lg">
-                                <div class="flex justify-between items-center bg-zinc-800 border-b-2 border-neutral-700 rounded-b-none rounded-md px-4 py-2" style="min-height: 24px;">
-                                    <div class="text-lg font-bold">{i+1}</div>    
-                                    {#if self}
-                                        <div class="flex gap-4">
-                                            <button class="hover:text-blue-500"><PenSquare /></button>
-                                            <button class="hover:text-red-500" on:click={() => deleteFlashcard(card.id)}><Trash2 /></button>
-                                        </div> 
-                                    {/if}
-                                </div>
-                                <div class="flex justify-between bg-zinc-800 py-2 rounded-md" style="min-height: 56px;">
-                                    <div class="flex items-start w-1/3 px-4 py-2 border-r-2 border-neutral-700">{card.front}</div>
-                                    <div class="flex items-start w-2/3 px-4 py-2">{card.back}</div>       
-                                </div>
+                        <div class="border-2 rounded-lg my-2">
+                            <div class="flex justify-between items-center bg-zinc-800 border-b-2 border-neutral-700 rounded-b-none rounded-md px-4 py-2" style="min-height: 24px;">
+                                <div class="text-lg font-bold">{i+1}</div>    
+                                {#if self}
+                                    <div class="flex gap-4">
+                                        <button class="hover:text-blue-500"><PenSquare /></button>
+                                        <button class="hover:text-red-500" on:click={() => deleteFlashcard(card.id)}><Trash2 /></button>
+                                    </div> 
+                                {/if}
+                            </div>
+                            <div class="flex justify-between bg-zinc-800 py-2 rounded-md" style="min-height: 56px;">
+                                <div class="flex items-start w-1/3 px-4 py-2 border-r-2 border-neutral-700">{card.front}</div>
+                                <div class="flex items-start w-2/3 px-4 py-2">{card.back}</div>       
                             </div>
                         </div>
                     {/each}
@@ -231,3 +300,4 @@
         {/if}
     {/if}
 </div>
+
