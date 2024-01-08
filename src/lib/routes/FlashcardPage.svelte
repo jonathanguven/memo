@@ -37,12 +37,14 @@
     async function saveTitle() {
         // Add logic to save the edited title to the backend
         flashcardSetData.flashcardSet.title = editedTitle;
+        titleEdit = false;
         toggleTitleEdit();
     }
 
     async function saveDescription() {
         // Add logic to save the edited description to the backend
         flashcardSetData.flashcardSet.description = editedDescription;
+        descriptionEdit = false;
         toggleDescriptionEdit();
     }
 
