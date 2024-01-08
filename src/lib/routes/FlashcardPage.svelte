@@ -49,6 +49,21 @@
             });
     });
 
+    function autoResize(node) {
+        function resize() {
+            node.style.height = 'auto';
+            node.style.height = node.scrollHeight + 'px';
+        }
+        resize();
+        node.addEventListener('input', resize);
+        return {
+            destroy() {
+                node.removeEventListener('input', resize);
+            }
+        };
+    }
+
+
     function toggleTitleEdit() {
         editingTitle = !editingTitle;
         editedTitle = flashcardSetData.flashcardSet.title;
@@ -305,13 +320,14 @@
 
             {#if editingDescription}
                 <textarea 
-                    bind:value={editedDescription} 
+                    use:autoResize
                     rows="1"
+                    bind:value={editedDescription} 
                     on:input={e => autoGrow(e.target)} 
                     class="shadow appearance-none overflow-hidden border w-1/2 rounded mb-0 p-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline resize-none"></textarea>
                 <div class="text-sm mt-2 {(editedDescription.trim().length < 1 || editedDescription.trim().length > 200) ? 'text-red-500' : 'text-neutral-300'}">{editedDescription.length} / 200</div>
                 <div class="flex gap-2 my-4">
-                    <button class="px-4 py-1 rounded text-white bg-zinc-500 {(editedDescription.trim().length < 1 || editedDescription.trim().length > 50) ? 'cursor-not-allowed' : 'hover:bg-zinc-700'} focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" on:click={saveDescription}>save</button>
+                    <button class="px-4 py-1 rounded text-white bg-zinc-500 {(editedDescription.trim().length < 1 || editedDescription.trim().length > 200) ? 'cursor-not-allowed' : 'hover:bg-zinc-700'} focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" on:click={saveDescription}>save</button>
                     <button class="px-2 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 w-16 transition ease-in-out duration-150" on:click={cancelDescriptionEdit}>cancel</button>
                 </div>
             {:else}
@@ -378,16 +394,18 @@
                             <div class="flex justify-between bg-zinc-800 py-2 rounded-md" style="min-height: 56px;">
                                 {#if card.editing}
                                 <textarea
+                                    use:autoResize
+                                    rows="1"
                                     class="w-1/3 px-4 py-2 overflow-hidden resize-none bg-transparent border-r-2 border-neutral-700 text-white focus:outline-none"
                                     type="text"
-                                    rows="1"
                                     on:input={e => autoGrow(e.target)}
                                     bind:value={card.front}
                                 />                                    
                                 <textarea
+                                    use:autoResize
+                                    rows="1"
                                     class="w-2/3 px-4 py-2 overflow-hidden resize-none bg-transparent border-neutral-700 text-white focus:outline-none"
                                     type="text"
-                                    rows="1"
                                     on:input={e => autoGrow(e.target)}
                                     bind:value={card.back}
                                 />                                
