@@ -127,6 +127,27 @@ router.put('/flashcard-sets/:id', authenticate, async (req, res) => {
     }
 });
 
+// Update a specific flashcard set - update title
+router.put('/flashcard-sets/:id/update-title', authenticate, async (req, res) => {
+	const setId = req.params.id;
+	console.log('body')
+	console.log(req.body)
+	const { title } = req.body;
+	
+	try {
+        const { error } = await supabase
+            .from('flashcard_sets')
+            .update({ title })
+            .match({ id: setId });
+
+        if (error) throw error;
+
+        res.json({ success: true, message: `Title updated successfully to ${title}` });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to update the title', error: error.message });
+    }
+});
+
 // Delete a specific flashcard set
 router.delete('/flashcard-sets/:id', authenticate, async (req, res) => {
 	const userId = req.id; 

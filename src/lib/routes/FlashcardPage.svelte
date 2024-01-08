@@ -7,6 +7,8 @@
     import { onMount } from "svelte";
 
     import { ChevronLeft, ChevronRight, ChevronsDown, ChevronsUp, Pencil, PenSquare, Trash2 } from 'lucide-svelte';
+    
+    const url = import.meta.env.VITE_API_URL;
 
     export let id;
     let self = false;
@@ -32,13 +34,6 @@
     function toggleDescriptionEdit() {
         editingDescription = !editingDescription;
         editedDescription = flashcardSetData.flashcardSet.description;
-    }
-
-    async function saveTitle() {
-        // Add logic to save the edited title to the backend
-        flashcardSetData.flashcardSet.title = editedTitle;
-        titleEdit = false;
-        toggleTitleEdit();
     }
 
     async function saveDescription() {
@@ -74,6 +69,41 @@
                 showLoading = false;
             });
     });
+
+    async function saveTitle() {
+        const newTitle = editedTitle.trim();
+
+        if (newTitle) {
+            try {
+                const response = await fetch(`${url}/api/flashcard-sets/${id}/update-title`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ title: newTitle })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    flashcardSetData.flashcardSet.title = newTitle;
+                    editingTitle = false; 
+                    titleEdit = false;
+                } else {
+                    throw new Error('Failed to update the title');
+                }
+            } catch (error) {
+                console.error('Error updating title:', error);
+            }
+        } else {
+            console.error('The title cannot be empty.');
+        }
+    }
 
     async function deleteFlashcard(cardId) {
         try {
@@ -187,8 +217,12 @@
             </div>
             {#if editingTitle}
                 <input bind:value={editedTitle} class="text-4xl text-white bg-transparent border-b-2 border-white px-4 mb-2" />
+                <div class="text-sm {(editedTitle.trim().length < 1 || editedTitle.trim().length > 50) ? 'text-red-500' : 'text-neutral-300'}">{editedTitle.length} / 50</div>
                 <div class="flex gap-2 my-4">
-                    <button class="px-4 py-1 rounded text-white bg-zinc-500 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" on:click={saveTitle}>save</button>
+                    <button 
+                        class="px-4 py-1 rounded text-white bg-zinc-500 {(editedTitle.trim().length < 1 || editedTitle.trim().length > 50) ? 'cursor-not-allowed' : 'hover:bg-zinc-700'} focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" 
+                        disabled={editedTitle.trim().length < 0 || editedTitle.trim().length > 50} 
+                        on:click={saveTitle}>save</button>
                     <button class="px-2 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 w-16 transition ease-in-out duration-150" on:click={cancelTitleEdit}>cancel</button>
                 </div>
             {:else}
@@ -216,8 +250,9 @@
                     rows="1"
                     on:input={e => autoGrow(e.target)} 
                     class="shadow appearance-none overflow-hidden border w-1/2 rounded mb-0 p-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline resize-none"></textarea>
+                <div class="text-sm mt-2 {(editedDescription.trim().length < 1 || editedDescription.trim().length > 200) ? 'text-red-500' : 'text-neutral-300'}">{editedDescription.length} / 200</div>
                 <div class="flex gap-2 my-4">
-                    <button class="px-4 py-1 rounded text-white bg-zinc-500 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" on:click={saveDescription}>save</button>
+                    <button class="px-4 py-1 rounded text-white bg-zinc-500 {(editedDescription.trim().length < 1 || editedDescription.trim().length > 50) ? 'cursor-not-allowed' : 'hover:bg-zinc-700'} focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" on:click={saveDescription}>save</button>
                     <button class="px-2 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 w-16 transition ease-in-out duration-150" on:click={cancelDescriptionEdit}>cancel</button>
                 </div>
             {:else}
