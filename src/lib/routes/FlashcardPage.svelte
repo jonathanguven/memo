@@ -6,7 +6,7 @@
     import { Link } from 'svelte-routing';
     import { onMount } from "svelte";
 
-    import { ChevronLeft, ChevronRight, ChevronsDown, ChevronsUp, PlusCircle, PenSquare, Trash2 } from 'lucide-svelte';
+    import { ChevronLeft, ChevronRight, ChevronsDown, ChevronsUp, Pencil, PenSquare, Trash2 } from 'lucide-svelte';
 
     export let id;
     let self = false;
@@ -15,6 +15,9 @@
     let index = 0;
     let show = false;
     let error;
+
+    let titleEdit = false;
+    let descriptionEdit = false;
 
     onMount(async () => {
         await checkAuthentication();
@@ -48,6 +51,14 @@
         } catch (e) {
             console.error('Error adding flashcard:', e);
         }
+    }
+
+    function showTitleEdit() {
+        titleEdit = !titleEdit;
+    }
+
+    function showDescriptionEdit() {
+        descriptionEdit = !descriptionEdit;
     }
 
     const goBack = () => {
@@ -127,13 +138,32 @@
                     <ChevronRight size={32}/>
                 </button>
             </div>
-            <h1 class="text-4xl text-white px-4 mb-2">{flashcardSetData.flashcardSet.title}</h1>
+            <div class="flex" on:mouseenter={showTitleEdit} on:mouseleave={showTitleEdit} tabindex="0" role="button">
+                <h1 
+                    class="relative text-4xl text-white px-4 mb-2"
+                    
+                >
+                    {flashcardSetData.flashcardSet.title}
+                </h1>
+                {#if titleEdit}
+                    <div class="absolute right-80 mt-2 mr-2">
+                        <Pencil size={28}/>
+                    </div>
+                {/if}
+            </div>
+            
             <div class="text-xl text-white mb-2">
                 by <Link to="/user/{flashcardSetData.flashcardSet.users.username}" class="hover:underline">{flashcardSetData.flashcardSet.users.username}</Link>
             </div>
-            
-            <div class="text-xl text-center text-gray-400 font-normal mb-8 max-w-2xl">
-                {flashcardSetData.flashcardSet.description}
+            <div class="flex" on:mouseenter={showDescriptionEdit} on:mouseleave={showDescriptionEdit} tabindex="0" role="button">
+                <div class="text-xl text-center text-gray-400 font-normal mb-8 px-8 max-w-2xl">
+                    {flashcardSetData.flashcardSet.description}
+                </div>
+                {#if descriptionEdit}
+                    <div class="absolute right-96 mt-1 mr-2">
+                        <Pencil size={20}/>
+                    </div>
+                {/if}
             </div>
             {#if !show}
                 <div 
