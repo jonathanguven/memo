@@ -41,7 +41,7 @@ router.post('/flashcard-sets/:setId/flashcards', authenticate, async (req, res) 
             throw flashcardError;
         }
 
-        res.status(201).json({ message: 'Flashcard added successfully' });
+        res.status(201).json({ message: 'Flashcard added successfully', front, back });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

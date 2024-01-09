@@ -1,11 +1,11 @@
 <script>
     import { fetchFlashcardSet } from "../../api/getFlashcardSet";
+    import { addFlashcardToSet } from "../../api/addFlashcardToSet";
     import { deleteFlashcardFromSet } from "../../api/deleteFlashcardFromSet";
     import { checkAuthentication, name } from '../../stores/authStore.js';
     import Flashcard from "../components/Flashcard.svelte";
     import { Link } from 'svelte-routing';
     import { onMount } from "svelte";
-    import { fade } from "svelte/transition";
 
     import { ChevronLeft, ChevronRight, ChevronsDown, ChevronsUp, Pencil, PenSquare, Trash2, PlusCircle } from 'lucide-svelte';
     
@@ -245,7 +245,10 @@
 
         try {
             const addedCard = await addFlashcardToSet(id, { front: newCardFront, back: newCardBack });
-            flashcardSetData.flashcardSet.flashcards.push(addedCard);
+            flashcardSetData.flashcardSet.flashcards = [
+                ...flashcardSetData.flashcardSet.flashcards,
+                addedCard
+            ];
             addingCard = false;
             newCardFront = '';
             newCardBack = '';
@@ -540,7 +543,7 @@
                     {:else if self}
                         <div class="flex w-full justify-center">
                             <button 
-                                class="flex justify-center ml- px-4 py-2 w-max rounded-lg bg-zinc-600 hover:bg-zinc-700 hover:text-zinc-200 mt-2 transition duration-200 ease-in-out" 
+                                class="flex justify-center px-4 py-2 w-max rounded-lg bg-zinc-600 hover:bg-zinc-700 hover:text-zinc-200 mt-4 transition duration-200 ease-in-out" 
                                 on:click={showAddCardForm}
                             >
                                 <span class="mr-1"><PlusCircle /></span>
@@ -616,7 +619,7 @@
             {:else if self}
                 <div class="flex w-full justify-center">
                     <button 
-                        class="flex justify-center ml- px-4 py-2 w-max rounded-lg bg-zinc-600 hover:bg-zinc-700 hover:text-zinc-200 mt-2 transition duration-200 ease-in-out" 
+                        class="flex justify-center ml- px-4 py-2 w-max rounded-lg bg-zinc-600 hover:bg-zinc-700 hover:text-zinc-200 mt-4 transition duration-200 ease-in-out" 
                         on:click={showAddCardForm}
                     >
                         <span class="mr-1"><PlusCircle /></span>
