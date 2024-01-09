@@ -5,8 +5,9 @@
     import Flashcard from "../components/Flashcard.svelte";
     import { Link } from 'svelte-routing';
     import { onMount } from "svelte";
+    import { fade } from "svelte/transition";
 
-    import { ChevronLeft, ChevronRight, ChevronsDown, ChevronsUp, Pencil, PenSquare, Trash2 } from 'lucide-svelte';
+    import { ChevronLeft, ChevronRight, ChevronsDown, ChevronsUp, Pencil, PenSquare, Trash2, PlusCircle } from 'lucide-svelte';
     
     const url = import.meta.env.VITE_API_URL;
 
@@ -17,6 +18,10 @@
     let index = 0;
     let show = false;
     let error;
+
+    let addingCard = false;
+    let newCardFront = '';
+    let newCardBack = '';
 
     let titleEdit = false;
     let descriptionEdit = false;
@@ -222,12 +227,30 @@
         }
     }
 
-    async function addFlashcard(newCard) {
+    function showAddCardForm() {
+        addingCard = true;
+    }
+
+    function cancelAddCard() {
+        addingCard = false;
+        newCardFront = '';
+        newCardBack = '';
+    }
+
+    async function saveNewCard() {
+        if (!newCardFront.trim() || !newCardBack.trim()) {
+            console.error('Both sides of the flashcard must be filled.');
+            return;
+        }
+
         try {
-            const addedCard = await addFlashcardToSet(id, newCard);
+            const addedCard = await addFlashcardToSet(id, { front: newCardFront, back: newCardBack });
             flashcardSetData.flashcardSet.flashcards.push(addedCard);
-        } catch (e) {
-            console.error('Error adding flashcard:', e);
+            addingCard = false;
+            newCardFront = '';
+            newCardBack = '';
+        } catch (error) {
+            console.error('Error adding flashcard:', error);
         }
     }
 
@@ -465,6 +488,66 @@
                             </div>
                         {/if} 
                     {/each}
+                    {#if self && addingCard}
+                        <div class="flex flex-col border-2 mt-2 justify-between bg-zinc-800 pb-2 rounded-md" style="min-height: 56px;">
+                            <div class="flex justify-between items-center bg-zinc-800 border-b-2 border-neutral-700 rounded-b-none rounded-md px-4 py-2" style="min-height: 24px;">
+                                <div class="text-lg">New Flashcard</div>    
+                                {#if self}
+                                    <div class="flex gap-4">
+                                        <div class="flex justify-center gap-2">
+                                            <button 
+                                                class="px-4 py-1 rounded text-white bg-zinc-500 focus:outline-none focus:ring-2 {(newCardFront.length < 1 || newCardFront.length > 400 || newCardBack.length < 1 || newCardBack.length > 400) ? 'cursor-not-allowed' : 'hover:bg-zinc-700'} focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" 
+                                                on:click={() => {saveNewCard()}}
+                                                disabled={(newCardFront.length < 1 || newCardFront.length > 400 || newCardBack.length < 1 || newCardBack.length > 400)}>
+                                                save
+                                            </button>
+                                            <button 
+                                                class="px-2 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 w-16 transition ease-in-out duration-150" 
+                                                on:click={() => {cancelAddCard()}}>
+                                                cancel
+                                            </button>
+                                        </div>
+                                    </div> 
+                                {/if}
+                            </div>
+                            <div class="flex">
+                                <textarea
+                                    use:autoResize
+                                    rows="1"
+                                    class="w-1/3 px-2 mx-2 py-2 overflow-hidden border-b-2 resize-none bg-transparent border-neutral-300 text-white focus:outline-none"
+                                    type="text"
+                                    placeholder="Front of the card"
+                                    on:input={e => autoGrow(e.target)}
+                                    bind:value={newCardFront}
+                                />
+                                <div class="border-r-2 border-neutral-700"></div>   
+                                <textarea
+                                    use:autoResize
+                                    rows="1"
+                                    class="w-2/3 px-2 mx-2 py-2 overflow-hidden border-b-2 resize-none bg-transparent border-neutral-300 text-white focus:outline-none"
+                                    type="text"
+                                    placeholder="Back of the card"
+                                    on:input={e => autoGrow(e.target)}
+                                    bind:value={newCardBack}
+                                />
+                            </div>
+                        </div>
+                        <div class="flex justify-between mb-4 mt-2">
+                            <div class="flex items-start w-1/3 px-4 {(newCardFront.length < 1 || newCardFront.length > 400) ? 'text-red-500' : 'text-neutral-300'}">Front: {newCardFront.length}/400</div>
+                            <div class="flex items-start w-2/3 px-4 {(newCardBack.length < 1 || newCardBack.length > 200) ? 'text-red-500' : 'text-neutral-300'}">Back: {newCardBack.length}/400</div>
+                        </div>
+
+                    {:else if self}
+                        <div class="flex w-full justify-center">
+                            <button 
+                                class="flex justify-center ml- px-4 py-2 w-max rounded-lg bg-zinc-600 hover:bg-zinc-700 hover:text-zinc-200 mt-2 transition duration-200 ease-in-out" 
+                                on:click={showAddCardForm}
+                            >
+                                <span class="mr-1"><PlusCircle /></span>
+                                <span>Add Flashcard</span>
+                            </button>
+                        </div>
+                    {/if}
                 </div>
             {/if}
         {:else}
@@ -481,6 +564,66 @@
                     There are no items in this flashcard set!
                 </div>
             </div>
+            {#if self && addingCard}
+                <div class="flex flex-col border-2 mt-2 justify-between bg-zinc-800 pb-2 rounded-md" style="width: 720px; min-height: 56px;">
+                    <div class="flex justify-between items-center bg-zinc-800 border-b-2 border-neutral-700 rounded-b-none rounded-md px-4 py-2" style="min-height: 24px;">
+                        <div class="text-lg">New Flashcard</div>    
+                        {#if self}
+                            <div class="flex gap-4">
+                                <div class="flex justify-center gap-2">
+                                    <button 
+                                        class="px-4 py-1 rounded text-white bg-zinc-500 focus:outline-none focus:ring-2 {(newCardFront.length < 1 || newCardFront.length > 400 || newCardBack.length < 1 || newCardBack.length > 400) ? 'cursor-not-allowed' : 'hover:bg-zinc-700'} focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" 
+                                        on:click={() => {saveNewCard()}}
+                                        disabled={(newCardFront.length < 1 || newCardFront.length > 400 || newCardBack.length < 1 || newCardBack.length > 400)}>
+                                        save
+                                    </button>
+                                    <button 
+                                        class="px-2 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 w-16 transition ease-in-out duration-150" 
+                                        on:click={() => {cancelAddCard()}}>
+                                        cancel
+                                    </button>
+                                </div>
+                            </div> 
+                        {/if}
+                    </div>
+                    <div class="flex">
+                        <textarea
+                            use:autoResize
+                            rows="1"
+                            class="w-1/3 px-2 mx-2 py-2 overflow-hidden border-b-2 resize-none bg-transparent border-neutral-300 text-white focus:outline-none"
+                            type="text"
+                            placeholder="Front of the card"
+                            on:input={e => autoGrow(e.target)}
+                            bind:value={newCardFront}
+                        />
+                        <div class="border-r-2 border-neutral-700"></div>   
+                        <textarea
+                            use:autoResize
+                            rows="1"
+                            class="w-2/3 px-2 mx-2 py-2 overflow-hidden border-b-2 resize-none bg-transparent border-neutral-300 text-white focus:outline-none"
+                            type="text"
+                            placeholder="Back of the card"
+                            on:input={e => autoGrow(e.target)}
+                            bind:value={newCardBack}
+                        />
+                    </div>
+                    
+                </div>
+                <div class="flex justify-between mt-1 w-full">
+                    <div class="flex items-start w-1/3 px-4 {(newCardFront.length < 1 || newCardFront.length > 400) ? 'text-red-500' : 'text-neutral-300'}">Front: {newCardFront.length}/400</div>
+                    <div class="flex items-start w-2/3 px-4 {(newCardBack.length < 1 || newCardBack.length > 200) ? 'text-red-500' : 'text-neutral-300'}">Back: {newCardBack.length}/400</div>
+                </div>
+            {:else if self}
+                <div class="flex w-full justify-center">
+                    <button 
+                        class="flex justify-center ml- px-4 py-2 w-max rounded-lg bg-zinc-600 hover:bg-zinc-700 hover:text-zinc-200 mt-2 transition duration-200 ease-in-out" 
+                        on:click={showAddCardForm}
+                    >
+                        <span class="mr-1"><PlusCircle /></span>
+                        <span>Add Flashcard</span>
+                    </button>
+                </div>
+            {/if}
         {/if}
         {#if flashcardSetData.error}
             <div class="text-3xl pb-2">Error loading flashcard set: {flashcardSetData.error.message}</div>
