@@ -82,7 +82,7 @@
         flex: 0 32%;
         margin-bottom: 2%;
         margin-left: 1%;
-        max-height: 300px;
+        max-height: 500px;
     }
     
     @media (max-width: 1500px) {
