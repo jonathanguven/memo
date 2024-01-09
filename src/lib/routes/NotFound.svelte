@@ -1,5 +1,3 @@
-
-
 <svelte:head>
     <title>Not Found</title>
 </svelte:head>
