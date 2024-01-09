@@ -83,4 +83,46 @@ router.delete('/flashcard-sets/:setId/flashcards/:cardId', authenticate, async (
     }
 });
 
+// Edit a flashcard's front and back content
+router.put('/flashcard-sets/:setId/flashcards/:cardId', authenticate, async (req, res) => {
+    const userId = req.id;
+    const setId = req.params.setId;
+    const cardId = req.params.cardId;
+
+    try {
+        const { front, back } = req.body;
+
+        const { data: flashcardSet, error: flashcardSetError } = await supabase
+            .from('flashcard_sets')
+            .select('id, user_id')
+            .eq('id', setId)
+            .single();
+
+        if (flashcardSetError || !flashcardSet) {
+            throw new Error('Flashcard set not found');
+        }
+
+        if (flashcardSet.user_id !== userId) {
+            return res.status(403).json({ message: 'Unauthorized access.' });
+        }
+
+        const { error: flashcardError } = await supabase
+            .from('flashcards')
+            .update({
+                front,
+                back
+            })
+            .match({ id: cardId, parent: setId });
+
+        if (flashcardError) {
+            throw flashcardError;
+        }
+
+        res.status(200).json({ success: true, message: 'Flashcard updated successfully' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+
 export default router;

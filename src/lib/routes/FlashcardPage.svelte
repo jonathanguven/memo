@@ -165,10 +165,43 @@
 
     async function saveCardChanges(index) {
         let card = flashcardSetData.flashcardSet.flashcards[index];
-        // Add logic to save the changes to the backend here
-        console.log(`Saving changes for card ${index}`, card.front, card.back);
-        card.editing = false;
-        flashcardSetData = { ...flashcardSetData };
+
+        if (card) {
+            try {
+                const response = await fetch(`${url}/api/flashcard-sets/${id}/flashcards/${card.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ front: card.front, back: card.back })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    flashcardSetData.flashcardSet.flashcards = flashcardSetData.flashcardSet.flashcards.map((c, i) => {
+                        if (i === index) {
+                            return { ...c, editing: false };
+                        }
+                        return c;
+                    });
+
+                    flashcardSetData = { ...flashcardSetData };
+                } else {
+                    throw new Error('Failed to update the flashcard');
+                }
+            } catch (error) {
+                console.error('Error updating flashcard:', error);
+            }
+        } else {
+            console.error('Flashcard content cannot be empty.');
+        }
+        console.log(`Saving changes for card ${index+1}`, card.front, card.back);
     }
 
     function cancelCardChanges(index) {

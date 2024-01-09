@@ -71,6 +71,7 @@ router.get('/flashcard-sets/:id', async (req, res) => {
 				) 
 			`)
 			.eq('id', setId)
+			.order('created_at', { foreignTable: 'flashcards', ascending: true })
 			.single();
 
 		// no flashcard set found
