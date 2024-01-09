@@ -1,7 +1,7 @@
 <script>
     import { fetchFlashcardSet } from "../../api/getFlashcardSet";
     import { deleteFlashcardFromSet } from "../../api/deleteFlashcardFromSet";
-    import { isAuthenticated, checkAuthentication, name } from '../../stores/authStore.js';
+    import { checkAuthentication, name } from '../../stores/authStore.js';
     import Flashcard from "../components/Flashcard.svelte";
     import { Link } from 'svelte-routing';
     import { onMount } from "svelte";
@@ -324,15 +324,15 @@
                     rows="1"
                     bind:value={editedDescription} 
                     on:input={e => autoGrow(e.target)} 
-                    class="shadow appearance-none overflow-hidden border w-1/2 rounded mb-0 p-3 bg-zinc-800 text-neutral-200 leading-tight focus:outline-none focus:shadow-outline resize-none"></textarea>
+                    class="shadow text-gray-400 font-normal text-xl w-4/5 appearance-none overflow-hidden border rounded mb-0 mt-2 p-3 bg-zinc-800 leading-tight focus:outline-none focus:shadow-outline resize-none"></textarea>
                 <div class="text-sm mt-2 {(editedDescription.trim().length < 1 || editedDescription.trim().length > 200) ? 'text-red-500' : 'text-neutral-300'}">{editedDescription.length} / 200</div>
                 <div class="flex gap-2 my-4">
                     <button class="px-4 py-1 rounded text-white bg-zinc-500 {(editedDescription.trim().length < 1 || editedDescription.trim().length > 200) ? 'cursor-not-allowed' : 'hover:bg-zinc-700'} focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 transition w-16 ease-in-out duration-150" on:click={saveDescription}>save</button>
                     <button class="px-2 py-1 rounded text-zinc-700 bg-white hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-opacity-50 w-16 transition ease-in-out duration-150" on:click={cancelDescriptionEdit}>cancel</button>
                 </div>
             {:else}
-                <div class="flex" on:mouseenter={showDescriptionEdit} on:mouseleave={showDescriptionEdit} tabindex="0" role="button">
-                    <div class="text-xl mb-2 flex justify-center">
+                <div class="flex items-center" on:mouseenter={showDescriptionEdit} on:mouseleave={showDescriptionEdit} tabindex="0" role="button">
+                    <div class="text-xl mt-2 mb-4 flex justify-center">
                         <div class="relative inline-block text-center">
                             <div class="text-gray-400 font-normal px-8 max-w-2xl">
                                 {flashcardSetData.flashcardSet.description}
@@ -405,15 +405,16 @@
                                 <textarea
                                     use:autoResize
                                     rows="1"
-                                    class="w-1/3 px-4 py-2 overflow-hidden resize-none bg-transparent border-r-2 border-neutral-700 text-white focus:outline-none"
+                                    class="w-1/3 px-2 mx-2 py-2 overflow-hidden border-b-2 resize-none bg-transparent border-neutral-300 text-white focus:outline-none"
                                     type="text"
                                     on:input={e => autoGrow(e.target)}
                                     bind:value={card.front}
-                                />                                    
+                                />   
+                                <div class="border-r-2 border-neutral-700"></div>                                 
                                 <textarea
                                     use:autoResize
                                     rows="1"
-                                    class="w-2/3 px-4 py-2 overflow-hidden resize-none bg-transparent border-neutral-700 text-white focus:outline-none"
+                                    class="w-2/3 px-2 mx-2 py-2 overflow-hidden border-b-2 resize-none bg-transparent border-neutral-300 text-white focus:outline-none"
                                     type="text"
                                     on:input={e => autoGrow(e.target)}
                                     bind:value={card.back}
