@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 const url = import.meta.env.VITE_API_URL;
 
 export const isAuthenticated = writable(false);
-export const name = writable(undefined);
+export const name = writable(null);
 
 // check login status
 export async function checkAuthentication() {
@@ -31,6 +31,7 @@ export async function clearAuth() {
         });
         // Update the isAuthenticated store
         isAuthenticated.set(false);
+        name.set(null)
         console.log("Successfully logged out");
     } catch (error) {
         console.error('Error during logout:', error);
