@@ -123,7 +123,7 @@
 
 <div class="flex flex-col items-center">
     <h1 class="text-4xl font-medium py-1">Create Flashcard Set</h1>
-    <div class="w-full mt-6" style="min-width: 480px;">
+    <div class="w-full mt-6" style="min-width: 680px;">
     <div class="bg-zinc-800 rounded-lg shadow px-6 pt-4 pb-6 border" style="min-width: 40vw">
         <form on:submit|preventDefault={submitForm}>
             <div>
