@@ -460,8 +460,8 @@
                         </div>
                         {#if card.editing}
                             <div class="flex justify-between mb-4">
-                                <div class="flex items-start w-1/3 px-4 {(card.front.length < 1 || card.front.length > 400) ? 'text-red-500' : 'text-neutral-300'}">{card.front.length}/400</div>
-                                <div class="flex items-start w-2/3 px-4 {(card.back.length < 1 || card.back.length > 200) ? 'text-red-500' : 'text-neutral-300'}">{card.back.length}/400</div>
+                                <div class="flex items-start w-1/3 px-4 {(card.front.length < 1 || card.front.length > 400) ? 'text-red-500' : 'text-neutral-300'}">Front: {card.front.length}/400</div>
+                                <div class="flex items-start w-2/3 px-4 {(card.back.length < 1 || card.back.length > 200) ? 'text-red-500' : 'text-neutral-300'}">Back: {card.back.length}/400</div>
                             </div>
                         {/if} 
                     {/each}
