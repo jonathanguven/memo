@@ -7,7 +7,7 @@ export async function deleteFlashcard(id) {
             credentials: "include"
         });
         const data = await response.json();
-        console.log(data)
+
         return data;
     } catch (error) {
         console.error('Failed to delete flashcard set:', error);

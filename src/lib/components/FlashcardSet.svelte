@@ -47,12 +47,10 @@
 
 
     function redirect(id) {
-        console.log(`redirecting to flashcard set ${id}`);
         navigate(`/flashcardsets/${id}`);
     }
 
     async function editPrivacy() {
-        console.log(`Editing privacy of set ${id}`);
         const response = await togglePrivacy(id);
         if (response && !response.error) {
             is_private = !is_private;
@@ -62,7 +60,6 @@
     }
 
     async function deleteConfirm() {
-        console.log(`Deleting card ${id} created at ${created_at}`);
         const result = await deleteFlashcard(id);
         popup = false;
         if (result.message) {

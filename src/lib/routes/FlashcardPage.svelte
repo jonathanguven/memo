@@ -163,7 +163,6 @@
     }
     
     function startEditing(index) {
-        console.log('editing flashcard ' + index)
         flashcardSetData.flashcardSet.flashcards[index].editing = true;
         flashcardSetData = { ...flashcardSetData }; 
     }
@@ -206,7 +205,6 @@
         } else {
             console.error('Flashcard content cannot be empty.');
         }
-        console.log(`Saving changes for card ${index+1}`, card.front, card.back);
     }
 
     function cancelCardChanges(index) {
@@ -267,14 +265,12 @@
 
     const goBack = () => {
         if (index > 0) {
-            console.log('back');
             index--;
         }
     }
 
     const goNext = (length) => {
         if (index < length - 1) {
-            console.log('next');
             index++;
         }
     }

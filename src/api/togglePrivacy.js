@@ -11,7 +11,6 @@ export async function togglePrivacy(setId) {
         });
 
         const data = await response.json();
-        console.log('Toggle privacy response:', data);
         return data;
     } catch (error) {
         console.error('Failed to toggle flashcard set privacy:', error);

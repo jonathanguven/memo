@@ -4,10 +4,7 @@
     
     export let front;
     export let back;
-    export let description;
     export let key;
-
-    console.log(description)
 
     let frontElement;
     let backElement;

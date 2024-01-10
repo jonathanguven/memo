@@ -12,12 +12,11 @@ async function addFlashcardToSet(setId, cardData) {
         });
 
         if (!response.ok) {
-            console.log(response.json())
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const addedCard = await response.json();
-        console.log(addedCard)
+
         return addedCard;
     } catch (error) {
         console.error('Error adding flashcard:', error);
