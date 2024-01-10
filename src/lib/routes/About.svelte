@@ -1,4 +1,5 @@
 <script>
+    import { Link } from 'svelte-routing'
     const link = 'https://github.com/jonathanguven/memo'
 
 </script>
@@ -16,14 +17,19 @@
         </svg>
     </a>
     <a href="https://github.com/jonathanguven/" target="_blank" class="icon pb-4">github.com/jonathanguven/</a>
-    <div class="about">
-        <p class="pb-4">
-            Thanks for checking out my website! Flash is a flashcard based studying tool, with some AI features built in!
+    <div class="about flex flex-col items-center mt-4">
+        <p class="pb-4 max-w-md">
+            Memo is a flashcard based studying tool where users can create full study sets, 
+            and even share them for others to view! For those just checking out the website, 
+            head over to the page of public flashcard sets <Link to='/flashcardsets' class='underline'>here</Link>.
+            Otherwise, click <Link to='/sign-up' class='underline'>here</Link> to create your account and begin creating flashcards!
         </p>
         <p class="pb-4">
             This project was made using svelte on the frontend and express on the backend.
             I've made smaller javascript and web development projects in the past, 
-            but this is my first fully developed and hosted web application. 
+            but this is my first fully developed and hosted web application.
+            I hope to implement generative AI answer explanations,
+            making studying and review more effective! 
         </p>
         <p>
             Some future projects I hope to develop one day include IoT applications, computer vision projects, 
