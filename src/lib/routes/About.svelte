@@ -1,10 +1,11 @@
 <script>
     const link = 'https://github.com/jonathanguven/memo'
-    // const timestamp = async () => {
 
-    // }
 </script>
 
+<svelte:head>
+    <title>About</title>
+</svelte:head>
 <div class="flex flex-col items-center">
     <div class="text-4xl font-medium py-1">About</div>
     <a href={link} target="_blank" rel="noopener noreferrer" class="m-6">

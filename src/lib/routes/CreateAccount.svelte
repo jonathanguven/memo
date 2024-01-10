@@ -90,7 +90,7 @@
 </script>
 
 <svelte:head>
-    <title>Create</title>
+    <title>Create Account</title>
 </svelte:head>
 <div class="flex flex-col items-center bg-transparent">
     <h1 class="text-3xl p-4">Create Account</h1>

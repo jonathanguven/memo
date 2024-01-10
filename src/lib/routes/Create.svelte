@@ -121,6 +121,9 @@
     }
 </script>
 
+<svelte:head>
+    <title>Create</title>
+</svelte:head>
 <div class="flex flex-col items-center">
     <h1 class="text-4xl font-medium py-1">Create Flashcard Set</h1>
     <div class="w-full mt-6" style="min-width: 680px;">
