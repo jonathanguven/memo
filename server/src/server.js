@@ -20,7 +20,7 @@ const port = 3000;
 
 // express tools
 app.use(cors({
-    origin: 'http://localhost:5173', 
+    origin: process.env.DEPLOYMENT_URL, 
     credentials: true,
 }));
 app.use(morgan('dev'))
