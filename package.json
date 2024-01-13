@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"nodemon server/src/server.js\"",
+    "dev": "concurrently \"vite\"",
     "start": "node server/server.js",
     "build": "vite build",
     "preview": "vite preview",
