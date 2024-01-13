@@ -25,8 +25,8 @@
         }
     }
 
-    function goTo() {
-        navigate('/sign-up')
+    function goTo(url) {
+        navigate(url)
     }
 
     afterUpdate(() => {
