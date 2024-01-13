@@ -130,5 +130,11 @@
     input:-webkit-autofill:focus, 
     input:-webkit-autofill:active{
         -webkit-box-shadow: 0 0 0 30px white inset !important;
+        -webkit-text-fill-color: black !important;
+    }
+    input:-moz-ui-invalid {
+        box-shadow: none;
+        background-color: white;
+        color: black;
     }
 </style>
