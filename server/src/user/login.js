@@ -21,6 +21,7 @@ router.post('/login', express.json(), async (req, res) => {
         res.cookie('jwt', login.token, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
+            sameSite: 'None',
             maxAge: maxAge,
         })
         res.json({ message: 'Login successful!', username });
