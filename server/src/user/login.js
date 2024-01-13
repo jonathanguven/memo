@@ -20,7 +20,7 @@ router.post('/login', express.json(), async (req, res) => {
         const maxAge = req.body.remember ? 7 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000;
         res.cookie('jwt', login.token, {
             httpOnly: true,
-            // secure: process.env.NODE_ENV !== 'development',
+            secure: process.env.NODE_ENV !== 'development',
             maxAge: maxAge,
         })
         res.json({ message: 'Login successful!', username });
