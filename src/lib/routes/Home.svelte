@@ -53,7 +53,7 @@
             <h1 class="text-5xl font-semibold mb-4">Optimize Your Study Habits</h1>
             <p class="text-lg mb-6 pr-8">Memo is more than just flashcards and notes. Create, share, and study flashcard sets with others.</p>
             <div>
-                <button class="bg-gray-100 w-28 hover:bg-neutral-400 text-zinc-600 font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out" on:click={() => goTo('/flashcardsets')}>View Sets</button>
+                <button class="bg-gray-100 w-28 mr-1 hover:bg-neutral-400 text-zinc-600 font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out" on:click={() => goTo('/flashcardsets')}>View Sets</button>
                 <button class="bg-gray-100 w-28 hover:bg-neutral-400 text-zinc-600 font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out" on:click={() => goTo('/sign-up')}>Sign up</button>
             </div>
         </div>
