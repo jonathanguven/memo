@@ -99,7 +99,7 @@
             <label for="createusername" class="block text-md font-medium text-gray-100 text-left">
                 Username
             </label>
-            <input id="createusername" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
+            <input id="createusername" autocomplete="off" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
                 type="text" 
                 bind:value={name} 
             />
@@ -113,7 +113,7 @@
             <label for="createpassword" class="block text-md font-medium text-gray-100 text-left">
                 Password
             </label>
-            <input id="createpassword" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
+            <input id="createpassword" autocomplete="off" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
                 type="password" 
                 bind:value={password} 
             />
@@ -127,7 +127,7 @@
             <label for="confirm-password" class="block text-md font-medium text-gray-100 text-left">
                 Confirm password
             </label>
-            <input id="confirm-password" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
+            <input id="confirm-password" autocomplete="new-password" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
                 type="password" 
                 bind:value={confirm} 
             />
