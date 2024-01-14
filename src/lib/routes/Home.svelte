@@ -4,7 +4,7 @@
     import { afterUpdate } from 'svelte';
 
     let front = "Optimize Your Study Habits";
-    let phrase = "Flashcards are the best way to quickly and easily memorize important vocabulary.\n\n";
+    let phrase = "Flashcards are the most effective tool for studying important terms and vocabulary.\n\n";
     let backContent = "";
 
     for (let i = 0; i < 40; i++) {
