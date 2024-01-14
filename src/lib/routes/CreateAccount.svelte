@@ -96,10 +96,10 @@
     <h1 class="text-3xl p-4">Create Account</h1>
     <form on:submit|preventDefault={submitForm} class="border-2 px-4 py-4 rounded-xl shadow-md">
         <div>
-            <label for="username" class="block text-md font-medium text-gray-100 text-left">
+            <label for="createusername" class="block text-md font-medium text-gray-100 text-left">
                 Username
             </label>
-            <input id="username" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
+            <input id="createusername" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
                 type="text" 
                 bind:value={name} 
             />
@@ -110,10 +110,10 @@
             </div>
         </div>
         <div>
-            <label for="password" class="block text-md font-medium text-gray-100 text-left">
+            <label for="createpassword" class="block text-md font-medium text-gray-100 text-left">
                 Password
             </label>
-            <input id="password" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
+            <input id="createpassword" class="w-64 bg-gray-100 mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" 
                 type="password" 
                 bind:value={password} 
             />
