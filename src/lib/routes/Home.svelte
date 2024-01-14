@@ -7,7 +7,7 @@
     let phrase = "Flashcards are the best way to quickly and easily memorize important vocabulary.\n\n";
     let backContent = "";
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 40; i++) {
         backContent = backContent + phrase;
     }
 
