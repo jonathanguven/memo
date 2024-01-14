@@ -3,8 +3,16 @@
     import { ArrowLeftRight } from 'lucide-svelte';
     import { afterUpdate } from 'svelte';
 
-    let front = 'Optimize Your Study Habits';
-    let back = 'Flashcards are the best way to quickly and easily memorize important vocabulary. Create, study, and share them with others.';
+    let front = "Optimize Your Study Habits";
+    let phrase = "Flashcards are the best way to quickly and easily memorize important vocabulary.\n\n";
+    let backContent = "";
+
+    for (let i = 0; i < 20; i++) {
+        backContent = backContent + phrase;
+    }
+
+    let back = convertNewlinesToBreaks(backContent);
+    
     let isFront = true;
 
     let frontElement;
@@ -37,6 +45,10 @@
         isFront = !isFront;
     }
 
+    function convertNewlinesToBreaks(str) {
+        return str.replace(/\n/g, '<br>');
+    }
+
     function handleKeydown(event) {
         if (event.key === 'Enter' || event.key === ' ') {
             toggle();
@@ -53,7 +65,7 @@
             <!-- flashcard portion -->
             <div class="flex-grow ml-8" style="flex-basis: 60%;">
                 <div 
-                    class="border-2 px-16 flex items-center relative justify-center bg-zinc-800 shadow-lg rounded-xl cursor-pointer" 
+                    class="border-2 py-10 px-20 flex items-center relative justify-center bg-zinc-800 shadow-lg rounded-xl cursor-pointer" 
                     on:click={toggle}
                     on:keydown={handleKeydown}
                     tabindex="0"  
@@ -65,7 +77,7 @@
                         {#if isFront}
                             <div>{front}</div>
                         {:else}
-                            <div class="flex justify-center text-left w-full min-h-full" bind:this={backElement}>{back}</div>
+                            <div class="flex justify-center text-center w-full min-h-full" bind:this={backElement}>{@html back}</div>
                         {/if}
                     </div>
                     <div class="flex absolute bottom-2 left-2 py-1 px-2 rounded text-xl">
