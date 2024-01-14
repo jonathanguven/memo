@@ -41,7 +41,7 @@
     }
 </script>
 
-<main class="flex flex-col h-screen p-3">
+<main class="flex flex-col h-screen">
 <Router {url}>
     <nav class="navbar">
         <div class="left-links">
