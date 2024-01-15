@@ -10,13 +10,13 @@ const verifyJWT = (req, res, next) => {
     const token = req.cookies.jwt;
     if (!token) {
         console.log('no token')
-        return res.status(401).json({ isAuthenticated: false });
+        return res.status(401).json({ isAuthenticated: false, message: 'no token' });
     }
 
     jwt.verify(token, secret, (err, decoded) => {
         if (err) {
             console.log('bad token')
-            return res.status(401).json({ isAuthenticated: false });
+            return res.status(401).json({ isAuthenticated: false, message: 'bad token' });
         }
         req.user = decoded; 
         next();
