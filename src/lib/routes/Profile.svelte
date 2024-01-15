@@ -109,7 +109,7 @@
         margin-left: 1%;
     }
     
-    @media (max-width: 1400px) {
+    @media (max-width: 1500px) {
         .item {
             flex: 0 47%; 
             margin-left: 2%;
@@ -117,7 +117,7 @@
         }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 700px) {
         .item {
             flex: 0 100%; 
         }

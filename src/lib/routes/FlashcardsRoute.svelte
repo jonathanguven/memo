@@ -93,7 +93,7 @@
         }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 700px) {
         .item {
             flex: 0 100%; 
             margin-bottom: 5%;
