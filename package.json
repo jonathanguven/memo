@@ -15,11 +15,9 @@
     "postcss-load-config": "^4.0.1",
     "svelte": "^4.0.5",
     "tailwindcss": "^3.3.2",
-    "vite": "^4.4.5",
-    "vitest": "^1.0.4"
+    "vite": "^4.4.5"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.0",
     "lucide-svelte": "^0.299.0",
     "svelte-routing": "^2.8.0"
   }

@@ -17,9 +17,11 @@
     "morgan": "^1.10.0",
     "node-fetch": "^3.3.2",
     "passport": "^0.7.0",
-    "passport-jwt": "^4.0.1"
+    "passport-jwt": "^4.0.1",
+    "vitest": "^1.0.4"
   },
   "devDependencies": {
+    "@supabase/supabase-js": "^2.39.0",
     "concurrently": "^8.2.2",
     "supertest": "^6.3.3"
   }
