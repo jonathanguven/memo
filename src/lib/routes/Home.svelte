@@ -102,7 +102,6 @@
 </div>
 <style>
     .flashcard {
-        width: 100%;
         aspect-ratio: 5 / 3;
         overflow: hidden;
     }
