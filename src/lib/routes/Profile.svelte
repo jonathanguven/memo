@@ -62,7 +62,7 @@
         {/if}
     {:then}
     {#if userData}
-        <div class="text-4xl font-medium">{userData.username}</div>
+        <div class="text-4xl font-medium mb-1">{userData.username}</div>
         <div class="text-lg text-zinc-500">
             Joined {formatDate(userData.created_at)}
         </div>
