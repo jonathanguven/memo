@@ -16,7 +16,7 @@ import flashcardSets from './cards/publicSets.js'
 import card from './cards/card.js'
 
 const app = express();
-const port = 3000; 
+const port = process.env.PORT || 3000; 
 
 // express tools
 app.use(cors({
@@ -47,5 +47,6 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Express server listening at http://localhost:${port}`);
+    console.log(process.env.PORT)
+    console.log(`Express server listening on port: ${port}`);
 });
