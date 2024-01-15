@@ -63,9 +63,9 @@
     <div class="flex justify-between items-start h-full max-w-6xl">
         <div class="flex flex-col md:flex-row items-center flex-grow">
             <!-- flashcard portion -->
-            <div class="flashcard flex-grow mx-4 md:mx-0 md:ml-8 items-center md:justify-center" style="flex-basis: 60%;">
+            <div class="flex-grow mx-4 md:mx-0 md:ml-8 items-center md:justify-center" style="flex-basis: 60%;">
                 <div 
-                    class="border-2 py-10 px-20 box-border flex items-center relative justify-center bg-zinc-800 shadow-lg rounded-xl cursor-pointer" 
+                    class="flashcard border-2 py-10 px-20 box-border flex items-center relative justify-center bg-zinc-800 shadow-lg rounded-xl cursor-pointer"
                     on:click={toggle}
                     on:keydown={handleKeydown}
                     tabindex="0"  
@@ -105,12 +105,6 @@
         max-width: 100%;
         aspect-ratio: 5 / 3;
         overflow: hidden;
-    }
-
-    @media screen and (-webkit-min-device-pixel-ratio:0) {
-        .flashcard {
-            aspect-ratio: 5 / 3; 
-        }
     }
 
     .wrap {
