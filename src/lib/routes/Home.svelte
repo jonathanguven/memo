@@ -59,19 +59,19 @@
 <svelte:head>
     <title>Memo</title>
 </svelte:head>
-<div class="flex justify-center items-start mt-0 sm:mt-8">
+<div class="flex justify-center items-start w-full mt-0 md:mt-8">
     <div class="flex justify-between items-center max-w-6xl">
-        <div class="flex flex-col sm:flex-row items-center flex-grow">
+        <div class="flex flex-col md:flex-row items-center flex-grow">
             <!-- flashcard portion -->
-            <div class="flashcard flex-grow mx-4 sm:mx-0 sm:ml-8 items-center sm:justify-center" style="flex-basis: 60%;">
+            <div class="flashcard flex-grow mx-4 md:mx-0 md:ml-8 items-center md:justify-center" style="flex-basis: 60%;">
                 <div 
-                    class="border-2 py-10 px-20 flex items-center relative justify-center bg-zinc-800 shadow-lg rounded-xl cursor-pointer" 
+                    class="border-2 py-10 px-20 box-border flex items-center relative justify-center bg-zinc-800 shadow-lg rounded-xl cursor-pointer" 
                     on:click={toggle}
                     on:keydown={handleKeydown}
                     tabindex="0"  
                     role="button"  
                     aria-label="Toggle flashcard" 
-                    style="max-width: 900px; width: 100%; aspect-ratio: 5/3;"
+                    style="max-width: 900px; aspect-ratio: 5/3;"
                 >
                     <div class="wrap flex justify-center text-center text-3xl w-full min-h-full" bind:this={frontElement}>
                         {#if isFront}
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <!-- text portion -->
-            <div class="flex-none m-8 sm:mx-8 text-center sm:text-left" style="flex-basis: 35%;">
+            <div class="flex-none m-8 md:mx-8 text-center md:text-left" style="flex-basis: 35%;">
                 <h1 class="text-5xl font-semibold mb-4">Study Easily</h1>
                 <p class="text-lg mb-6">Memo is more than just flashcards and notes. Create, share, and study flashcard sets with others.</p>
                 <div>
