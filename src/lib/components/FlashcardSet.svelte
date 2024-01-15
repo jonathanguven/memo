@@ -11,7 +11,6 @@
     export let self = false;
     export let is_private = false;
     export let id;
-    export let created_at; 
 
     export let onDelete
 
