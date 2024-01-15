@@ -41,7 +41,7 @@
     }
 </script>
 
-<main class="flex flex-col min-w-fit h-screen">
+<main class="flex flex-col min-w-fit min-h-full h-screen">
 <Router {url}>
     <nav class="navbar">
         <div class="left-links">

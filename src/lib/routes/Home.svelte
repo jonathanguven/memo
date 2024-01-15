@@ -71,7 +71,7 @@
                     tabindex="0"  
                     role="button"  
                     aria-label="Toggle flashcard" 
-                    style="max-width: 900px; width: 100%; height: auto; aspect-ratio: 5/3;"
+                    style="max-width: 900px; width: 100%; aspect-ratio: 5/3;"
                 >
                     <div class="wrap flex justify-center text-center text-3xl w-full min-h-full" bind:this={frontElement}>
                         {#if isFront}
@@ -104,6 +104,7 @@
     .flashcard {
         width: 100%;
         aspect-ratio: 5 / 3;
+        overflow: hidden;
     }
     .wrap {
         max-height: 100%;
