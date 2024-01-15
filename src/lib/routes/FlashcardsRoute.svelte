@@ -10,7 +10,7 @@
     onMount(() => {
         const timer = setTimeout(() => {
             showLoading = true;
-        }, 1000);
+        }, 50);
 
         return () => {
             clearTimeout(timer);
