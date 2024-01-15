@@ -63,7 +63,7 @@
     <div class="flex justify-between items-center max-w-6xl">
         <div class="flex flex-col sm:flex-row items-center flex-grow">
             <!-- flashcard portion -->
-            <div class="flex-grow sm:ml-8 mx-4 items-center sm:justify-center" style="flex-basis: 60%;">
+            <div class="flex-grow mx-4 sm:mx-0 sm:ml-8 items-center sm:justify-center" style="flex-basis: 60%;">
                 <div 
                     class="border-2 py-10 px-20 flex items-center relative justify-center bg-zinc-800 shadow-lg rounded-xl cursor-pointer" 
                     on:click={toggle}
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <!-- text portion -->
-            <div class="flex-none m-8 text-center sm:text-left" style="flex-basis: 35%;">
+            <div class="flex-none m-8 sm:mx-8 text-center sm:text-left" style="flex-basis: 35%;">
                 <h1 class="text-5xl font-semibold mb-4">Study Easily</h1>
                 <p class="text-lg mb-6">Memo is more than just flashcards and notes. Create, share, and study flashcard sets with others.</p>
                 <div>
