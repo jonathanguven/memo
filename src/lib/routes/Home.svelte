@@ -63,7 +63,7 @@
     <div class="flex justify-between items-center max-w-6xl">
         <div class="flex flex-col sm:flex-row items-center flex-grow">
             <!-- flashcard portion -->
-            <div class="flex-grow mx-4 items-center sm:justify-center" style="flex-basis: 60%;">
+            <div class="flex-grow sm:ml-8 mx-4 items-center sm:justify-center" style="flex-basis: 60%;">
                 <div 
                     class="border-2 py-10 px-20 flex items-center relative justify-center bg-zinc-800 shadow-lg rounded-xl cursor-pointer" 
                     on:click={toggle}
