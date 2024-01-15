@@ -102,9 +102,17 @@
 </div>
 <style>
     .flashcard {
+        max-width: 100%;
         aspect-ratio: 5 / 3;
         overflow: hidden;
     }
+
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        .flashcard {
+            aspect-ratio: 5 / 3; 
+        }
+    }
+
     .wrap {
         max-height: 100%;
         overflow-y: auto; 
