@@ -63,7 +63,7 @@
     <div class="flex justify-between items-center max-w-6xl">
         <div class="flex flex-col sm:flex-row items-center flex-grow">
             <!-- flashcard portion -->
-            <div class="flex-grow mx-4 sm:mx-0 sm:ml-8 items-center sm:justify-center" style="flex-basis: 60%;">
+            <div class="flashcard flex-grow mx-4 sm:mx-0 sm:ml-8 items-center sm:justify-center" style="flex-basis: 60%;">
                 <div 
                     class="border-2 py-10 px-20 flex items-center relative justify-center bg-zinc-800 shadow-lg rounded-xl cursor-pointer" 
                     on:click={toggle}
@@ -101,6 +101,9 @@
     </div>
 </div>
 <style>
+    .flashcard {
+        aspect-ratio: 5 / 3;
+    }
     .wrap {
         max-height: 100%;
         overflow-y: auto; 
