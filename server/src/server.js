@@ -11,9 +11,9 @@ import check from './auth/check.js'
 import logout from './user/logout.js'
 import getUser from './user/user.js'
 import self from './user/self.js'
-import flashcards from './api/flashcardSet.js'
-import flashcardSets from './api/publicSets.js'
-import card from './api/card.js'
+import flashcards from './cards/flashcardSet.js'
+import flashcardSets from './cards/publicSets.js'
+import card from './cards/card.js'
 
 const app = express();
 const port = 3000; 
