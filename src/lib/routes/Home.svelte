@@ -60,7 +60,7 @@
     <title>Memo</title>
 </svelte:head>
 <div class="flex justify-center items-start w-full mt-0 md:mt-8">
-    <div class="flex justify-between items-center max-w-6xl">
+    <div class="flex justify-between items-start h-full max-w-6xl">
         <div class="flex flex-col md:flex-row items-center flex-grow">
             <!-- flashcard portion -->
             <div class="flashcard flex-grow mx-4 md:mx-0 md:ml-8 items-center md:justify-center" style="flex-basis: 60%;">
