@@ -69,7 +69,7 @@
                     </div>
                 {/each}
             </div>
-        {:else}
+        {:else if !flashcardSets}
             <div>No flashcard sets available.</div>
         {/if}
     {:catch error}
