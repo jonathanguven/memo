@@ -358,7 +358,7 @@
                 <div class="flex" on:mouseenter={showTitleEdit} on:mouseleave={showTitleEdit} tabindex="0" role="button">
                     <div class="text-4xl px-4 mb-2 flex justify-center">
                         <div class="relative inline-block text-center">
-                            <h1 class="text-white">{flashcardSetData.flashcardSet.title}</h1>
+                            <h1 class="text-white" style="white-space: pre-wrap;">{flashcardSetData.flashcardSet.title}</h1>
                             {#if self && titleEdit}
                                 <button class="absolute hover:text-zinc-500 -right-16 top-2 transform -translate-x-full" on:click={toggleTitleEdit}>
                                     <Pencil size={28} />
@@ -389,7 +389,7 @@
                 <div class="flex items-center" on:mouseenter={showDescriptionEdit} on:mouseleave={showDescriptionEdit} tabindex="0" role="button">
                     <div class="text-xl mt-2 mb-4 flex justify-center">
                         <div class="relative inline-block text-center">
-                            <div class="text-gray-400 font-normal px-8 max-w-2xl">
+                            <div class="text-gray-400 font-normal px-8 max-w-2xl" style="white-space: pre-wrap;">
                                 {flashcardSetData.flashcardSet.description}
                             </div>
                             {#if self && descriptionEdit}
@@ -553,12 +553,12 @@
             {/if}
         {:else}
             <div class="flex flex-col items-center m-4">
-                <h1 class="text-4xl text-white px-4 mb-2">{flashcardSetData.flashcardSet.title}</h1>
+                <h1 class="text-4xl text-white px-4 mb-2" style="white-space: pre-wrap;">{flashcardSetData.flashcardSet.title}</h1>
                 <div class="text-xl text-white mb-2">
                     by <Link to="/user/{flashcardSetData.flashcardSet.users.username}" class="hover:underline">{flashcardSetData.flashcardSet.users.username}</Link>
                 </div>
                 
-                <div class="text-xl text-center text-gray-400 font-normal mb-8 max-w-2xl">
+                <div class="text-xl text-center text-gray-400 font-normal mb-8 max-w-2xl" style="white-space: pre-wrap;">
                     {flashcardSetData.flashcardSet.description}
                 </div>
                 <div class="text-xl text-gray-500">
