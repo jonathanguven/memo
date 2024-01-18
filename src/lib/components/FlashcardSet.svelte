@@ -103,9 +103,9 @@
     >
         <div class="wrap flex justify-center text-3xl w-full min-h-full {titleClass}" bind:this={titleElement}>
             {#if isTitle}
-                <div>{title}</div>
+                <div style="white-space: pre-wrap;">{title}</div>
             {:else}
-                <div class="flex justify-center w-full min-h-full {descriptionClass}" bind:this={descriptionElement}>{description}</div>
+                <div class="flex justify-center w-full min-h-full {descriptionClass}" style="white-space: pre-wrap;" bind:this={descriptionElement}>{description}</div>
             {/if}
         </div>
 

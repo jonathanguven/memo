@@ -63,9 +63,9 @@
     >
         <div class="wrap flex justify-center text-3xl w-full min-h-full {frontClass}" bind:this={frontElement}>
             {#if isFront}
-                <div>{front}</div>
+                <div style="white-space: pre-wrap;">{front}</div>
             {:else}
-                <div class="flex justify-center w-full min-h-full {backClass}" bind:this={backElement}>{back}</div>
+                <div class="flex justify-center w-full min-h-full {backClass}" style="white-space: pre-wrap;" bind:this={backElement}>{back}</div>
             {/if}
         </div>
         <div class="flex absolute bottom-2 left-2 py-1 px-2 rounded text-xl">

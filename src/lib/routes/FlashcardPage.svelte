@@ -462,6 +462,7 @@
                                     rows="1"
                                     class="w-1/3 px-2 mx-2 py-2 overflow-hidden border-b-2 resize-none bg-transparent border-neutral-300 text-white focus:outline-none"
                                     type="text"
+                                    style="white-space: pre-wrap;"
                                     on:input={e => autoGrow(e.target)}
                                     bind:value={card.front}
                                 />   
@@ -471,12 +472,13 @@
                                     rows="1"
                                     class="w-2/3 px-2 mx-2 py-2 overflow-hidden border-b-2 resize-none bg-transparent border-neutral-300 text-white focus:outline-none"
                                     type="text"
+                                    style="white-space: pre-wrap;"
                                     on:input={e => autoGrow(e.target)}
                                     bind:value={card.back}
                                 />                                
                                 {:else}
-                                    <div class="flex items-start w-1/3 px-4 py-2 border-r-2 border-neutral-700">{card.front}</div>
-                                    <div class="flex items-start w-2/3 px-4 py-2">{card.back}</div>       
+                                    <div class="flex items-start w-1/3 px-4 py-2 border-r-2 border-neutral-700" style="white-space: pre-wrap;">{card.front}</div>
+                                    <div class="flex items-start w-2/3 px-4 py-2" style="white-space: pre-wrap;">{card.back}</div>       
                                 {/if}
                             </div>
                         </div>
