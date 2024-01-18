@@ -37,7 +37,7 @@ router.get('/user/:username', cookieParser(), async (req, res) => {
                     title,
                     description,
                     created_at,
-                    is_private
+                    is_private,
                     flashcards (
                         id,
                         front,
