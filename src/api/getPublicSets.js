@@ -11,6 +11,7 @@ export async function fetchPublicSets() {
         }
 
         const data = await response.json();
+        console.log(data.flashcardSets)
         return data.flashcardSets;
     } catch (error) {
         console.error('Failed to public flashcard sets:', error);

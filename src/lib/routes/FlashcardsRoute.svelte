@@ -62,7 +62,7 @@
                                 by <Link to="/user/{users.username}" class="hover:underline">{users.username}</Link>
                             </div>
                             <div>
-                                {flashcardSets.length} cards
+                                {flashcardSets[i].count} cards
                             </div>
                         </div>
                     </div>

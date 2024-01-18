@@ -81,7 +81,7 @@
                         />
                         <div class="flex justify-end py-1 px-3 text-lg text-white">
                             <div>
-                                {flashcardSets.length} cards
+                                {flashcardSet.count} cards
                             </div>
                         </div>
                     </div>
