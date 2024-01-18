@@ -55,7 +55,6 @@
                             description={description} 
                             id={flashcardSets[i].id} 
                             timestamp={formatDate(created_at)}
-                            created_at={created_at}
                             onDelete={handleDelete}
                         />
                         <div class="flex justify-between py-1 px-3 text-lg text-white">
