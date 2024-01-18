@@ -32,13 +32,18 @@ router.get('/user/:username', cookieParser(), async (req, res) => {
                 id, 
                 username, 
                 created_at,
-                flashcard_sets:flashcard_sets!inner (
+                flashcard_sets (
                     id,
                     title,
                     description,
                     created_at,
                     is_private
-                    flashcards!inner(id).count()
+                    flashcards (
+                        id,
+                        front,
+                        back,
+                        parent
+                    )
                 )
             `)
             .eq('username', username)
@@ -51,14 +56,6 @@ router.get('/user/:username', cookieParser(), async (req, res) => {
         const { data, error } = await query;
 
         if (error) throw error;
-
-        if (data && data.flashcard_sets) {
-            data.flashcard_sets = data.flashcard_sets.map(set => ({
-                ...set,
-                flashcard_count: set.flashcards.count,
-                flashcards: undefined  
-            }));
-        }
 
         const response = { user: data, self };
         res.json(response);
