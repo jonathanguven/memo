@@ -45,8 +45,11 @@
         text-align: center;
     }
     
+    .icon {
+        transition: all 0.3s ease;
+    }
+
     .icon:hover {
         transform: scale(1.1); 
-        transition: all 0.3s ease; 
     }
 </style>
